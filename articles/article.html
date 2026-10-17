@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article - RX PLAYER</title>
+    <title>Loading Article... - RX PLAYER</title>
+    <meta name="description" content="Read the latest news, guides, and updates about RX Player streaming app.">
     
     <!-- External Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,262 +18,372 @@
             padding: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
         }
 
-        html, body {
+        html { scroll-behavior: smooth; }
+
+        body {
             background-color: #050505;
             color: #ffffff;
             min-height: 100vh;
             width: 100%;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
             overflow-x: hidden;
         }
 
-        .app-screen {
-            width: 100%;
-            max-width: 420px;
-            min-height: 100vh;
-            background-color: #0f0f0f;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-            border-radius: 12px;
-        }
-
-        @media (max-width: 440px) { .app-screen { border-radius: 0; } }
-
-        /* Top Nav */
+        /* ===== NAVBAR ===== */
         .navbar {
-            position: relative;
-            height: 52px;
-            padding: 0 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 30;
-            background: rgba(15, 15, 15, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            flex-shrink: 0;
+            z-index: 50;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .navbar .logo { font-size: 19px; font-weight: 900; text-decoration: none; }
+        .navbar .logo { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
         .navbar .logo .rx { color: #e50914; }
         .navbar .logo .player { color: #fff; font-weight: 300; }
 
-        /* Article Content Section */
-        .article-section {
-            position: relative;
-            z-index: 10;
-            background: #0f0f0f;
-            padding: 22px 16px 140px;
-            flex: 1;
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #e50914; }
+
+        .nav-web-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff !important;
+            background: #e50914;
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: transform 0.2s !important;
+        }
+        .nav-web-link:hover { transform: scale(1.05); background: #b20710; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
         }
 
+        /* ===== MAIN LAYOUT ===== */
+        .main-container {
+            flex: 1;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 20px 60px; /* 100px top padding for fixed navbar */
+        }
+
+        /* ===== BACK BUTTON ===== */
         .back-home-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 20px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            gap: 8px;
+            margin-bottom: 24px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             color: #ffffff;
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
         
-        .back-home-btn:active { transform: scale(0.97); }
+        .back-home-btn:hover { background: rgba(255, 255, 255, 0.1); transform: translateX(-3px); }
+
+        /* ===== AD SPACES ===== */
+        .ad-container {
+            width: 100%;
+            min-height: 90px;
+            margin: 30px 0;
+            background: rgba(22, 22, 34, 0.5);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .ad-tag {
+            position: absolute; top: 6px; right: 10px;
+            font-size: 10px; font-weight: 700; color: rgba(255, 255, 255, 0.3); z-index: 2;
+        }
+
+        /* ===== ARTICLE STYLING ===== */
+        .article-content {
+            max-width: 800px; /* Optimal reading width */
+            margin: 0 auto;
+        }
 
         .post-full-title {
-            font-size: 22px;
+            font-size: clamp(28px, 4vw, 42px);
             font-weight: 900;
             color: #ffffff;
-            margin-bottom: 8px;
-            line-height: 1.3;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
         }
 
         .post-full-meta {
-            font-size: 10.5px;
+            font-size: 13px;
             color: #9ca3af;
             font-weight: 600;
             text-transform: uppercase;
-            margin-bottom: 18px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        .post-full-meta span { color: #e50914; }
 
-        /* Post Content Styling */
         .post-full-body {
-            font-size: 14px;
+            font-size: 16px;
             color: #d1d5db;
-            line-height: 1.75;
+            line-height: 1.8;
             word-wrap: break-word;
         }
 
         .post-full-body img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            margin: 14px 0;
+            border-radius: 12px;
+            margin: 24px 0;
             display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .post-full-body a { color: #e50914; text-decoration: none; }
+        .post-full-body a { color: #e50914; text-decoration: none; font-weight: 600; }
         .post-full-body a:hover { text-decoration: underline; }
-        .post-full-body p { margin-bottom: 14px; }
+        .post-full-body p { margin-bottom: 20px; }
 
         .post-full-body h1, .post-full-body h2, .post-full-body h3, .post-full-body h4 {
             color: #ffffff;
-            margin: 20px 0 10px;
+            margin: 35px 0 15px;
             line-height: 1.3;
+            font-weight: 800;
         }
-        .post-full-body h2 { font-size: 18px; }
-        .post-full-body h3 { font-size: 16px; }
+        .post-full-body h1 { font-size: 28px; }
+        .post-full-body h2 { font-size: 24px; }
+        .post-full-body h3 { font-size: 20px; }
 
-        .post-full-body ul, .post-full-body ol { margin: 12px 0 14px 22px; }
-        .post-full-body li { margin-bottom: 6px; }
+        .post-full-body ul, .post-full-body ol { margin: 20px 0 20px 24px; }
+        .post-full-body li { margin-bottom: 10px; }
 
         .post-full-body blockquote {
-            border-left: 3px solid #e50914;
-            padding-left: 14px;
-            margin: 16px 0;
-            color: #9ca3af;
+            border-left: 4px solid #e50914;
+            padding: 15px 20px;
+            margin: 24px 0;
+            background: rgba(229, 9, 20, 0.05);
+            border-radius: 0 8px 8px 0;
+            color: #d1d5db;
             font-style: italic;
+            font-size: 17px;
         }
 
         .post-full-body pre, .post-full-body code {
             background: #1c1c1e;
-            border-radius: 4px;
-            font-family: monospace;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
             color: #e5e7eb;
         }
-        .post-full-body code { padding: 2px 6px; font-size: 12px; }
-        .post-full-body pre { padding: 14px; overflow-x: auto; margin: 14px 0; font-size: 12px; }
-        .post-full-body iframe { max-width: 100%; border-radius: 8px; margin: 14px 0; }
+        .post-full-body code { padding: 3px 8px; font-size: 14px; color: #e50914; background: rgba(229, 9, 20, 0.1); }
+        .post-full-body pre { padding: 20px; overflow-x: auto; margin: 24px 0; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); }
+        .post-full-body pre code { background: transparent; color: #e5e7eb; padding: 0; }
+        
+        .post-full-body iframe { max-width: 100%; border-radius: 12px; margin: 24px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .post-full-body table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .post-full-body th, .post-full-body td { border: 1px solid rgba(255,255,255,0.1); padding: 12px; text-align: left; }
+        .post-full-body th { background: rgba(255,255,255,0.05); color: #fff; font-weight: 700; }
 
-        /* Fixed Bottom Dock (Same as index) */
-        .bottom-dock-container {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 420px;
-            z-index: 40;
-            background: rgba(15, 15, 15, 0.96);
-            backdrop-filter: blur(14px);
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 8px 12px 10px;
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 5% 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
         }
 
-        @media (min-width: 441px) {
-            .bottom-dock-container { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
-        }
-
-        .bottom-telegram-bar {
+        .footer-info {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background: rgba(20, 20, 26, 0.95);
-            border: 1px solid rgba(0, 136, 204, 0.25);
-            border-radius: 12px;
-            padding: 6px 12px;
+            gap: 16px;
         }
 
-        .banner-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-        .banner-logo {
-            width: 32px; height: 32px; min-width: 32px; border-radius: 8px;
-            background: rgba(229, 9, 20, 0.15); display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(229, 9, 20, 0.25); overflow: hidden;
+        .footer-logo {
+            width: 50px; height: 50px; border-radius: 12px; overflow: hidden;
         }
-        .banner-logo img { width: 100%; height: 100%; object-fit: cover; }
+        .footer-logo img { width: 100%; height: 100%; object-fit: cover; }
 
-        .banner-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-        .banner-tagline { font-size: 8px; font-weight: 800; color: #0088cc; text-transform: uppercase; }
-        .banner-title { font-size: 11.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .banner-subtext { font-size: 9px; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .footer-text h4 { font-size: 18px; color: #fff; margin-bottom: 4px; }
+        .footer-text p { font-size: 13px; color: #9ca3af; }
+
+        .footer-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+            max-width: 400px;
+        }
 
         .btn-get {
-            background: #0088cc; color: #ffffff; border-radius: 10px; padding: 6px 12px;
-            font-size: 11px; font-weight: 700; text-decoration: none;
-            display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+            background: #0088cc; color: #ffffff;
+            border-radius: 12px; padding: 12px 24px;
+            font-size: 15px; font-weight: 700; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: background 0.3s;
         }
-        .btn-get svg { width: 11px; height: 11px; fill: currentColor; }
+        .btn-get:hover { background: #0077b3; }
+        .btn-get svg { width: 18px; height: 18px; fill: currentColor; }
 
         .bottom-banner-ad-box {
-            width: 100%; max-width: 320px; height: 50px; margin: 0 auto;
-            background: rgba(22, 22, 34, 0.85); border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            width: 100%; 
+            height: 60px;
+            background: rgba(22, 22, 34, 0.85);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden;
         }
-        .ad-tag { position: absolute; top: 2px; right: 5px; font-size: 8px; color: rgba(255, 255, 255, 0.35); z-index: 2; }
-        
-        #loading-text { text-align: center; color: #9ca3af; font-size: 12px; padding: 20px; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* Loading & Error States */
+        #loading-text { text-align: center; color: #9ca3af; font-size: 16px; padding: 60px 20px; }
+        .error-msg { text-align: center; color: #e50914; font-size: 16px; padding: 40px; background: rgba(229, 9, 20, 0.1); border-radius: 12px; }
     </style>
 </head>
 <body>
 
-    <div class="app-screen">
-        <!-- Top Navbar -->
-        <header class="navbar">
-            <!-- Path changed to ../index.html as we are inside 'articles' folder -->
-            <a class="logo" href="../index.html"><span class="rx">RX</span><span class="player">PLAYER</span></a>
-        </header>
+    <!-- Top Navbar -->
+    <header class="navbar">
+        <a class="logo" href="../index.html"><span class="rx">RX</span><span class="player">PLAYER</span></a>
+        <nav class="nav-links">
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#articles">Articles</a>
+            <a href="../index.html#download">Download</a>
+            <a class="nav-web-link" href="https://soonrxplayerweb.blogspot.com/">Watch Web &#8594;</a>
+        </nav>
+    </header>
 
-        <section class="article-section">
-            <!-- Back Button -->
-            <a class="back-home-btn" href="../index.html">&#8592; Back to Home</a>
-            
+    <!-- Main Content Layout -->
+    <main class="main-container">
+        <!-- Back Button -->
+        <a class="back-home-btn" href="../index.html">&#8592; Back to Home</a>
+        
+        <!-- Top Ad Space -->
+        <div class="ad-container">
+            <span class="ad-tag">AD</span>
+            <!-- Top Ad Script (Replace with your Ad Code if different) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '4a5f21676e17448c3ce7697746d1287c',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
+        </div>
+
+        <!-- Article Container -->
+        <article class="article-content">
             <div id="article-container">
                 <div id="loading-text">Loading article...</div>
             </div>
-        </section>
+        </article>
 
-        <!-- Fixed Bottom Dock (Same as index) -->
-        <div class="bottom-dock-container">
-            <div class="bottom-banner-ad-box">
-                <span class="ad-tag">AD</span>
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : '4a5f21676e17448c3ce7697746d1287c',
-                        'format' : 'iframe',
-                        'height' : 50,
-                        'width' : 320,
-                        'params' : {}
-                    };
-                </script>
-                <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
+        <!-- Bottom Ad Space -->
+        <div class="ad-container" style="margin-top: 50px;">
+            <span class="ad-tag">AD</span>
+            <!-- Bottom Ad Script (Same Ad, or change for a different one) -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '4a5f21676e17448c3ce7697746d1287c',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
+        </div>
+    </main>
+
+    <!-- Footer (Same as index.html) -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img alt="RX Player" src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg"/>
+                </div>
+                <div class="footer-text">
+                    <h4>RX Player Official</h4>
+                    <p>Your premium streaming partner.</p>
+                </div>
             </div>
 
-            <div class="bottom-telegram-bar">
-                <div class="banner-left">
-                    <div class="banner-logo">
-                        <img alt="RX" src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg"/>
-                    </div>
-                    <div class="banner-info">
-                        <span class="banner-tagline">OFFICIAL BACKUP</span>
-                        <h4 class="banner-title">RX Player Telegram</h4>
-                        <span class="banner-subtext">Direct APK &amp; Daily Releases</span>
-                    </div>
+            <div class="footer-actions">
+                <div class="bottom-banner-ad-box">
+                    <span class="ad-tag">AD</span>
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : '4a5f21676e17448c3ce7697746d1287c',
+                            'format' : 'iframe',
+                            'height' : 50,
+                            'width' : 320,
+                            'params' : {}
+                        };
+                    </script>
+                    <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
                 </div>
+
                 <a class="btn-get" href="https://t.me/rxplayer" target="_blank">
-                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Join
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Join Official Telegram Channel
                 </a>
             </div>
         </div>
-    </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 RX Player. All rights reserved.</p>
+        </div>
+    </footer>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -301,41 +412,50 @@
         async function loadArticle() {
             const container = document.getElementById('article-container');
             
-            // Get ID from URL (e.g., article.html?id=12345)
+            // Get ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
 
             if (!articleId) {
-                container.innerHTML = '<div style="color:#e50914; text-align:center;">Article ID not found in URL.</div>';
+                container.innerHTML = '<div class="error-msg">Article ID not found in URL.</div>';
                 return;
             }
 
             try {
-                // Fetch from 'articles' collection
                 const doc = await db.collection('articles').doc(articleId).get();
 
                 if (!doc.exists) {
-                    container.innerHTML = '<div style="color:#e50914; text-align:center;">Article does not exist.</div>';
+                    container.innerHTML = '<div class="error-msg">Article does not exist or has been removed.</div>';
                     return;
                 }
 
                 const data = doc.data();
-                const title = data.title || 'Untitled';
+                const title = data.title || 'Untitled Article';
                 const content = data.content || '<p>No content available.</p>';
                 const date = data.date ? new Date(data.date.toDate()).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Recent';
                 
-                // Update Page Title
+                // Update Document Title & Meta for SEO
                 document.title = `${title} - RX PLAYER`;
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if(metaDesc) {
+                    // Strip HTML tags from content for meta description
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = content;
+                    const textSnippet = tempDiv.textContent || tempDiv.innerText || "";
+                    metaDesc.setAttribute('content', textSnippet.substring(0, 150) + '...');
+                }
 
                 // Render HTML
                 container.innerHTML = `
                     <h1 class="post-full-title">${title}</h1>
-                    <div class="post-full-meta">${date}</div>
+                    <div class="post-full-meta">
+                        <span>Published</span> • ${date}
+                    </div>
                     <div class="post-full-body">${content}</div>
                 `;
             } catch (error) {
                 console.error("Error fetching article: ", error);
-                container.innerHTML = '<div style="color:#e50914; text-align:center;">Failed to load the article. Please try again later.</div>';
+                container.innerHTML = '<div class="error-msg">Failed to load the article. Please check your connection and try again.</div>';
             }
         }
 
