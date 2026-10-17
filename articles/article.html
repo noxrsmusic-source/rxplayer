@@ -6,6 +6,13 @@
     <title>Loading Article... - RX PLAYER</title>
     <meta name="description" content="Read the latest news, guides, and updates about RX Player streaming app.">
     
+    <!-- Open Graph Tags (For sharing on WhatsApp/Social Media) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" id="og-title" content="RX Player Article">
+    <meta property="og:description" id="og-desc" content="Read the latest news and guides on RX Player.">
+    <meta property="og:image" id="og-image" content="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg">
+    <meta property="og:url" id="og-url" content="">
+
     <!-- External Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,154 +41,92 @@
 
         /* ===== NAVBAR ===== */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 50;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(15px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            padding: 0 5%; display: flex; justify-content: space-between; align-items: center;
+            z-index: 50; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .navbar .logo { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
+        .navbar .logo { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; display: flex; }
         .navbar .logo .rx { color: #e50914; }
         .navbar .logo .player { color: #fff; font-weight: 300; }
 
         .nav-links { display: flex; gap: 20px; align-items: center; }
-        
-        .nav-links a {
-            color: #d1d5db;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
+        .nav-links a { color: #d1d5db; text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; }
         .nav-links a:hover { color: #e50914; }
 
         .nav-web-link {
-            font-size: 12px;
-            font-weight: 700;
-            color: #fff !important;
-            background: #e50914;
-            padding: 8px 20px;
-            border-radius: 50px;
-            transition: transform 0.2s !important;
+            font-size: 12px; font-weight: 700; color: #fff !important; background: #e50914;
+            padding: 8px 20px; border-radius: 50px; transition: transform 0.2s !important;
         }
         .nav-web-link:hover { transform: scale(1.05); background: #b20710; }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } }
 
         /* ===== MAIN LAYOUT ===== */
         .main-container {
-            flex: 1;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 100px 20px 60px; /* 100px top padding for fixed navbar */
+            flex: 1; width: 100%; max-width: 1000px; margin: 0 auto; padding: 100px 20px 60px;
         }
 
-        /* ===== BACK BUTTON ===== */
         .back-home-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 24px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px;
+            padding: 10px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.2s;
         }
-        
         .back-home-btn:hover { background: rgba(255, 255, 255, 0.1); transform: translateX(-3px); }
 
         /* ===== AD SPACES ===== */
         .ad-container {
-            width: 100%;
-            min-height: 90px;
-            margin: 30px 0;
-            background: rgba(22, 22, 34, 0.5);
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            width: 100%; min-height: 90px; margin: 30px 0;
+            background: rgba(22, 22, 34, 0.5); border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
         }
         .ad-tag {
             position: absolute; top: 6px; right: 10px;
             font-size: 10px; font-weight: 700; color: rgba(255, 255, 255, 0.3); z-index: 2;
         }
+        .in-article-ad { margin: 35px 0; }
 
         /* ===== ARTICLE STYLING ===== */
-        .article-content {
-            max-width: 800px; /* Optimal reading width */
-            margin: 0 auto;
-        }
+        .article-content { max-width: 800px; margin: 0 auto; }
 
         .post-full-title {
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 900;
-            color: #ffffff;
-            margin-bottom: 12px;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
+            font-size: clamp(28px, 4vw, 42px); font-weight: 900; color: #ffffff;
+            margin-bottom: 16px; line-height: 1.2; letter-spacing: -0.5px;
+        }
+
+        .post-full-meta-wrapper {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap; gap: 15px;
         }
 
         .post-full-meta {
-            font-size: 13px;
-            color: #9ca3af;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 13px; color: #9ca3af; font-weight: 600;
+            text-transform: uppercase; display: flex; align-items: center; gap: 10px;
         }
         .post-full-meta span { color: #e50914; }
 
-        .post-full-body {
-            font-size: 16px;
-            color: #d1d5db;
-            line-height: 1.8;
-            word-wrap: break-word;
+        /* Share Button */
+        .share-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
         }
+        .share-btn:hover { background: #e50914; border-color: #e50914; }
+        .share-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-        .post-full-body img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            margin: 24px 0;
-            display: block;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
+        .post-full-body { font-size: 16px; color: #d1d5db; line-height: 1.8; word-wrap: break-word; }
+        .post-full-body img { max-width: 100%; height: auto; border-radius: 12px; margin: 24px 0; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .post-full-body a { color: #e50914; text-decoration: none; font-weight: 600; }
         .post-full-body a:hover { text-decoration: underline; }
         .post-full-body p { margin-bottom: 20px; }
 
         .post-full-body h1, .post-full-body h2, .post-full-body h3, .post-full-body h4 {
-            color: #ffffff;
-            margin: 35px 0 15px;
-            line-height: 1.3;
-            font-weight: 800;
+            color: #ffffff; margin: 35px 0 15px; line-height: 1.3; font-weight: 800;
         }
-        .post-full-body h1 { font-size: 28px; }
         .post-full-body h2 { font-size: 24px; }
         .post-full-body h3 { font-size: 20px; }
 
@@ -189,99 +134,55 @@
         .post-full-body li { margin-bottom: 10px; }
 
         .post-full-body blockquote {
-            border-left: 4px solid #e50914;
-            padding: 15px 20px;
-            margin: 24px 0;
-            background: rgba(229, 9, 20, 0.05);
-            border-radius: 0 8px 8px 0;
-            color: #d1d5db;
-            font-style: italic;
-            font-size: 17px;
+            border-left: 4px solid #e50914; padding: 15px 20px; margin: 24px 0;
+            background: rgba(229, 9, 20, 0.05); border-radius: 0 8px 8px 0;
+            color: #d1d5db; font-style: italic; font-size: 17px;
         }
 
-        .post-full-body pre, .post-full-body code {
-            background: #1c1c1e;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            color: #e5e7eb;
+        /* ===== SUGGESTED ARTICLES SECTION ===== */
+        .suggested-section {
+            max-width: 1000px; margin: 60px auto 0; padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .post-full-body code { padding: 3px 8px; font-size: 14px; color: #e50914; background: rgba(229, 9, 20, 0.1); }
-        .post-full-body pre { padding: 20px; overflow-x: auto; margin: 24px 0; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); }
-        .post-full-body pre code { background: transparent; color: #e5e7eb; padding: 0; }
+        .suggested-title {
+            font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 24px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .suggested-title::before {
+            content: ''; width: 4px; height: 22px; background: #e50914; border-radius: 2px;
+        }
         
-        .post-full-body iframe { max-width: 100%; border-radius: 12px; margin: 24px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .post-full-body table { width: 100%; border-collapse: collapse; margin: 24px 0; }
-        .post-full-body th, .post-full-body td { border: 1px solid rgba(255,255,255,0.1); padding: 12px; text-align: left; }
-        .post-full-body th { background: rgba(255,255,255,0.05); color: #fff; font-weight: 700; }
+        .suggested-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+        }
+
+        .suggested-card {
+            background: #111; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;
+            overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column; text-decoration: none;
+        }
+        .suggested-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.6); border-color: rgba(229, 9, 20, 0.3); }
+        .suggested-img-wrap { width: 100%; height: 160px; overflow: hidden; background: #1c1c1e; }
+        .suggested-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .suggested-card:hover .suggested-img-wrap img { transform: scale(1.05); }
+        .suggested-content { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+        .suggested-meta { color: #e50914; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
+        .suggested-card-title { font-size: 15px; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: #fff; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .suggested-card-snippet { font-size: 12px; color: #9ca3af; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
 
         /* ===== FOOTER ===== */
-        .footer {
-            background: #0a0a0a;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 60px 5% 20px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 40px;
-        }
-
-        .footer-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .footer-logo {
-            width: 50px; height: 50px; border-radius: 12px; overflow: hidden;
-        }
+        .footer { background: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 60px 5% 20px; margin-top: auto; }
+        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; gap: 40px; }
+        .footer-info { display: flex; align-items: center; gap: 16px; }
+        .footer-logo { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; }
         .footer-logo img { width: 100%; height: 100%; object-fit: cover; }
-
         .footer-text h4 { font-size: 18px; color: #fff; margin-bottom: 4px; }
         .footer-text p { font-size: 13px; color: #9ca3af; }
-
-        .footer-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .btn-get {
-            background: #0088cc; color: #ffffff;
-            border-radius: 12px; padding: 12px 24px;
-            font-size: 15px; font-weight: 700; text-decoration: none;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: background 0.3s;
-        }
+        .footer-actions { display: flex; flex-direction: column; gap: 20px; flex: 1; max-width: 400px; }
+        .btn-get { background: #0088cc; color: #ffffff; border-radius: 12px; padding: 12px 24px; font-size: 15px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.3s; }
         .btn-get:hover { background: #0077b3; }
         .btn-get svg { width: 18px; height: 18px; fill: currentColor; }
-
-        .bottom-banner-ad-box {
-            width: 100%; 
-            height: 60px;
-            background: rgba(22, 22, 34, 0.85);
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 40px;
-            margin-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #6b7280;
-            font-size: 13px;
-        }
+        .bottom-banner-ad-box { width: 100%; height: 60px; background: rgba(22, 22, 34, 0.85); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .footer-bottom { text-align: center; padding-top: 40px; margin-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #6b7280; font-size: 13px; }
 
         /* Loading & Error States */
         #loading-text { text-align: center; color: #9ca3af; font-size: 16px; padding: 60px 20px; }
@@ -294,7 +195,6 @@
     <header class="navbar">
         <a class="logo" href="../index.html"><span class="rx">RX</span><span class="player">PLAYER</span></a>
         <nav class="nav-links">
-            <a href="../index.html#features">Features</a>
             <a href="../index.html#articles">Articles</a>
             <a href="../index.html#download">Download</a>
             <a class="nav-web-link" href="https://soonrxplayerweb.blogspot.com/">Watch Web &#8594;</a>
@@ -309,15 +209,8 @@
         <!-- Top Ad Space -->
         <div class="ad-container">
             <span class="ad-tag">AD</span>
-            <!-- Top Ad Script (Replace with your Ad Code if different) -->
             <script type="text/javascript">
-                atOptions = {
-                    'key' : '4a5f21676e17448c3ce7697746d1287c',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
+                atOptions = { 'key' : '4a5f21676e17448c3ce7697746d1287c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
             </script>
             <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
         </div>
@@ -332,21 +225,22 @@
         <!-- Bottom Ad Space -->
         <div class="ad-container" style="margin-top: 50px;">
             <span class="ad-tag">AD</span>
-            <!-- Bottom Ad Script (Same Ad, or change for a different one) -->
             <script type="text/javascript">
-                atOptions = {
-                    'key' : '4a5f21676e17448c3ce7697746d1287c',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
+                atOptions = { 'key' : '4a5f21676e17448c3ce7697746d1287c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
             </script>
             <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
         </div>
+
+        <!-- Suggested Articles Section -->
+        <section class="suggested-section" id="suggested-container" style="display: none;">
+            <h2 class="suggested-title">Read Next</h2>
+            <div class="suggested-grid" id="suggested-grid">
+                <!-- JS will inject related articles here -->
+            </div>
+        </section>
     </main>
 
-    <!-- Footer (Same as index.html) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-info">
@@ -363,13 +257,7 @@
                 <div class="bottom-banner-ad-box">
                     <span class="ad-tag">AD</span>
                     <script type="text/javascript">
-                        atOptions = {
-                            'key' : '4a5f21676e17448c3ce7697746d1287c',
-                            'format' : 'iframe',
-                            'height' : 50,
-                            'width' : 320,
-                            'params' : {}
-                        };
+                        atOptions = { 'key' : '4a5f21676e17448c3ce7697746d1287c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
                     </script>
                     <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
                 </div>
@@ -379,7 +267,6 @@
                 </a>
             </div>
         </div>
-
         <div class="footer-bottom">
             <p>&copy; 2024 RX Player. All rights reserved.</p>
         </div>
@@ -408,11 +295,13 @@
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // Global variables for sharing
+        let currentArticleTitle = '';
+        let currentArticleImage = '';
+
         // Load Article Data
         async function loadArticle() {
             const container = document.getElementById('article-container');
-            
-            // Get ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
 
@@ -430,32 +319,156 @@
                 }
 
                 const data = doc.data();
-                const title = data.title || 'Untitled Article';
+                currentArticleTitle = data.title || 'Untitled Article';
+                currentArticleImage = data.image || 'https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg';
                 const content = data.content || '<p>No content available.</p>';
                 const date = data.date ? new Date(data.date.toDate()).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Recent';
                 
-                // Update Document Title & Meta for SEO
-                document.title = `${title} - RX PLAYER`;
-                const metaDesc = document.querySelector('meta[name="description"]');
-                if(metaDesc) {
-                    // Strip HTML tags from content for meta description
-                    const tempDiv = document.createElement("div");
-                    tempDiv.innerHTML = content;
-                    const textSnippet = tempDiv.textContent || tempDiv.innerText || "";
-                    metaDesc.setAttribute('content', textSnippet.substring(0, 150) + '...');
-                }
+                // --- Update SEO & Open Graph Meta Tags ---
+                document.title = `${currentArticleTitle} - RX PLAYER`;
+                
+                // Strip HTML tags from content for description
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = content;
+                const textSnippet = tempDiv.textContent || tempDiv.innerText || "";
+                
+                document.getElementById('og-title').setAttribute('content', currentArticleTitle);
+                document.getElementById('og-desc').setAttribute('content', textSnippet.substring(0, 150) + '...');
+                document.getElementById('og-image').setAttribute('content', currentArticleImage);
+                document.getElementById('og-url').setAttribute('content', window.location.href);
 
-                // Render HTML
+                // --- Render HTML ---
                 container.innerHTML = `
-                    <h1 class="post-full-title">${title}</h1>
-                    <div class="post-full-meta">
-                        <span>Published</span> • ${date}
+                    <h1 class="post-full-title">${currentArticleTitle}</h1>
+                    <div class="post-full-meta-wrapper">
+                        <div class="post-full-meta">
+                            <span>Published</span> • ${date}
+                        </div>
+                        <button class="share-btn" id="shareBtn">
+                            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                            Share
+                        </button>
                     </div>
-                    <div class="post-full-body">${content}</div>
+                    <div class="post-full-body" id="article-body">${content}</div>
                 `;
+
+                // --- Inject In-Article Ad dynamically ---
+                injectInArticleAd();
+
+                // --- Setup Share Button ---
+                document.getElementById('shareBtn').addEventListener('click', shareArticle);
+
+                // --- Load Suggested Articles ---
+                loadSuggestedArticles(articleId);
+
             } catch (error) {
                 console.error("Error fetching article: ", error);
                 container.innerHTML = '<div class="error-msg">Failed to load the article. Please check your connection and try again.</div>';
+            }
+        }
+
+        // --- Function to handle Native Share ---
+        async function shareArticle() {
+            const shareData = {
+                title: currentArticleTitle,
+                text: `Read this article on RX Player: ${currentArticleTitle}`,
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    // Fallback for browsers that don't support native share
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied to clipboard! You can now paste it anywhere to share.");
+                }
+            } catch (err) {
+                console.log('Error sharing:', err);
+            }
+        }
+
+        // --- Function to inject Ad in the middle of the text ---
+        function injectInArticleAd() {
+            const body = document.getElementById('article-body');
+            const paragraphs = body.querySelectorAll('p');
+            
+            // Agar article mein 2 se zyada paragraphs hain, toh 2nd paragraph ke baad ad daalo
+            if (paragraphs.length > 1) {
+                const adDiv = document.createElement('div');
+                adDiv.className = 'ad-container in-article-ad';
+                adDiv.innerHTML = `<span class="ad-tag">AD</span>`;
+                
+                // Ad scripts ko dynamically create karna padta hai taaki wo execute ho sake
+                const script1 = document.createElement('script');
+                script1.type = 'text/javascript';
+                script1.innerHTML = `atOptions = { 'key' : '4a5f21676e17448c3ce7697746d1287c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };`;
+                
+                const script2 = document.createElement('script');
+                script2.type = 'text/javascript';
+                script2.src = 'https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js';
+                
+                adDiv.appendChild(script1);
+                adDiv.appendChild(script2);
+
+                // 2nd paragraph ke baad insert karein
+                paragraphs[1].parentNode.insertBefore(adDiv, paragraphs[1].nextSibling);
+            }
+        }
+
+        // --- Function to load other articles ---
+        async function loadSuggestedArticles(currentId) {
+            const suggestedContainer = document.getElementById('suggested-container');
+            const suggestedGrid = document.getElementById('suggested-grid');
+
+            try {
+                // Fetch latest 4 articles
+                const snapshot = await db.collection('articles').orderBy('date', 'desc').limit(4).get();
+                
+                if (snapshot.empty) return;
+
+                let html = '';
+                let count = 0;
+
+                snapshot.forEach(doc => {
+                    // Exclude the current article
+                    if (doc.id === currentId) return;
+                    
+                    // Limit to 3 suggestions
+                    if (count >= 3) return; 
+                    
+                    const data = doc.data();
+                    const title = data.title || 'Untitled';
+                    const image = data.image || 'https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg';
+                    const date = data.date ? new Date(data.date.toDate()).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : 'Recent';
+                    
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = data.content || '';
+                    const textSnippet = tempDiv.textContent || tempDiv.innerText || "";
+                    const snippet = textSnippet.substring(0, 80) + '...';
+
+                    html += `
+                        <a class="suggested-card" href="article.html?id=${doc.id}">
+                            <div class="suggested-img-wrap">
+                                <img src="${image}" alt="${title}" loading="lazy">
+                            </div>
+                            <div class="suggested-content">
+                                <div class="suggested-meta">${date}</div>
+                                <h3 class="suggested-card-title">${title}</h3>
+                                <div class="suggested-card-snippet">${snippet}</div>
+                            </div>
+                        </a>
+                    `;
+                    count++;
+                });
+
+                if (html !== '') {
+                    suggestedGrid.innerHTML = html;
+                    suggestedContainer.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error("Error fetching suggested articles: ", error);
             }
         }
 
