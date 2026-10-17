@@ -88,6 +88,43 @@
         }
         .in-article-ad { margin: 35px 0; }
 
+        /* ===== WATCH BANNER (New) ===== */
+        .watch-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #e50914, #b20710);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 25px 0 30px;
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+        .watch-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(229, 9, 20, 0.6);
+        }
+        .watch-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .watch-banner-content svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        @media (max-width: 480px) {
+            .watch-banner-content { font-size: 14px; }
+            .watch-banner-content svg { width: 20px; height: 20px; }
+        }
+
         /* ===== ARTICLE STYLING ===== */
         .article-content { max-width: 800px; margin: 0 auto; }
 
@@ -338,6 +375,7 @@
                 document.getElementById('og-url').setAttribute('content', window.location.href);
 
                 // --- Render HTML ---
+                // Added the Watch Banner right before the article body
                 container.innerHTML = `
                     <h1 class="post-full-title">${currentArticleTitle}</h1>
                     <div class="post-full-meta-wrapper">
@@ -349,6 +387,16 @@
                             Share
                         </button>
                     </div>
+
+                    <!-- WATCH BANNER START -->
+                    <a href="../dominpage.html" class="watch-banner">
+                        <div class="watch-banner-content">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <span>Click Here to Watch Movies & Anime</span>
+                        </div>
+                    </a>
+                    <!-- WATCH BANNER END -->
+
                     <div class="post-full-body" id="article-body">${content}</div>
                 `;
 
@@ -399,7 +447,6 @@
                 adDiv.className = 'ad-container in-article-ad';
                 adDiv.innerHTML = `<span class="ad-tag">AD</span>`;
                 
-                // Ad scripts ko dynamically create karna padta hai taaki wo execute ho sake
                 const script1 = document.createElement('script');
                 script1.type = 'text/javascript';
                 script1.innerHTML = `atOptions = { 'key' : '4a5f21676e17448c3ce7697746d1287c', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };`;
@@ -411,7 +458,6 @@
                 adDiv.appendChild(script1);
                 adDiv.appendChild(script2);
 
-                // 2nd paragraph ke baad insert karein
                 paragraphs[1].parentNode.insertBefore(adDiv, paragraphs[1].nextSibling);
             }
         }
@@ -422,7 +468,6 @@
             const suggestedGrid = document.getElementById('suggested-grid');
 
             try {
-                // Fetch latest 4 articles
                 const snapshot = await db.collection('articles').orderBy('date', 'desc').limit(4).get();
                 
                 if (snapshot.empty) return;
@@ -431,10 +476,7 @@
                 let count = 0;
 
                 snapshot.forEach(doc => {
-                    // Exclude the current article
                     if (doc.id === currentId) return;
-                    
-                    // Limit to 3 suggestions
                     if (count >= 3) return; 
                     
                     const data = doc.data();
