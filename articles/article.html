@@ -1,1 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - RX PLAYER</title>
+    
+    <!-- External Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        html, body {
+            background-color: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+        }
+
+        .app-screen {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background-color: #0f0f0f;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 440px) { .app-screen { border-radius: 0; } }
+
+        /* Top Nav */
+        .navbar {
+            position: relative;
+            height: 52px;
+            padding: 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 30;
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            flex-shrink: 0;
+        }
+
+        .navbar .logo { font-size: 19px; font-weight: 900; text-decoration: none; }
+        .navbar .logo .rx { color: #e50914; }
+        .navbar .logo .player { color: #fff; font-weight: 300; }
+
+        /* Article Content Section */
+        .article-section {
+            position: relative;
+            z-index: 10;
+            background: #0f0f0f;
+            padding: 22px 16px 140px;
+            flex: 1;
+        }
+
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .back-home-btn:active { transform: scale(0.97); }
+
+        .post-full-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .post-full-meta {
+            font-size: 10.5px;
+            color: #9ca3af;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Post Content Styling */
+        .post-full-body {
+            font-size: 14px;
+            color: #d1d5db;
+            line-height: 1.75;
+            word-wrap: break-word;
+        }
+
+        .post-full-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 14px 0;
+            display: block;
+        }
+
+        .post-full-body a { color: #e50914; text-decoration: none; }
+        .post-full-body a:hover { text-decoration: underline; }
+        .post-full-body p { margin-bottom: 14px; }
+
+        .post-full-body h1, .post-full-body h2, .post-full-body h3, .post-full-body h4 {
+            color: #ffffff;
+            margin: 20px 0 10px;
+            line-height: 1.3;
+        }
+        .post-full-body h2 { font-size: 18px; }
+        .post-full-body h3 { font-size: 16px; }
+
+        .post-full-body ul, .post-full-body ol { margin: 12px 0 14px 22px; }
+        .post-full-body li { margin-bottom: 6px; }
+
+        .post-full-body blockquote {
+            border-left: 3px solid #e50914;
+            padding-left: 14px;
+            margin: 16px 0;
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .post-full-body pre, .post-full-body code {
+            background: #1c1c1e;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #e5e7eb;
+        }
+        .post-full-body code { padding: 2px 6px; font-size: 12px; }
+        .post-full-body pre { padding: 14px; overflow-x: auto; margin: 14px 0; font-size: 12px; }
+        .post-full-body iframe { max-width: 100%; border-radius: 8px; margin: 14px 0; }
+
+        /* Fixed Bottom Dock (Same as index) */
+        .bottom-dock-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 420px;
+            z-index: 40;
+            background: rgba(15, 15, 15, 0.96);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 8px 12px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        @media (min-width: 441px) {
+            .bottom-dock-container { border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+        }
+
+        .bottom-telegram-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(20, 20, 26, 0.95);
+            border: 1px solid rgba(0, 136, 204, 0.25);
+            border-radius: 12px;
+            padding: 6px 12px;
+        }
+
+        .banner-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+        .banner-logo {
+            width: 32px; height: 32px; min-width: 32px; border-radius: 8px;
+            background: rgba(229, 9, 20, 0.15); display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(229, 9, 20, 0.25); overflow: hidden;
+        }
+        .banner-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+        .banner-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .banner-tagline { font-size: 8px; font-weight: 800; color: #0088cc; text-transform: uppercase; }
+        .banner-title { font-size: 11.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .banner-subtext { font-size: 9px; color: #9ca3af; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .btn-get {
+            background: #0088cc; color: #ffffff; border-radius: 10px; padding: 6px 12px;
+            font-size: 11px; font-weight: 700; text-decoration: none;
+            display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+        }
+        .btn-get svg { width: 11px; height: 11px; fill: currentColor; }
+
+        .bottom-banner-ad-box {
+            width: 100%; max-width: 320px; height: 50px; margin: 0 auto;
+            background: rgba(22, 22, 34, 0.85); border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .ad-tag { position: absolute; top: 2px; right: 5px; font-size: 8px; color: rgba(255, 255, 255, 0.35); z-index: 2; }
+        
+        #loading-text { text-align: center; color: #9ca3af; font-size: 12px; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-screen">
+        <!-- Top Navbar -->
+        <header class="navbar">
+            <!-- Path changed to ../index.html as we are inside 'articles' folder -->
+            <a class="logo" href="../index.html"><span class="rx">RX</span><span class="player">PLAYER</span></a>
+        </header>
+
+        <section class="article-section">
+            <!-- Back Button -->
+            <a class="back-home-btn" href="../index.html">&#8592; Back to Home</a>
+            
+            <div id="article-container">
+                <div id="loading-text">Loading article...</div>
+            </div>
+        </section>
+
+        <!-- Fixed Bottom Dock (Same as index) -->
+        <div class="bottom-dock-container">
+            <div class="bottom-banner-ad-box">
+                <span class="ad-tag">AD</span>
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4a5f21676e17448c3ce7697746d1287c',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script src="https://www.highrevenueformat.com/4a5f21676e17448c3ce7697746d1287c/invoke.js" type="text/javascript"></script>
+            </div>
+
+            <div class="bottom-telegram-bar">
+                <div class="banner-left">
+                    <div class="banner-logo">
+                        <img alt="RX" src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg"/>
+                    </div>
+                    <div class="banner-info">
+                        <span class="banner-tagline">OFFICIAL BACKUP</span>
+                        <h4 class="banner-title">RX Player Telegram</h4>
+                        <span class="banner-subtext">Direct APK &amp; Daily Releases</span>
+                    </div>
+                </div>
+                <a class="btn-get" href="https://t.me/rxplayer" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Join
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Security
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa-Ut8CCiZac7MPpeuw0LSjLehqLO4ICw",
+            authDomain: "rxplayer-a2582.firebaseapp.com",
+            databaseURL: "https://rxplayer-a2582-default-rtdb.firebaseio.com",
+            projectId: "rxplayer-a2582",
+            storageBucket: "rxplayer-a2582.firebasestorage.app",
+            messagingSenderId: "208971977557",
+            appId: "1:208971977557:web:501ee9138aa40dbef595dc",
+            measurementId: "G-28GFZHBB6P"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Load Article Data
+        async function loadArticle() {
+            const container = document.getElementById('article-container');
+            
+            // Get ID from URL (e.g., article.html?id=12345)
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id');
+
+            if (!articleId) {
+                container.innerHTML = '<div style="color:#e50914; text-align:center;">Article ID not found in URL.</div>';
+                return;
+            }
+
+            try {
+                // Fetch from 'articles' collection
+                const doc = await db.collection('articles').doc(articleId).get();
+
+                if (!doc.exists) {
+                    container.innerHTML = '<div style="color:#e50914; text-align:center;">Article does not exist.</div>';
+                    return;
+                }
+
+                const data = doc.data();
+                const title = data.title || 'Untitled';
+                const content = data.content || '<p>No content available.</p>';
+                const date = data.date ? new Date(data.date.toDate()).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Recent';
+                
+                // Update Page Title
+                document.title = `${title} - RX PLAYER`;
+
+                // Render HTML
+                container.innerHTML = `
+                    <h1 class="post-full-title">${title}</h1>
+                    <div class="post-full-meta">${date}</div>
+                    <div class="post-full-body">${content}</div>
+                `;
+            } catch (error) {
+                console.error("Error fetching article: ", error);
+                container.innerHTML = '<div style="color:#e50914; text-align:center;">Failed to load the article. Please try again later.</div>';
+            }
+        }
+
+        // Init
+        loadArticle();
+    </script>
+</body>
+</html>
