@@ -1,1 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to RX Player Web - Official Streaming</title>
+    
+    <!-- SEO Meta (No-index this page so Google doesn't treat it as a main content page) -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="You are being redirected to the RX Player Web streaming platform.">
 
+    <!-- External Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at top, rgba(229, 9, 20, 0.1) 0%, #050505 70%);
+        }
+
+        /* ===== REDIRECT CARD ===== */
+        .redirect-card {
+            background: #0f0f0f;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative red top border */
+        .redirect-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #e50914, #b20710);
+        }
+
+        .logo-area {
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .logo-text .rx { color: #e50914; }
+        .logo-text .player { color: #fff; font-weight: 300; }
+
+        .status-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .redirect-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .redirect-desc {
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* ===== OPEN BUTTON ===== */
+        .open-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(180deg, #e50914, #b20710);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(229, 9, 20, 0.6);
+        }
+
+        .open-btn:active {
+            transform: scale(0.98);
+        }
+
+        .open-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* ===== DISCLAIMER ===== */
+        .disclaimer-box {
+            margin-top: 30px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .disclaimer-box h4 {
+            font-size: 11px;
+            font-weight: 800;
+            color: #e50914;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .disclaimer-box p {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            margin-top: 24px;
+            display: inline-block;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="redirect-card">
+        <!-- Brand Logo -->
+        <div class="logo-area">
+            <img src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg" alt="RX Player Logo">
+            <span class="logo-text"><span class="rx">RX</span><span class="player">PLAYER</span></span>
+        </div>
+
+        <!-- Status -->
+        <div class="status-icon">🌐</div>
+        
+        <h1 class="redirect-title">Redirecting to Streaming Server</h1>
+        <p class="redirect-desc">
+            You are about to visit our official live streaming portal. Click the button below to continue watching movies and anime.
+        </p>
+
+        <!-- MAIN REDIRECT BUTTON (Using rel="nofollow noopener noreferrer" for safety) -->
+        <a href="https://rxplayer-indol.vercel.app/" class="open-btn" target="_blank" rel="nofollow noopener noreferrer">
+            <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            Open Streaming Site
+        </a>
+
+        <!-- Google Safe Disclaimer -->
+        <div class="disclaimer-box">
+            <h4>External Link Disclaimer</h4>
+            <p>
+                You are leaving our main website. RX Player does not host or upload any video files. All content is provided by non-affiliated third parties. We hold no responsibility for the content hosted on external domains.
+            </p>
+        </div>
+
+        <!-- Back Button -->
+        <a href="index.html" class="back-link">&#8592; Go Back to Home</a>
+    </div>
+
+</body>
+</html>
