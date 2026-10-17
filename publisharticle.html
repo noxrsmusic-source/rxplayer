@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish Article - RX PLAYER</title>
+    
+    <!-- External Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            background-color: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+        }
+
+        .app-screen {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            background-color: #0f0f0f;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 440px) {
+            .app-screen { border-radius: 0; }
+        }
+
+        /* Top Nav */
+        .navbar {
+            position: relative;
+            height: 52px;
+            padding: 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 30;
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            flex-shrink: 0;
+        }
+
+        .navbar .logo { font-size: 19px; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; }
+        .navbar .logo .rx { color: #e50914; }
+        .navbar .logo .player { color: #fff; font-weight: 300; }
+
+        .nav-back-link {
+            font-size: 11px;
+            font-weight: 700;
+            color: #e5e7eb;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 24px 20px 140px;
+            flex: 1;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .section-heading::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #e50914;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #d1d5db;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 14px;
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: #e50914;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 180px;
+            line-height: 1.5;
+        }
+
+        .form-group input::placeholder, 
+        .form-group textarea::placeholder {
+            color: #6b7280;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(180deg, #e50914, #b20710);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(229, 9, 20, 0.4);
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        /* Alerts */
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 18px;
+            display: none;
+            text-align: center;
+        }
+        .alert-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .alert-error {
+            background: rgba(229, 9, 20, 0.15);
+            color: #e50914;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+        }
+
+        /* Bottom Dock (Simplified for this page) */
+        .bottom-dock-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 420px;
+            z-index: 40;
+            background: rgba(15, 15, 15, 0.96);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 12px;
+            text-align: center;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-screen">
+        <!-- Top Navbar -->
+        <header class="navbar">
+            <a class="logo" href="index.html"><span class="rx">RX</span><span class="player">PLAYER</span></a>
+            <a class="nav-back-link" href="index.html">&#8592; Back to Home</a>
+        </header>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <h2 class="section-heading">Publish New Article</h2>
+
+            <!-- Alerts -->
+            <div id="successAlert" class="alert alert-success">Article Published Successfully! Redirecting...</div>
+            <div id="errorAlert" class="alert alert-error">Failed to publish article. Please try again.</div>
+
+            <form id="articleForm">
+                <!-- Headline / Title -->
+                <div class="form-group">
+                    <label for="articleTitle">Headline <span style="color:#e50914">*</span></label>
+                    <input type="text" id="articleTitle" placeholder="e.g., RX Player APK Guide: Features & Tips" required autocomplete="off">
+                </div>
+
+                <!-- Image URL (Optional) -->
+                <div class="form-group">
+                    <label for="articleImage">Image URL <span style="color:#6b7280; font-weight:400;">(Optional)</span></label>
+                    <input type="url" id="articleImage" placeholder="https://example.com/image.jpg" autocomplete="off">
+                </div>
+
+                <!-- Body / Content -->
+                <div class="form-group">
+                    <label for="articleContent">Body Content <span style="color:#e50914">*</span></label>
+                    <textarea id="articleContent" placeholder="Write your article content here. You can also paste HTML tags (like <p>, <h2>, <b>) for formatting..." required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn" id="publishBtn">
+                    Publish Article
+                </button>
+            </form>
+        </section>
+
+        <!-- Bottom Dock Text -->
+        <div class="bottom-dock-container">
+            Only authorized users should publish articles.
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa-Ut8CCiZac7MPpeuw0LSjLehqLO4ICw",
+            authDomain: "rxplayer-a2582.firebaseapp.com",
+            databaseURL: "https://rxplayer-a2582-default-rtdb.firebaseio.com",
+            projectId: "rxplayer-a2582",
+            storageBucket: "rxplayer-a2582.firebasestorage.app",
+            messagingSenderId: "208971977557",
+            appId: "1:208971977557:web:501ee9138aa40dbef595dc",
+            measurementId: "G-28GFZHBB6P"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Form Submission
+        const form = document.getElementById('articleForm');
+        const publishBtn = document.getElementById('publishBtn');
+        const successAlert = document.getElementById('successAlert');
+        const errorAlert = document.getElementById('errorAlert');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Hide previous alerts
+            successAlert.style.display = 'none';
+            errorAlert.style.display = 'none';
+
+            // Get values
+            const title = document.getElementById('articleTitle').value.trim();
+            const image = document.getElementById('articleImage').value.trim();
+            const content = document.getElementById('articleContent').value.trim();
+
+            // Basic validation
+            if (!title || !content) {
+                errorAlert.textContent = "Headline and Body Content are required!";
+                errorAlert.style.display = 'block';
+                return;
+            }
+
+            // Change button state
+            publishBtn.disabled = true;
+            publishBtn.innerHTML = 'Publishing...';
+
+            try {
+                // Add document to Firestore 'articles' collection
+                await db.collection('articles').add({
+                    title: title,
+                    image: image || '', // Optional, index.html handles default image
+                    content: content,
+                    date: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Show success
+                successAlert.style.display = 'block';
+                form.reset();
+                
+                // Redirect to homepage after 2.5 seconds
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2500);
+
+            } catch (error) {
+                console.error("Error publishing article: ", error);
+                errorAlert.textContent = "Error: " + error.message;
+                errorAlert.style.display = 'block';
+                
+                // Reset button state
+                publishBtn.disabled = false;
+                publishBtn.innerHTML = 'Publish Article';
+            }
+        });
+    </script>
+</body>
+</html>
