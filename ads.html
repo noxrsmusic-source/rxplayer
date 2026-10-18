@@ -13,22 +13,7 @@
         body {
             background: #08080C; color: #fff; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-start; padding: 30px 16px 120px; text-align: center;
-        }
-
-        /* ✅ Floating Video Ad ko BOTTOM CENTER me rakhne ke liye */
-        iframe[style*="position: fixed"], 
-        div[style*="position: fixed"], 
-        ins[style*="position: fixed"],
-        iframe[id*="aswift"],
-        iframe[style*="fixed"],
-        div[style*="fixed"] {
-            left: 50% !important;
-            right: auto !important;
-            transform: translateX(-50%) !important;
-            bottom: 10px !important;   
-            top: auto !important;
-            z-index: 9999999 !important;
+            justify-content: flex-start; padding: 30px 16px 60px; text-align: center;
         }
 
         .content-box {
@@ -69,16 +54,6 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; 
         }
 
-        .instructions-box {
-            width: 100%;
-            background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15);
-            border-radius: 10px; padding: 14px; text-align: left; margin-bottom: 20px;
-        }
-        .instructions-box h4 { font-size: 12px; color: #F59E0B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .instructions-box ul { list-style: none; padding-left: 0; }
-        .instructions-box li { font-size: 12px; color: #D1D5DB; margin-bottom: 6px; line-height: 1.4; display: flex; gap: 8px; }
-        .instructions-box li i { color: #E50914; margin-top: 2px; font-size: 10px; }
-
         /* ✅ TIMER */
         .timer-text {
             width: 100%; max-width: 350px; 
@@ -92,15 +67,15 @@
             text-align: center; margin-bottom: 20px;
         }
 
-        /* ✅ AD PLACEHOLDER */
+        /* ✅ AD PLACEHOLDER (Banner Ad ke liye jagah) */
         .ad-placeholder {
             width: 100%; 
-            height: 200px;
+            min-height: 250px; /* Banner Ads ke liye fix space */
             background: rgba(255,255,255,0.02);
             border: 1px dashed rgba(255,255,255,0.15); 
             border-radius: 8px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-bottom: 20px; padding: 0;
+            margin-bottom: 10px; padding: 10px;
             overflow: hidden;
             position: relative;
         }
@@ -140,7 +115,7 @@
 
         /* ✅ PC VIEW FIX */
         @media (min-width: 768px) {
-            body { padding-top: 45px; padding-bottom: 150px; }
+            body { padding-top: 45px; padding-bottom: 60px; }
             .content-box { max-width: 900px; padding: 40px; }
             .content-grid { grid-template-columns: 280px 1fr; gap: 40px; align-items: center; text-align: left; }
             .media-info { align-items: flex-start; }
@@ -148,22 +123,10 @@
             h1 { font-size: 28px; margin-bottom: 10px; }
             p.subtitle { font-size: 15px; }
             
-            .instructions-box { padding: 20px; margin-bottom: 24px; }
-            .instructions-box h4 { font-size: 14px; }
-            .instructions-box li { font-size: 14px; margin-bottom: 10px; }
+            /* PC par banner ad center me aayega */
+            .ad-placeholder { min-height: 250px; margin-bottom: 0; } 
             
-            /* ✅ FIX: Ad script ko trigger karne ke liye display block rakha, par height 0 ki taaki UI na bigde */
-            .ad-placeholder { 
-                display: block; 
-                height: 0; 
-                margin: 0; 
-                padding: 0; 
-                border: none;
-                background: transparent;
-                overflow: hidden;
-            } 
-            
-            .timer-text { font-size: 18px; padding: 18px; margin-bottom: 0; max-width: 400px; }
+            .timer-text { font-size: 18px; padding: 18px; margin-bottom: 20px; max-width: 400px; }
 
             .extra-sections { margin-top: 45px; }
             .section { margin-bottom: 40px; }
@@ -196,33 +159,17 @@
             <!-- Right Column: Action Area -->
             <div class="action-area">
                 
-                <div class="instructions-box">
-                    <h4 data-i18n="instructions_title">How to proceed:</h4>
-                    <ul>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step1">1. Please wait for the video ad to play.</span></li>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step2">2. Do not refresh or close this page.</span></li>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step3">3. You will be redirected automatically.</span></li>
-                    </ul>
-                </div>
-
                 <!-- TIMER -->
                 <div id="timer-text" class="timer-text">
                     <i class="fas fa-clock"></i> <span id="timer-message">Redirecting in 30 seconds...</span>
                 </div>
 
-                <!-- AD CONTAINER -->
+                <!-- ✅ BANNER AD CONTAINER -->
                 <div class="ad-placeholder">
                     <script>
-                    (function(mapa){
-                    var d = document,
-                        s = d.createElement('script'),
-                        l = d.currentScript || d.scripts[d.scripts.length - 1];
-                    s.settings = mapa || {};
-                    s.src = "\/\/shameful-farm.com\/bCXiV.s-deGBlN0kYjWScO\/TeNm\/9YuoZGUnltkaP\/T-cC1eMxjbkD5aMpThcbtMNoz\/Uvy_O\/TzkGyAMVQK";
-                    s.async = true;
-                    s.referrerPolicy = 'no-referrer-when-downgrade';
-                    l.parentNode.insertBefore(s, l);
-                    })({})
+                        (function(s){
+                            s.dataset.zone='12062782',s.src='https://nap5k.com/tag.min.js'
+                        })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
                     </script>
                 </div>
 
@@ -281,18 +228,10 @@
         const translations = {
             en: {
                 official_page: "Official Ads Page",
-                instructions_title: "How to proceed:",
-                step1: "1. Please wait for the video ad to play.",
-                step2: "2. Do not refresh or close this page.",
-                step3: "3. You will be redirected automatically.",
                 timer_msg: "Redirecting in {time} seconds..."
             },
             hi: {
                 official_page: "आधिकारिक विज्ञापन पृष्ठ",
-                instructions_title: "आगे बढ़ने के लिए निर्देश:",
-                step1: "1. कृपया वीडियो विज्ञापन चलने का इंतजार करें।",
-                step2: "2. इस पेज को रिफ्रेश या बंद न करें।",
-                step3: "3. आप स्वतः रीडायरेक्ट हो जाएंगे।",
                 timer_msg: "कृपया {time} सेकंड प्रतीक्षा करें..."
             }
         };
