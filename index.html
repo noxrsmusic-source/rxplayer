@@ -1,74 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Hill Top Ads / EZMob Validation -->
+    <!-- hill top ads-->
     <meta name="b79de5bf7fc1b9f97d06db22b1e3b244b7356275" content="b79de5bf7fc1b9f97d06db22b1e3b244b7356275" />
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- EZMob Prebid JS -->
+    <!-- EZMob Site Validation Code: EZM0EP8I2WMJGQ1JK72 -->
     <script type="text/javascript" src="https://docdn.ezmob.com/prebid.js" async></script>
-    <script>
-        var pbjs = pbjs || {};
-        pbjs.que = pbjs.que || [];
-        
-        pbjs.que.push(function() {
-            var adUnits = [{
-                code: 'container-1',
-                mediaTypes: {
-                    video: {
-                        context: 'outstream',
-                        playerSize: [300, 250],
-                        renderer: {
-                            url: 'https://docdn.ezmob.com/outstream_pb.js',
-                            render: renderOutstream
-                        }
-                    }
-                },
-                bids: [{
-                    bidder: 'adkernel',
-                    params: {
-                      zoneId: 420250,
-                      host: 'cpm.ezmob.com'
-                    }
-                }]
-            }];
-            pbjs.addAdUnits(adUnits);
-            pbjs.requestBids({
-                bidsBackHandler: function(bidResponses) {
-                    process('container-1');
-                }
-            });
-        });
+<script>
+	var pbjs = pbjs || {};
+	pbjs.que = pbjs.que || [];
+	
+	pbjs.que.push(function() {
+		var adUnits = [{
+			code: 'container-1',
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [300, 250],
+					renderer: {
+						url: 'https://docdn.ezmob.com/outstream_pb.js',
+						render: renderOutstream
+					}
+				}
+			},
+			bids: [{
+				bidder: 'adkernel',
+				params: {
+				  zoneId: 420250,
+				  host: 'cpm.ezmob.com'
+				}
 
-        function process(adUnit) {
-            var bidResponses = pbjs.getHighestCpmBids(adUnit);
-            if (bidResponses.length == 0) {
-                return;
-            }
-            var bid = bidResponses[0];
-            pbjs.renderAd(document, bid.adId);
-        }
-        
-        function renderOutstream(bid) {
-            OutstreamPlayerPB(bid, {
-                displayMode: 'floating',
-                transitions: true,
-                vpaidMode: 2
-            });
-        }
-    </script>
+			}]
+		}];
+		pbjs.addAdUnits(adUnits);
+		pbjs.requestBids({
+			bidsBackHandler: function(bidResponses) {
+				process('container-1');
+			}
+		});
+	});
 
+	function process(adUnit) {
+		var bidResponses = pbjs.getHighestCpmBids(adUnit);
+		if (bidResponses.length == 0) {
+			return;
+		}
+		var bid = bidResponses[0];
+		pbjs.renderAd(document, bid.adId);
+	}
+	
+	function renderOutstream(bid) {
+		OutstreamPlayerPB(bid, {
+			displayMode: 'floating',
+			transitions: true,
+			vpaidMode: 2
+		});
+	}
+</script>
+<div id="container-1"></div>
     <!-- ===== SEO META TAGS ===== -->
-    <title>Loading your content... - RX Player</title>
-    <meta name="robots" content="noindex, nofollow"> <!-- Ad-gate pages should not be indexed -->
-    
+    <title>RX Player - Official Streaming App & Web Platform</title>
+    <meta name="description" content="RX Player is the ultimate media player to stream movies, TV shows, and anime. Download the official Android APK or use the web version. 100% Safe and fast.">
+    <meta name="author" content="RX Player">
+    <link rel="canonical" href="https://rxplayer.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rxplayer.com/">
+    <meta property="og:title" content="RX Player - Official Streaming App">
+    <meta property="og:image" content="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg">
+
     <!-- External Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
@@ -85,6 +92,18 @@
         .navbar .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; display: flex; }
         .navbar .logo .rx { color: #e50914; }
         .navbar .logo .player { color: #fff; font-weight: 300; }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: #e5e7eb; text-decoration: none; font-size: 12px; font-weight: 700; transition: color 0.2s; }
+        .nav-links a:hover { color: #e50914; }
+
+        .btn-download-nav {
+            background: #e50914; color: #fff !important; padding: 6px 14px;
+            border-radius: 20px; font-weight: 700 !important; transition: transform 0.2s, background 0.2s;
+        }
+        .btn-download-nav:hover { transform: scale(1.05); background: #b20710; }
+
+        @media (max-width: 768px) { .nav-links { display: none; } }
 
         /* ===== HERO SECTION (Fixed Background) ===== */
         .hero-section {
@@ -94,14 +113,23 @@
 
         /* Background fixed to viewport, covers full screen */
         .background-wrapper {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             display: flex; justify-content: center; gap: 12px;
-            opacity: 0.65; z-index: 1; pointer-events: none; overflow: hidden;
+            opacity: 0.65;
+            z-index: 1; pointer-events: none;
+            overflow: hidden;
         }
 
-        .scroll-column { display: flex; flex-direction: column; gap: 12px; width: 30%; will-change: transform; }
+        .scroll-column { 
+            display: flex; flex-direction: column; gap: 12px; 
+            width: 30%; /* Mobile: 3 columns */
+            will-change: transform; 
+        }
 
-        @media (min-width: 768px) { .scroll-column { width: 18%; } }
+        @media (min-width: 768px) {
+            .scroll-column { width: 18%; } /* Desktop: ~5-6 columns */
+        }
 
         .scroll-column-up-fast { animation: scrollUp 45s linear infinite; }
         .scroll-column-up-slow { animation: scrollUp 60s linear infinite; }
@@ -120,87 +148,128 @@
 
         /* Exact Blogger-style overlay: Clear top, black bottom */
         .overlay-gradient {
-            position: fixed; inset: 0;
+            position: fixed;
+            inset: 0;
             background: linear-gradient(180deg, rgba(15, 15, 15, 0.55) 0%, rgba(15, 15, 15, 0.88) 45%, #0f0f0f 100%);
             z-index: 2; pointer-events: none;
         }
 
-        /* Hero Content */
+        /* Hero Content (Text & Buttons) */
         .hero-content {
             position: relative; z-index: 10; display: flex; flex-direction: column;
             align-items: center; text-align: center; max-width: 400px; width: 100%;
         }
 
-        .media-poster-wrapper {
-            width: 110px; height: 160px; border-radius: 12px; background: #1c1c1e;
+        .app-icon-wrapper {
+            width: 72px; height: 72px; border-radius: 18px; background: #1c1c1e;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 8px 24px rgba(229, 9, 20, 0.35); margin-bottom: 16px;
-            overflow: hidden; border: 2px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 24px rgba(229, 9, 20, 0.35); margin-bottom: 12px;
+            overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .media-poster-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .app-icon-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        .hero-title { font-size: 22px; font-weight: 900; line-height: 1.2; color: #ffffff; margin-bottom: 6px; }
-        .hero-subtitle { font-size: 13px; color: #d1d5db; margin-bottom: 24px; }
+        .hero-title { 
+            font-size: 24px; font-weight: 900; line-height: 1.2; 
+            color: #ffffff; margin-bottom: 4px; letter-spacing: -0.5px; 
+        }
+        .hero-title .rx { color: #e50914; }
+        .hero-title .player { font-weight: 300; }
 
-        /* Ad Container */
-        .ad-container-wrap {
-            width: 100%; min-height: 250px; margin-bottom: 20px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 12px; overflow: hidden;
+        .hero-subtitle { 
+            font-size: 12.5px; color: #d1d5db; margin-bottom: 16px; line-height: 1.4;
         }
-        #container-1 { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
 
-        /* Timer Box */
-        .timer-box {
-            width: 100%; max-width: 320px; padding: 15px; background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 50px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            color: #F59E0B; font-weight: 700; font-size: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); animation: pulse 2s infinite;
+        .app-specs-row { 
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; 
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
+
+        .spec-item {
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3px 10px; border-radius: 20px; font-size: 10.5px; font-weight: 600; color: #e5e7eb;
+            backdrop-filter: blur(5px);
         }
+
+        .btn-container { 
+            width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center;
+        }
+
+        .btn {
+            width: 100%; max-width: 300px; padding: 13px 18px; border-radius: 50px;
+            font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-decoration: none; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn:active { transform: scale(0.98); }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #e50914, #b20710); color: #ffffff;
+            box-shadow: 0 6px 20px rgba(229, 9, 20, 0.4);
+        }
+        .btn-primary:hover { box-shadow: 0 8px 25px rgba(229, 9, 20, 0.6); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(16px); color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+
+        .btn svg { width: 16px; height: 16px; fill: currentColor; }
 
         /* ===== CONTENT SECTION (SEO & Articles) ===== */
         .content-section { position: relative; z-index: 10; padding: 60px 5%; background: #0f0f0f; width: 100%; border-top: 1px solid rgba(255,255,255,0.05); }
         .section-inner { max-width: 1200px; margin: 0 auto; }
         
         .section-header { text-align: center; margin-bottom: 40px; }
-        .section-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; color: #fff; }
+        .section-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; text-transform: uppercase; color: #fff; }
         .section-subtitle { color: #9ca3af; font-size: 13px; max-width: 500px; margin: 0 auto; line-height: 1.6; }
 
         .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         
-        .post-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .post-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;
+            overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column;
+        }
+        .post-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.6); border-color: rgba(229, 9, 20, 0.3); }
+        
         .post-card-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; }
         .post-image-wrapper { width: 100%; height: 160px; overflow: hidden; background: #1c1c1e; }
-        .post-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .post-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .post-card:hover .post-image-wrapper img { transform: scale(1.05); }
+        
         .post-content { padding: 16px; display: flex; flex-direction: column; flex: 1; }
-        .post-meta { color: #e50914; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
-        .post-title { font-size: 15px; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: #fff; }
+        .post-meta { color: #e50914; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .post-title { font-size: 15px; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: #fff; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .post-snippet { font-size: 12px; color: #9ca3af; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
 
-        /* ===== FOOTER ===== */
+        /* ===== FOOTER & DISCLAIMER ===== */
         .footer { position: relative; z-index: 10; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 5% 20px; margin-top: auto; }
         .footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 30px; }
+        
         .footer-brand h4 { font-size: 20px; font-weight: 900; margin-bottom: 12px; }
         .footer-brand h4 span { color: #e50914; }
-        .disclaimer-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 10px; max-width: 600px; }
-        .disclaimer-box h5 { color: #e50914; font-size: 12px; margin-bottom: 6px; }
+        
+        .disclaimer-box { 
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); 
+            padding: 16px; border-radius: 10px; max-width: 600px; 
+        }
+        .disclaimer-box h5 { color: #e50914; font-size: 12px; margin-bottom: 6px; text-transform: uppercase; }
         .disclaimer-box p { color: #6b7280; font-size: 11px; line-height: 1.5; margin-bottom: 6px; }
+        
         .footer-bottom { text-align: center; padding-top: 20px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); color: #6b7280; font-size: 12px; }
+
+        /* Loading */
+        #loading-text { text-align: center; color: #9ca3af; padding: 40px; grid-column: 1 / -1; font-size: 13px; }
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
     <header class="navbar">
-        <a class="logo" href="#"><span class="rx">RX</span><span class="player">PLAYER</span></a>
+        <a class="logo" href="/"><span class="rx">RX</span><span class="player">PLAYER</span></a>
+        <nav class="nav-links">
+            <a href="#articles">News & Guides</a>
+            <a href="domin.html">Watch Web</a>
+            <a class="btn-download-nav" href="download.html">Download App</a>
+        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -209,27 +278,33 @@
         <div class="overlay-gradient"></div>
 
         <main class="hero-content">
-            <div class="media-poster-wrapper">
-                <img id="poster-img" src="https://placehold.co/300x450/14141F/666?text=Loading" alt="Poster">
+            <div class="app-icon-wrapper">
+                <img alt="RX Player App" src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg"/>
             </div>
 
-            <h1 class="hero-title" id="media-title">Loading Content...</h1>
-            <p class="hero-subtitle" id="media-subtitle">Please wait while we prepare your file</p>
+            <h1 class="hero-title"><span class="rx">RX</span><span class="player">PLAYER</span> APP</h1>
+            <p class="hero-subtitle">Stream Movies, Shows &amp; Anime</p>
 
-            <!-- EZMob Ad Container -->
-            <div class="ad-container-wrap">
-                <div id="container-1"></div>
+            <div class="app-specs-row">
+                <span class="spec-item" id="appVersionText">v1.1.0</span>
+                <span class="spec-item">Android 6.0+</span>
+                <span class="spec-item">100% Safe</span>
             </div>
 
-            <!-- Timer -->
-            <div class="timer-box">
-                <i class="fas fa-clock"></i> 
-                <span id="timer-message">Redirecting in 20 seconds...</span>
+            <div class="btn-container">
+                <a class="btn btn-primary" href="download.html" id="directDownloadBtn">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    <span id="downloadBtnLabel">Download APK Now</span>
+                </a>
+                <a class="btn btn-secondary" href="domin.html">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    Continue On Web
+                </a>
             </div>
         </main>
     </section>
 
-    <!-- Articles Section (Optional - SEO ke liye rakha gaya hai) -->
+    <!-- Articles Section -->
     <section class="content-section" id="articles">
         <div class="section-inner">
             <div class="section-header">
@@ -237,7 +312,7 @@
                 <p class="section-subtitle">Stay updated with the newest features, release notes, and streaming guides.</p>
             </div>
             <div class="articles-grid" id="articles-container">
-                <div id="loading-text" style="text-align:center; color:#9ca3af; grid-column: 1 / -1; font-size:13px;">Loading articles...</div>
+                <div id="loading-text">Loading articles...</div>
             </div>
         </div>
     </section>
@@ -252,6 +327,7 @@
                 </p>
             </div>
 
+            <!-- Google Safe Disclaimer -->
             <div class="disclaimer-box">
                 <h5>Important Disclaimer</h5>
                 <p>RX Player does not host, upload, or manage any video files or copyrighted content on its servers. We are solely a media player and indexing platform.</p>
@@ -263,60 +339,27 @@
         </div>
     </footer>
 
-    <!-- Firebase SDK for Articles -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
-        /* =========================================================
-           1. URL PARAMS & REDIRECT LOGIC
-           ========================================================= */
-        const BASE_URL = 'https://rxplayer-indol.vercel.app'; // Target Site
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const id      = urlParams.get('id');
-        const type    = urlParams.get('type');
-        const action  = urlParams.get('action'); // 'watch' or 'download'
-        const title   = urlParams.get('title')    || 'Untitled';
-        const poster  = urlParams.get('poster')   || 'https://placehold.co/300x450/14141F/666?text=No+Image';
-        const season  = urlParams.get('season')   || '1';
-        const episode = urlParams.get('episode')  || '1';
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa-Ut8CCiZac7MPpeuw0LSjLehqLO4ICw",
+            authDomain: "rxplayer-a2582.firebaseapp.com",
+            databaseURL: "https://rxplayer-a2582-default-rtdb.firebaseio.com",
+            projectId: "rxplayer-a2582",
+            storageBucket: "rxplayer-a2582.firebasestorage.app",
+            messagingSenderId: "208971977557",
+            appId: "1:208971977557:web:501ee9138aa40dbef595dc",
+            measurementId: "G-28GFZHBB6P"
+        };
 
-        // Update UI with URL data
-        document.getElementById('poster-img').src = poster;
-        document.getElementById('media-title').textContent = title;
-        
-        if (type === 'tv') {
-            document.getElementById('media-subtitle').textContent = `Season ${season}, Episode ${episode}`;
-        } else {
-            document.getElementById('media-subtitle').textContent = 'Movie';
-        }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        // Auto-Redirect Timer (Starts immediately)
-        let timeLeft = 20;
-        const timerMessage = document.getElementById('timer-message');
-        
-        const countdownInterval = setInterval(() => {
-            timeLeft--;
-            timerMessage.textContent = `Redirecting in ${timeLeft} seconds...`;
-            
-            if (timeLeft <= 0) {
-                clearInterval(countdownInterval);
-                redirectUser();
-            }
-        }, 1000);
-
-        function redirectUser() {
-            const q = `id=${encodeURIComponent(id)}&type=${encodeURIComponent(type)}&season=${encodeURIComponent(season)}&episode=${encodeURIComponent(episode)}`;
-            const targetUrl = action === 'download'
-                ? `${BASE_URL}/download.html?${q}`
-                : `${BASE_URL}/player.html?${q}`;
-            window.location.href = targetUrl;
-        }
-
-        /* =========================================================
-           2. BACKGROUND POSTERS ANIMATION
-           ========================================================= */
+        // Background Posters Animation
         const posters1 = ['https://m.media-amazon.com/images/M/MV5BMTk2ZmFhYjctYWZiYy00N2IxLWEzMWItZGRiMDY4ZDQwZWFlXkEyXkFqcGc@._V1_QL75_UY281_CR11,0,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BNzdkNjAxNWMtNWY3My00NTI1LTg2YWQtOGI3MDA0NzdhMjEyXkEyXkFqcGc@._V1_QL75_UY281_CR12,0,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BOWNjYWM3NWItOGE0ZS00MWRjLThiZWEtYjc4ZmNmMmU5ZTVmXkEyXkFqcGc@._V1_QL75_UX190_CR0,0,190,281_.jpg'];
         const posters2 = ['https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX190_CR0,0,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BMGUzOWE4NDItNzAxYy00M2VkLWFiNDEtNjczZTQ2Nzg5YmVhXkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BYmEzYTQ2OTEtMGM4MS00MWE1LWI3MGYtMTIyN2IwYzlkYmI0XkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg'];
         const posters3 = ['https://m.media-amazon.com/images/M/MV5BMWU1OGEwNmQtNGM3MS00YTYyLThmYmMtN2FjYzQzNzNmNTE0XkEyXkFqcGc@._V1_QL75_UX190_CR0,2,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg'];
@@ -326,6 +369,7 @@
 
         const bgWrapper = document.getElementById('backgroundWrapper');
         if(bgWrapper) {
+            // Create multiple columns
             for(let i=0; i<6; i++) {
                 const col = document.createElement('div');
                 const speeds = ['fast', 'slow', 'medium'];
@@ -336,28 +380,27 @@
             }
         }
 
-        /* =========================================================
-           3. FIREBASE (For Articles)
-           ========================================================= */
-        const firebaseConfig = {
-            apiKey: "AIzaSyCa-Ut8CCiZac7MPpeuw0LSjLehqLO4ICw",
-            authDomain: "rxplayer-a2582.firebaseapp.com",
-            projectId: "rxplayer-a2582",
-            storageBucket: "rxplayer-a2582.firebasestorage.app",
-            messagingSenderId: "208971977557",
-            appId: "1:208971977557:web:501ee9138aa40dbef595dc"
-        };
+        // Fetch Version Info
+        async function fetchAppVersion() {
+            try {
+                const doc = await db.collection('config').doc('appVersion').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    const version = data.version || '1.1.0';
+                    document.getElementById('appVersionText').textContent = `v${version}`;
+                    document.getElementById('downloadBtnLabel').textContent = `Download APK (v${version})`;
+                }
+            } catch (e) {}
+        }
 
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
+        // Fetch Articles
         async function fetchArticles() {
             const container = document.getElementById('articles-container');
             try {
-                const snapshot = await db.collection('articles').orderBy('date', 'desc').limit(3).get();
+                const snapshot = await db.collection('articles').orderBy('date', 'desc').get();
                 
                 if (snapshot.empty) {
-                    container.innerHTML = '<div style="color:#9ca3af; text-align:center; grid-column: 1 / -1; font-size:13px;">No updates published yet.</div>';
+                    container.innerHTML = '<div style="color:#9ca3af; text-align:center; grid-column: 1 / -1; font-size:13px;">No updates published yet. Check back soon!</div>';
                     return;
                 }
 
@@ -394,10 +437,12 @@
                 container.innerHTML = html;
             } catch (error) {
                 console.error("Error fetching articles: ", error);
-                container.innerHTML = '<div style="color:#e50914; text-align:center; grid-column: 1 / -1; font-size:13px;">Failed to load articles.</div>';
+                container.innerHTML = '<div style="color:#e50914; text-align:center; grid-column: 1 / -1; font-size:13px;">Failed to load articles. Please refresh.</div>';
             }
         }
 
+        // Init
+        fetchAppVersion();
         fetchArticles();
     </script>
 </body>
