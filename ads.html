@@ -221,6 +221,331 @@
 </head>
 <body>
 
-ads
+    <!-- =================== MAIN GATE =================== -->
+    <div class="content-box">
+        <button id="lang-toggle" class="lang-toggle">हिंदी</button>
+        <div class="official-badge" data-i18n="official_page">Official Ads Page</div>
+
+        <div class="content-grid">
+            <div class="media-info">
+                <div class="poster-wrap">
+                    <img id="poster-img" src="https://placehold.co/300x450/14141F/666?text=Loading" alt="Poster">
+                </div>
+                <h1 id="media-title">Loading Title...</h1>
+                <p class="subtitle" id="media-subtitle">Preparing your content...</p>
+            </div>
+
+            <div class="action-area">
+                <div class="instructions-box">
+                    <h4 data-i18n="instructions_title">How to proceed:</h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step1">1. Click the button below to load the ad.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step2">2. Close the ad after it loads.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step3">3. Wait for the 20-second timer.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step4">4. You will be redirected automatically.</span></li>
+                    </ul>
+                </div>
+
+                <div class="banner-ad-space">
+                    <!-- 🛑 REPLACE THIS WITH YOUR BANNER AD CODE 🛑 -->
+                    <span>Banner Ad Space</span>
+                </div>
+
+                <button id="ad-trigger-btn" class="btn-primary">
+                    <i class="fas fa-hand-pointer"></i> <span data-i18n="trigger_btn">Click Here to Continue</span>
+                </button>
+
+                <div id="timer-text" class="timer-text" style="margin-top: 15px;">
+                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait 20 seconds...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================== EXTRA SECTIONS =================== -->
+    <div class="extra-sections">
+
+        <!-- 🔥 RELATED CONTENT -->
+        <div class="section related-section">
+            <h2><i class="fas fa-fire"></i> You May Also Like</h2>
+            <div class="related-grid" id="related-grid">
+                <!-- Filled dynamically by JS -->
+            </div>
+        </div>
+
+        <!-- 📰 BLOG SECTION -->
+        <div class="section blog-section">
+            <h2><i class="fas fa-newspaper"></i> Latest from Our Blog</h2>
+            <div class="blog-grid">
+                <!-- ⚠️ Update these href values to your real blog post URLs -->
+                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
+                    <span class="blog-tag">Movies</span>
+                    <h3>Top 10 Must-Watch Movies of 2024</h3>
+                    <p>From blockbuster hits to hidden gems — here's our carefully curated list of the best films this year.</p>
+                </a>
+                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
+                    <span class="blog-tag">Guide</span>
+                    <h3>How to Download Movies Safely &amp; Fast</h3>
+                    <p>Learn the safest way to download your favourite content without compromising your device.</p>
+                </a>
+                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
+                    <span class="blog-tag">TV Shows</span>
+                    <h3>Best TV Series to Binge This Month</h3>
+                    <p>Bored? Here are the top binge-worthy series that everyone is talking about right now.</p>
+                </a>
+                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
+                    <span class="blog-tag">Tips</span>
+                    <h3>Streaming Tips: Save Data While Watching</h3>
+                    <p>Don't burn through your data plan — follow these simple tips to watch more, spend less.</p>
+                </a>
+                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
+                    <span class="blog-tag">News</span>
+                    <h3>New Releases Added Weekly</h3>
+                    <p>We're constantly updating our library — stay tuned to see what's coming next week.</p>
+                </a>
+                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
+                    <span class="blog-tag">Feature</span>
+                    <h3>Behind the Scenes: How We Pick Content</h3>
+                    <p>Ever wondered how your favourite titles end up here? Get a peek behind the curtain.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================== AD MODAL =================== -->
+    <div id="ad-modal">
+        <div class="ad-modal-header">
+            <span><i class="fas fa-external-link-alt"></i> <span data-i18n="ad_header">Advertisement</span></span>
+            <button class="close-ad-btn" id="close-ad-btn">
+                <i class="fas fa-times"></i> <span data-i18n="close_ad">Close Ad</span>
+            </button>
+        </div>
+        <div class="ad-iframe-container">
+            <iframe id="ad-iframe" src="about:blank" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================
+           1. CONFIG
+           ========================================================= */
+        // Get a free TMDB API key: https://www.themoviedb.org/settings/api
+        // Leave as-is to disable related content (it will show a friendly message).
+        const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE';
+
+        // Your live site base URL (redirects)
+        const BASE_URL = 'https://rxplayer-indol.vercel.app';
+
+        /* =========================================================
+           2. URL PARAMS
+           ========================================================= */
+        const urlParams = new URLSearchParams(window.location.search);
+        const id      = urlParams.get('id');
+        const type    = urlParams.get('type');       // 'movie' or 'tv'
+        const action  = urlParams.get('action');     // 'watch' or 'download'
+        const title   = urlParams.get('title')    || 'Untitled';
+        const poster  = urlParams.get('poster')   || 'https://placehold.co/300x450/14141F/666?text=No+Image';
+        const season  = urlParams.get('season')   || '1';
+        const episode = urlParams.get('episode')  || '1';
+
+        /* =========================================================
+           3. TRANSLATIONS
+           ========================================================= */
+        let currentLang = 'en';
+        const translations = {
+            en: {
+                official_page: "Official Ads Page",
+                instructions_title: "How to proceed:",
+                step1: "1. Click the button below to load the ad.",
+                step2: "2. Close the ad after it loads.",
+                step3: "3. Wait for the 20-second timer.",
+                step4: "4. You will be redirected automatically.",
+                trigger_btn: "Click Here to Continue",
+                timer_msg: "Please wait {time} seconds...",
+                ad_header: "Advertisement",
+                close_ad: "Close Ad"
+            },
+            hi: {
+                official_page: "आधिकारिक विज्ञापन पृष्ठ",
+                instructions_title: "आगे बढ़ने के लिए निर्देश:",
+                step1: "1. विज्ञापन लोड करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
+                step2: "2. विज्ञापन लोड होने के बाद उसे बंद करें।",
+                step3: "3. 20 सेकंड के टाइमर का इंतजार करें।",
+                step4: "4. आप स्वतः रीडायरेक्ट हो जाएंगे।",
+                timer_msg: "कृपया {time} सेकंड प्रतीक्षा करें...",
+                ad_header: "विज्ञापन",
+                close_ad: "विज्ञापन बंद करें"
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.textContent = translations[lang][key];
+            });
+            document.getElementById('lang-toggle').textContent = lang === 'en' ? 'हिंदी' : 'English';
+
+            const timerMsg = document.getElementById('timer-message');
+            if (timerMsg.textContent.includes('wait') || timerMsg.textContent.includes('प्रतीक्षा')) {
+                const m = timerMsg.textContent.match(/\d+/);
+                const t = m ? m[0] : '20';
+                timerMsg.textContent = translations[lang].timer_msg.replace('{time}', t);
+            }
+        }
+
+        /* =========================================================
+           4. UI SETUP
+           ========================================================= */
+        document.getElementById('poster-img').src = poster;
+        document.getElementById('media-title').textContent = title;
+
+        if (type === 'tv') {
+            document.getElementById('media-subtitle').textContent = `Season ${season}, Episode ${episode}`;
+        } else {
+            document.getElementById('media-subtitle').textContent = 'Movie';
+        }
+
+        setLanguage('en');
+
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            setLanguage(currentLang === 'en' ? 'hi' : 'en');
+        });
+
+        /* =========================================================
+           5. AD LOGIC & TIMER
+           ========================================================= */
+        const adTriggerBtn = document.getElementById('ad-trigger-btn');
+        const adModal      = document.getElementById('ad-modal');
+        const closeAdBtn   = document.getElementById('close-ad-btn');
+        const adIframe     = document.getElementById('ad-iframe');
+        const timerText    = document.getElementById('timer-text');
+        const timerMessage = document.getElementById('timer-message');
+
+        let countdownInterval;
+        let timeLeft = 20;
+
+        // 🛑 PUT YOUR DIRECT-LINK AD URL HERE 🛑
+        const AD_URL = "https://www.example.com"; // Replace with your Monetag Direct Link
+
+        adTriggerBtn.addEventListener('click', () => {
+            adTriggerBtn.style.display = 'none';
+            adModal.classList.add('open');
+            adIframe.src = AD_URL;
+        });
+
+        closeAdBtn.addEventListener('click', () => {
+            adModal.classList.remove('open');
+            adIframe.src = 'about:blank';
+            timerText.style.display = 'block';
+            startTimer();
+        });
+
+        function startTimer() {
+            timeLeft = 20;
+            updateTimerText();
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerText();
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    timerText.style.display = 'none';
+                    redirectUser();
+                }
+            }, 1000);
+        }
+
+        function updateTimerText() {
+            const template = translations[currentLang].timer_msg;
+            timerMessage.textContent = template.replace('{time}', timeLeft);
+        }
+
+        function redirectUser() {
+            const q = `id=${encodeURIComponent(id)}&type=${encodeURIComponent(type)}&season=${encodeURIComponent(season)}&episode=${encodeURIComponent(episode)}`;
+            const targetUrl = action === 'download'
+                ? `${BASE_URL}/download.html?${q}`
+                : `${BASE_URL}/player.html?${q}`;
+            window.location.href = targetUrl;
+        }
+
+        /* =========================================================
+           6. RELATED CONTENT (TMDB)
+           ========================================================= */
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str).replace(/[&<>"']/g, function (c) {
+                return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+            });
+        }
+
+        function buildRelatedUrl(item, mediaType) {
+            const p = new URLSearchParams();
+            p.set('id', item.id);
+            p.set('type', mediaType);
+            p.set('title', item.title || item.name || 'Untitled');
+            if (item.poster_path) {
+                p.set('poster', `https://image.tmdb.org/t/p/w300${item.poster_path}`);
+            }
+            if (action) p.set('action', action);
+            if (mediaType === 'tv') {
+                p.set('season', '1');
+                p.set('episode', '1');
+            }
+            return `${window.location.pathname}?${p.toString()}`;
+        }
+
+        async function loadRelated() {
+            const grid = document.getElementById('related-grid');
+            if (!grid) return;
+
+            if (!id || (type !== 'movie' && type !== 'tv')) {
+                grid.innerHTML = '<p class="no-related"><i class="fas fa-info-circle"></i> Select a movie or series to see related content.</p>';
+                return;
+            }
+
+            // Show skeletons while loading
+            grid.innerHTML = Array(6).fill(0).map(() => `
+                <div class="related-skeleton">
+                    <div class="sk-poster"></div>
+                    <div class="sk-title"></div>
+                </div>
+            `).join('');
+
+            if (!TMDB_API_KEY || TMDB_API_KEY === 'YOUR_TMDB_API_KEY_HERE') {
+                grid.innerHTML = '<p class="no-related"><i class="fas fa-key"></i> Related content is not configured yet. Add your free TMDB API key in the code to enable it.</p>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/similar?api_key=${TMDB_API_KEY}&language=en-US&page=1`);
+                if (!res.ok) throw new Error('Fetch failed');
+                const data = await res.json();
+                const items = (data.results || []).filter(i => i.poster_path).slice(0, 6);
+
+                if (items.length === 0) {
+                    grid.innerHTML = '<p class="no-related"><i class="fas fa-search"></i> No related titles found.</p>';
+                    return;
+                }
+
+                grid.innerHTML = items.map(item => {
+                    const t = item.title || item.name || 'Untitled';
+                    const p = `https://image.tmdb.org/t/p/w300${item.poster_path}`;
+                    const u = buildRelatedUrl(item, type);
+                    return `
+                        <a href="${u}" class="related-card">
+                            <div class="related-poster">
+                                <img src="${p}" alt="${escapeHtml(t)}" loading="lazy">
+                            </div>
+                            <div class="related-title">${escapeHtml(t)}</div>
+                        </a>
+                    `;
+                }).join('');
+            } catch (err) {
+                grid.innerHTML = '<p class="no-related"><i class="fas fa-exclamation-triangle"></i> Could not load related content. Please try again later.</p>';
+            }
+        }
+
+        loadRelated();
+    </script>
 </body>
 </html>
