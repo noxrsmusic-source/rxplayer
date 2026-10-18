@@ -8,9 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    <!-- 🛑 MONETAG / ADS SCRIPT HERE 🛑 -->
-    <!-- Put your Monetag meta tag or script here if required -->
-
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body {
@@ -64,44 +61,18 @@
         .instructions-box li { font-size: 12px; color: #D1D5DB; margin-bottom: 6px; line-height: 1.4; display: flex; gap: 8px; }
         .instructions-box li i { color: #E50914; margin-top: 2px; font-size: 10px; }
 
+        /* Ad Space (Hill Top Ad fits here) */
         .banner-ad-space {
-            width: 100%; height: 60px; background: rgba(255,255,255,0.05);
-            border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px; font-size: 11px; color: #9CA3AF;
+            width: 100%; min-height: 120px; background: rgba(255,255,255,0.02);
+            border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin-bottom: 20px; overflow: hidden; position: relative;
         }
-
-        .btn-primary {
-            width: 100%; height: 50px; border-radius: 30px;
-            background: linear-gradient(135deg, #E50914 0%, #b20710 100%);
-            color: #fff; font-weight: 800; font-size: 14px; border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 6px 20px rgba(229,9,20,0.35); transition: 0.3s;
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(229,9,20,0.5); }
 
         .timer-text {
-            font-size: 15px; font-weight: 700; color: #F59E0B; display: none;
+            font-size: 15px; font-weight: 700; color: #F59E0B; display: block;
             padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px;
             border: 1px solid rgba(245, 158, 11, 0.2);
         }
-
-        /* Ad Iframe Modal */
-        #ad-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 999999; display: none; flex-direction: column; }
-        #ad-modal.open { display: flex; }
-        .ad-modal-header {
-            padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
-            background: #14141F; border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .ad-modal-header span { font-size: 14px; font-weight: 600; color: #9CA3AF; }
-        .close-ad-btn {
-            background: #E50914; color: #fff; border: none; padding: 8px 16px;
-            border-radius: 20px; font-weight: 700; font-size: 13px; cursor: pointer;
-            display: flex; align-items: center; gap: 6px; transition: 0.3s;
-        }
-        .close-ad-btn:hover { background: #b20710; }
-        .ad-iframe-container { flex: 1; width: 100%; height: 100%; position: relative; background: #fff; }
-        .ad-iframe-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 
         /* =========================================================
            EXTRA SECTIONS (Related Content + Blog)
@@ -204,8 +175,7 @@
             .instructions-box { padding: 20px; margin-bottom: 24px; }
             .instructions-box h4 { font-size: 14px; }
             .instructions-box li { font-size: 14px; margin-bottom: 10px; }
-            .banner-ad-space { height: 90px; margin-bottom: 24px; }
-            .btn-primary { height: 55px; font-size: 16px; }
+            .banner-ad-space { min-height: 250px; margin-bottom: 24px; }
             .timer-text { font-size: 18px; padding: 15px; }
 
             .extra-sections { margin-top: 45px; }
@@ -240,24 +210,31 @@
                 <div class="instructions-box">
                     <h4 data-i18n="instructions_title">How to proceed:</h4>
                     <ul>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step1">1. Click the button below to load the ad.</span></li>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step2">2. Close the ad after it loads.</span></li>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step3">3. Wait for the 20-second timer.</span></li>
-                        <li><i class="fas fa-circle"></i> <span data-i18n="step4">4. You will be redirected automatically.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step1">1. Please wait for the video ad to play.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step2">2. Do not refresh or close this page.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step3">3. You will be redirected automatically.</span></li>
                     </ul>
                 </div>
 
-                <div class="banner-ad-space">
-                    <!-- 🛑 REPLACE THIS WITH YOUR BANNER AD CODE 🛑 -->
-                    <span>Banner Ad Space</span>
+                <!-- HILL TOP VIDEO AD CONTAINER -->
+                <div class="banner-ad-space" id="ad-container">
+                    <script>
+                    (function(fcamb){
+                    var d = document,
+                        s = d.createElement('script'),
+                        l = d.currentScript || d.scripts[d.scripts.length - 1];
+                    s.settings = fcamb || {};
+                    s.src = "\/\/shameful-farm.com\/b\/X.VRsodvGMl\/0zYSW\/co\/ce\/ml9MuxZ-UtlDkwPiTdcl1\/M\/jjkt2\/M\/DlEwtuNyzDU\/yUOJTQY\/wnNEQZ";
+                    s.async = true;
+                    s.referrerPolicy = 'no-referrer-when-downgrade';
+                    l.parentNode.insertBefore(s, l);
+                    })({})
+                    </script>
                 </div>
 
-                <button id="ad-trigger-btn" class="btn-primary">
-                    <i class="fas fa-hand-pointer"></i> <span data-i18n="trigger_btn">Click Here to Continue</span>
-                </button>
-
-                <div id="timer-text" class="timer-text" style="margin-top: 15px;">
-                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait 20 seconds...</span>
+                <!-- TIMER -->
+                <div id="timer-text" class="timer-text" style="margin-top: 5px;">
+                    <i class="fas fa-clock"></i> <span id="timer-message">Redirecting in 30 seconds...</span>
                 </div>
             </div>
         </div>
@@ -278,7 +255,6 @@
         <div class="section blog-section">
             <h2><i class="fas fa-newspaper"></i> Latest from Our Blog</h2>
             <div class="blog-grid">
-                <!-- ⚠️ Update these href values to your real blog post URLs -->
                 <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
                     <span class="blog-tag">Movies</span>
                     <h3>Top 10 Must-Watch Movies of 2024</h3>
@@ -298,24 +274,10 @@
         </div>
     </div>
 
-    <!-- =================== AD MODAL =================== -->
-    <div id="ad-modal">
-        <div class="ad-modal-header">
-            <span><i class="fas fa-external-link-alt"></i> <span data-i18n="ad_header">Advertisement</span></span>
-            <button class="close-ad-btn" id="close-ad-btn">
-                <i class="fas fa-times"></i> <span data-i18n="close_ad">Close Ad</span>
-            </button>
-        </div>
-        <div class="ad-iframe-container">
-            <iframe id="ad-iframe" src="about:blank" allowfullscreen></iframe>
-        </div>
-    </div>
-
     <script>
         /* =========================================================
            1. CONFIG
            ========================================================= */
-        // ✅ IMPORTANT: Fixed API Base URL to absolute Vercel URL to avoid CORS/404 
         const API_BASE = 'https://rxplayer-indol.vercel.app/api';
         const BASE_URL = 'https://rxplayer-indol.vercel.app';
 
@@ -339,25 +301,18 @@
             en: {
                 official_page: "Official Ads Page",
                 instructions_title: "How to proceed:",
-                step1: "1. Click the button below to load the ad.",
-                step2: "2. Close the ad after it loads.",
-                step3: "3. Wait for the 20-second timer.",
-                step4: "4. You will be redirected automatically.",
-                trigger_btn: "Click Here to Continue",
-                timer_msg: "Please wait {time} seconds...",
-                ad_header: "Advertisement",
-                close_ad: "Close Ad"
+                step1: "1. Please wait for the video ad to play.",
+                step2: "2. Do not refresh or close this page.",
+                step3: "3. You will be redirected automatically.",
+                timer_msg: "Redirecting in {time} seconds..."
             },
             hi: {
                 official_page: "आधिकारिक विज्ञापन पृष्ठ",
                 instructions_title: "आगे बढ़ने के लिए निर्देश:",
-                step1: "1. विज्ञापन लोड करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
-                step2: "2. विज्ञापन लोड होने के बाद उसे बंद करें।",
-                step3: "3. 20 सेकंड के टाइमर का इंतजार करें।",
-                step4: "4. आप स्वतः रीडायरेक्ट हो जाएंगे।",
-                timer_msg: "कृपया {time} सेकंड प्रतीक्षा करें...",
-                ad_header: "विज्ञापन",
-                close_ad: "विज्ञापन बंद करें"
+                step1: "1. कृपया वीडियो विज्ञापन चलने का इंतजार करें।",
+                step2: "2. इस पेज को रिफ्रेश या बंद न करें।",
+                step3: "3. आप स्वतः रीडायरेक्ट हो जाएंगे।",
+                timer_msg: "कृपया {time} सेकंड प्रतीक्षा करें..."
             }
         };
 
@@ -370,9 +325,9 @@
             document.getElementById('lang-toggle').textContent = lang === 'en' ? 'हिंदी' : 'English';
 
             const timerMsg = document.getElementById('timer-message');
-            if (timerMsg.textContent.includes('wait') || timerMsg.textContent.includes('प्रतीक्षा')) {
+            if (timerMsg.textContent.includes('in') || timerMsg.textContent.includes('प्रतीक्षा')) {
                 const m = timerMsg.textContent.match(/\d+/);
-                const t = m ? m[0] : '20';
+                const t = m ? m[0] : '30';
                 timerMsg.textContent = translations[lang].timer_msg.replace('{time}', t);
             }
         }
@@ -396,51 +351,27 @@
         });
 
         /* =========================================================
-           5. AD LOGIC & TIMER
+           5. AUTO TIMER & REDIRECT LOGIC
            ========================================================= */
-        const adTriggerBtn = document.getElementById('ad-trigger-btn');
-        const adModal      = document.getElementById('ad-modal');
-        const closeAdBtn   = document.getElementById('close-ad-btn');
-        const adIframe     = document.getElementById('ad-iframe');
-        const timerText    = document.getElementById('timer-text');
         const timerMessage = document.getElementById('timer-message');
-
         let countdownInterval;
-        let timeLeft = 20;
+        let timeLeft = 30; // Changed to 30 seconds
 
-        // 🛑 PUT YOUR DIRECT-LINK AD URL HERE 🛑
-        const AD_URL = "https://www.example.com"; // Replace with your Monetag Direct Link
-
-        adTriggerBtn.addEventListener('click', () => {
-            adTriggerBtn.style.display = 'none';
-            adModal.classList.add('open');
-            adIframe.src = AD_URL;
-        });
-
-        closeAdBtn.addEventListener('click', () => {
-            adModal.classList.remove('open');
-            adIframe.src = 'about:blank';
-            timerText.style.display = 'block';
-            startTimer();
-        });
+        function updateTimerText() {
+            const template = translations[currentLang].timer_msg;
+            timerMessage.textContent = template.replace('{time}', timeLeft);
+        }
 
         function startTimer() {
-            timeLeft = 20;
             updateTimerText();
             countdownInterval = setInterval(() => {
                 timeLeft--;
                 updateTimerText();
                 if (timeLeft <= 0) {
                     clearInterval(countdownInterval);
-                    timerText.style.display = 'none';
                     redirectUser();
                 }
             }, 1000);
-        }
-
-        function updateTimerText() {
-            const template = translations[currentLang].timer_msg;
-            timerMessage.textContent = template.replace('{time}', timeLeft);
         }
 
         function redirectUser() {
@@ -451,10 +382,12 @@
             window.location.href = targetUrl;
         }
 
+        // Start timer automatically on page load
+        startTimer();
+
         /* =========================================================
            6. RELATED CONTENT (TMDB via Proxy)
            ========================================================= */
-
         async function proxyRequest(endpoint) {
             const url = `${API_BASE}/tmdb-proxy?endpoint=${encodeURIComponent(endpoint)}`;
             const res = await fetch(url);
@@ -510,14 +443,12 @@
             const grid = document.getElementById('related-grid');
             if (!grid) return;
 
-            // Validate ID
             const numericId = id !== null && id !== '' && !isNaN(Number(id));
             if (!numericId || (type !== 'movie' && type !== 'tv')) {
                 grid.innerHTML = '<p class="no-related"><i class="fas fa-info-circle"></i> Invalid content ID or type.</p>';
                 return;
             }
 
-            // Skeleton loading
             grid.innerHTML = Array(6).fill(0).map(() => `
                 <div class="related-skeleton">
                     <div class="sk-poster"></div>
@@ -526,15 +457,13 @@
             `).join('');
 
             try {
-                console.log(`Fetching related for ${type} ID: ${id}...`);
-                
                 const [similarRes, recRes] = await Promise.all([
-                    proxyRequest(`/${type}/${id}/similar?language=en-US&page=1`).catch(e => { console.warn('Similar failed:', e.message); return { results: [] }; }),
-                    proxyRequest(`/${type}/${id}/recommendations?language=en-US&page=1`).catch(e => { console.warn('Recs failed:', e.message); return { results: [] }; })
+                    proxyRequest(`/${type}/${id}/similar?language=en-US&page=1`).catch(() => ({ results: [] })),
+                    proxyRequest(`/${type}/${id}/recommendations?language=en-US&page=1`).catch(() => ({ results: [] }))
                 ]);
 
                 const similar = (similarRes.results || [])
-                    .filter(i => i.poster_path && String(i.id) !== String(id)) // Exclude current item
+                    .filter(i => i.poster_path && String(i.id) !== String(id))
                     .map(i => ({ ...i, media_type: i.media_type || type }));
 
                 const recommendations = (recRes.results || [])
@@ -544,7 +473,6 @@
                 let items = mergeUnique(recommendations, similar, 6);
 
                 if (items.length === 0) {
-                    console.log("No similar/recs found, fetching fallback popular...");
                     const fallback = await proxyRequest(`/${type}/popular?language=en-US&page=1`).catch(() => ({ results: [] }));
                     items = (fallback.results || [])
                         .filter(i => i.poster_path && String(i.id) !== String(id))
@@ -573,25 +501,11 @@
 
             } catch (err) {
                 console.error('Related fetch error:', err);
-                // 🛑 Show the actual error in UI for debugging
                 grid.innerHTML = `<p class="no-related"><i class="fas fa-exclamation-triangle"></i> Error loading content: ${escapeHtml(err.message || 'Network failed')}</p>`;
             }
         }
 
         loadRelated();
     </script>
-   <!--video ads hill top -->
-    <script>
-(function(fcamb){
-var d = document,
-    s = d.createElement('script'),
-    l = d.currentScript || d.scripts[d.scripts.length - 1];
-s.settings = fcamb || {};
-s.src = "\/\/shameful-farm.com\/b\/X.VRsodvGMl\/0zYSW\/co\/ce\/ml9MuxZ-UtlDkwPiTdcl1\/M\/jjkt2\/M\/DlEwtuNyzDU\/yUOJTQY\/wnNEQZ";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
 </body>
 </html>
