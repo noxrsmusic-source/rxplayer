@@ -20,11 +20,13 @@
         iframe[style*="position: fixed"], 
         div[style*="position: fixed"], 
         ins[style*="position: fixed"],
-        iframe[id*="aswift"] {
+        iframe[id*="aswift"],
+        iframe[style*="fixed"],
+        div[style*="fixed"] {
             left: 50% !important;
             right: auto !important;
             transform: translateX(-50%) !important;
-            bottom: 20px !important;
+            bottom: 0px !important;
             z-index: 9999999 !important;
         }
 
@@ -71,26 +73,29 @@
         .instructions-box li { font-size: 12px; color: #D1D5DB; margin-bottom: 6px; line-height: 1.4; display: flex; gap: 8px; }
         .instructions-box li i { color: #E50914; margin-top: 2px; font-size: 10px; }
 
-        /* Ad Placeholder Box */
+        /* ✅ FIXED AD PLACEHOLDER (UI Break Rokne Ke Liye) */
         .ad-placeholder {
-            width: 100%; min-height: 150px; background: rgba(255,255,255,0.02);
-            border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; 
+            width: 100%; 
+            height: 250px; /* Fixed Height taaki UI na bigde */
+            background: #000;
+            border: 1px dashed rgba(255,255,255,0.15); 
+            border-radius: 8px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-bottom: 20px; padding: 20px;
-        }
-        .ad-placeholder i { font-size: 30px; color: #E50914; margin-bottom: 10px; animation: pulse 1.5s infinite; }
-        .ad-placeholder p { font-size: 13px; color: #9CA3AF; font-weight: 600; }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.05); }
-            100% { opacity: 0.6; transform: scale(0.95); }
+            margin-bottom: 20px; padding: 0;
+            overflow: hidden; /* Ad box se bahar nahi niklega */
+            position: relative;
         }
 
+        /* ✅ TIMER FIX (Hamesha Upar Dikhega) */
         .timer-text {
-            font-size: 15px; font-weight: 700; color: #F59E0B; display: block;
-            padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            font-size: 16px; font-weight: 800; color: #F59E0B; display: block;
+            padding: 15px; background: #1a1408; /* Solid dark background */
+            border-radius: 8px;
+            border: 1px solid #F59E0B;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+            position: relative;
+            z-index: 99999; /* Ad ke upar dikhne ke liye */
+            text-align: center;
         }
 
         .extra-sections { width: 100%; max-width: 900px; margin-top: 30px; }
@@ -137,7 +142,9 @@
             .instructions-box { padding: 20px; margin-bottom: 24px; }
             .instructions-box h4 { font-size: 14px; }
             .instructions-box li { font-size: 14px; margin-bottom: 10px; }
-            .ad-placeholder { min-height: 200px; margin-bottom: 24px; }
+            
+            /* Desktop me bhi ad box fix rahega */
+            .ad-placeholder { height: 250px; margin-bottom: 24px; }
             .timer-text { font-size: 18px; padding: 15px; }
 
             .extra-sections { margin-top: 45px; }
@@ -177,24 +184,24 @@
                     </ul>
                 </div>
 
-                <!-- Ad Loading Placeholder (Ads will float at bottom center) -->
+                <!-- AD CONTAINER (Now fixed with height & overflow hidden) -->
                 <div class="ad-placeholder">
                     <script>
-(function(mapa){
-var d = document,
-    s = d.createElement('script'),
-    l = d.currentScript || d.scripts[d.scripts.length - 1];
-s.settings = mapa || {};
-s.src = "\/\/shameful-farm.com\/bCXiV.s-deGBlN0kYjWScO\/TeNm\/9YuoZGUnltkaP\/T-cC1eMxjbkD5aMpThcbtMNoz\/Uvy_O\/TzkGyAMVQK";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
+                    (function(mapa){
+                    var d = document,
+                        s = d.createElement('script'),
+                        l = d.currentScript || d.scripts[d.scripts.length - 1];
+                    s.settings = mapa || {};
+                    s.src = "\/\/shameful-farm.com\/bCXiV.s-deGBlN0kYjWScO\/TeNm\/9YuoZGUnltkaP\/T-cC1eMxjbkD5aMpThcbtMNoz\/Uvy_O\/TzkGyAMVQK";
+                    s.async = true;
+                    s.referrerPolicy = 'no-referrer-when-downgrade';
+                    l.parentNode.insertBefore(s, l);
+                    })({})
+                    </script>
                 </div>
 
-                <!-- TIMER -->
-                <div id="timer-text" class="timer-text" style="margin-top: 5px;">
+                <!-- TIMER (Now with z-index and solid background to stay on top) -->
+                <div id="timer-text" class="timer-text">
                     <i class="fas fa-clock"></i> <span id="timer-message">Redirecting in 30 seconds...</span>
                 </div>
             </div>
@@ -454,20 +461,6 @@ l.parentNode.insertBefore(s, l);
         }
 
         loadRelated();
-    </script>
-    
-    <!-- Hill Top Ads (Ye script automatically video ad load karega) -->
-    <script>
-    (function(fcamb){
-    var d = document,
-        s = d.createElement('script'),
-        l = d.currentScript || d.scripts[d.scripts.length - 1];
-    s.settings = fcamb || {};
-    s.src = "\/\/shameful-farm.com\/b\/X.VRsodvGMl\/0zYSW\/co\/ce\/ml9MuxZ-UtlDkwPiTdcl1\/M\/jjkt2\/M\/DlEwtuNyzDU\/yUOJTQY\/wnNEQZ";
-    s.async = true;
-    s.referrerPolicy = 'no-referrer-when-downgrade';
-    l.parentNode.insertBefore(s, l);
-    })({})
     </script>
 </body>
 </html>
