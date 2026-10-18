@@ -189,6 +189,7 @@
             .blog-card p { font-size: 13px; }
         }
     </style>
+        <!-- EZMob Site Validation Code: EZM0EP8I2WMJGQ1JK72 -->
 </head>
 <body>
 
@@ -218,18 +219,61 @@
 
                 <!-- HILL TOP VIDEO AD CONTAINER -->
                 <div class="banner-ad-space" id="ad-container">
-                    <script>
-                    (function(fcamb){
-                    var d = document,
-                        s = d.createElement('script'),
-                        l = d.currentScript || d.scripts[d.scripts.length - 1];
-                    s.settings = fcamb || {};
-                    s.src = "\/\/shameful-farm.com\/b\/X.VRsodvGMl\/0zYSW\/co\/ce\/ml9MuxZ-UtlDkwPiTdcl1\/M\/jjkt2\/M\/DlEwtuNyzDU\/yUOJTQY\/wnNEQZ";
-                    s.async = true;
-                    s.referrerPolicy = 'no-referrer-when-downgrade';
-                    l.parentNode.insertBefore(s, l);
-                    })({})
-                    </script>
+
+                    <script type="text/javascript" src="https://docdn.ezmob.com/prebid.js" async></script>
+<script>
+	var pbjs = pbjs || {};
+	pbjs.que = pbjs.que || [];
+	
+	pbjs.que.push(function() {
+		var adUnits = [{
+			code: 'container-1',
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [300, 250],
+					renderer: {
+						url: 'https://docdn.ezmob.com/outstream_pb.js',
+						render: renderOutstream
+					}
+				}
+			},
+			bids: [{
+				bidder: 'adkernel',
+				params: {
+				  zoneId: 420250,
+				  host: 'cpm.ezmob.com'
+				}
+
+			}]
+		}];
+		pbjs.addAdUnits(adUnits);
+		pbjs.requestBids({
+			bidsBackHandler: function(bidResponses) {
+				process('container-1');
+			}
+		});
+	});
+
+	function process(adUnit) {
+		var bidResponses = pbjs.getHighestCpmBids(adUnit);
+		if (bidResponses.length == 0) {
+			return;
+		}
+		var bid = bidResponses[0];
+		pbjs.renderAd(document, bid.adId);
+	}
+	
+	function renderOutstream(bid) {
+		OutstreamPlayerPB(bid, {
+			displayMode: 'floating',
+			transitions: true,
+			vpaidMode: 2
+		});
+	}
+</script>
+<div id="container-1"></div>
+                    
                 </div>
 
                 <!-- TIMER -->
@@ -507,5 +551,18 @@
 
         loadRelated();
     </script>
+    <!--hill top ads -->
+    <script>
+                    (function(fcamb){
+                    var d = document,
+                        s = d.createElement('script'),
+                        l = d.currentScript || d.scripts[d.scripts.length - 1];
+                    s.settings = fcamb || {};
+                    s.src = "\/\/shameful-farm.com\/b\/X.VRsodvGMl\/0zYSW\/co\/ce\/ml9MuxZ-UtlDkwPiTdcl1\/M\/jjkt2\/M\/DlEwtuNyzDU\/yUOJTQY\/wnNEQZ";
+                    s.async = true;
+                    s.referrerPolicy = 'no-referrer-when-downgrade';
+                    l.parentNode.insertBefore(s, l);
+                    })({})
+                    </script>
 </body>
 </html>
