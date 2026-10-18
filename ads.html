@@ -7,9 +7,6 @@
     <title>Loading your content...</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Google IMA SDK for VAST Tag -->
-    <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -17,6 +14,18 @@
             background: #08080C; color: #fff; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
             justify-content: flex-start; padding: 30px 16px 60px; text-align: center;
+        }
+
+        /* Ad Network ke floating iframe ko center me laane ke liye CSS Hack */
+        iframe[style*="position: fixed"], 
+        div[style*="position: fixed"], 
+        ins[style*="position: fixed"],
+        iframe[id*="aswift"] {
+            left: 50% !important;
+            right: auto !important;
+            transform: translateX(-50%) !important;
+            bottom: 20px !important;
+            z-index: 9999999 !important;
         }
 
         .content-box {
@@ -62,52 +71,21 @@
         .instructions-box li { font-size: 12px; color: #D1D5DB; margin-bottom: 6px; line-height: 1.4; display: flex; gap: 8px; }
         .instructions-box li i { color: #E50914; margin-top: 2px; font-size: 10px; }
 
-        /* ✅ PROPER VIDEO PLAYER CONTAINER */
-        .banner-ad-space {
-            width: 100%; min-height: 180px; background: #000;
-            border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-bottom: 20px; overflow: hidden; position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        /* Ad Placeholder Box */
+        .ad-placeholder {
+            width: 100%; min-height: 150px; background: rgba(255,255,255,0.02);
+            border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin-bottom: 20px; padding: 20px;
         }
-        
-        #ad-video-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .ad-placeholder i { font-size: 30px; color: #E50914; margin-bottom: 10px; animation: pulse 1.5s infinite; }
+        .ad-placeholder p { font-size: 13px; color: #9CA3AF; font-weight: 600; }
 
-        #ad-video {
-            width: 100%;
-            max-height: 220px;
-            outline: none;
-            background: #000;
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.6; transform: scale(0.95); }
         }
-
-        /* Custom Play Overlay if autoplay is blocked */
-        .play-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .play-overlay.show { display: flex; }
-        .play-overlay i {
-            font-size: 40px;
-            color: #E50914;
-            margin-bottom: 10px;
-            transition: transform 0.2s;
-        }
-        .play-overlay:hover i { transform: scale(1.1); }
-        .play-overlay span { font-size: 14px; font-weight: 700; color: #fff; }
 
         .timer-text {
             font-size: 15px; font-weight: 700; color: #F59E0B; display: block;
@@ -159,8 +137,7 @@
             .instructions-box { padding: 20px; margin-bottom: 24px; }
             .instructions-box h4 { font-size: 14px; }
             .instructions-box li { font-size: 14px; margin-bottom: 10px; }
-            .banner-ad-space { min-height: 250px; margin-bottom: 24px; }
-            #ad-video { max-height: 250px; }
+            .ad-placeholder { min-height: 200px; margin-bottom: 24px; }
             .timer-text { font-size: 18px; padding: 15px; }
 
             .extra-sections { margin-top: 45px; }
@@ -200,17 +177,10 @@
                     </ul>
                 </div>
 
-                <!-- ✅ VAST VIDEO PLAYER CONTAINER -->
-                <div class="banner-ad-space" id="ad-container">
-                    <div id="ad-video-container">
-                        <!-- Video element with native controls -->
-                        <video id="ad-video" playsinline webkit-playsinline muted controls></video>
-                        <!-- Fallback Play Button in case autoplay is blocked -->
-                        <div class="play-overlay" id="play-overlay">
-                            <i class="fas fa-play-circle"></i>
-                            <span>Play Ad</span>
-                        </div>
-                    </div>
+                <!-- Ad Loading Placeholder (Ads will float at bottom center) -->
+                <div class="ad-placeholder">
+                    <i class="fas fa-play-circle"></i>
+                    <p>Video ad is playing below...</p>
                 </div>
 
                 <!-- TIMER -->
@@ -354,93 +324,7 @@
         startTimer();
 
         /* =========================================================
-           4. GOOGLE IMA VAST AD PLAYER SETUP
-           ========================================================= */
-        const VAST_URL = "https://expensive-pollution.com/d/m.FvzLdVGFNdv/ZEGgUp/JekmB9WujZbUxlxkVPPTKcr1RMJjHk/4zMtT/cptFNXzSU/y/OWT/gCy/MdQv";
-
-        function initVastAd() {
-            const videoElement = document.getElementById('ad-video');
-            const adContainer = document.getElementById('ad-video-container');
-            const playOverlay = document.getElementById('play-overlay');
-
-            // Initialize IMA SDK
-            const adDisplayContainer = new google.ima.AdDisplayContainer(adContainer, videoElement);
-            const adsLoader = new google.ima.AdsLoader(adDisplayContainer);
-
-            adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
-            adsLoader.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError, false);
-
-            function onAdsManagerLoaded(adsManagerLoadedEvent) {
-                const adsManager = adsManagerLoadedEvent.getAdsManager(videoElement);
-
-                // Hide overlay when ad starts
-                adsManager.addEventListener(google.ima.AdEvent.Type.STARTED, () => {
-                    playOverlay.classList.remove('show');
-                });
-
-                // Start the ad
-                try {
-                    adsManager.init(300, 250, google.ima.ViewMode.NORMAL);
-                    adsManager.start();
-                } catch (adError) {
-                    console.log("Error initializing ads manager", adError);
-                    showFallback();
-                }
-            }
-
-            function onAdError(adErrorEvent) {
-                console.log("Ad Error: ", adErrorEvent.getError());
-                showFallback();
-            }
-
-            function showFallback() {
-                // If no ad loads, we just hide the overlay and show a message in the player
-                playOverlay.classList.remove('show');
-                adContainer.innerHTML = '<div style="color:#9CA3AF; font-size:13px; padding:20px; text-align:center; font-weight:600;">No ad available right now. Redirecting soon...</div>';
-            }
-
-            // Setup the request
-            const adsRequest = new google.ima.AdsRequest();
-            adsRequest.adTagUrl = VAST_URL;
-            adsRequest.linearAdSlotWidth = 300;
-            adsRequest.linearAdSlotHeight = 250;
-            adsRequest.nonLinearAdSlotWidth = 300;
-            adsRequest.nonLinearAdSlotHeight = 150;
-
-            adsLoader.requestAds(adsRequest);
-
-            // Handle Autoplay Policy (if blocked, show overlay to click)
-            const playPromise = videoElement.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Autoplay started successfully
-                    playOverlay.classList.remove('show');
-                }).catch(error => {
-                    // Autoplay was prevented, show the play button
-                    console.log("Autoplay blocked. User interaction required.");
-                    playOverlay.classList.add('show');
-                });
-            }
-
-            // When user clicks the overlay, start the ad
-            playOverlay.addEventListener('click', () => {
-                playOverlay.classList.remove('show');
-                videoElement.play();
-                // Initialize container after user interaction
-                adDisplayContainer.initialize(); 
-                adsLoader.requestAds(adsRequest); // Request again after click
-            });
-        }
-
-        // Initialize ad when window loads
-        window.addEventListener('load', () => {
-            // Initialize IMA container early
-            google.ima.AdDisplayContainer.prototype.initialize = function() {};
-            initVastAd();
-        });
-
-        /* =========================================================
-           5. RELATED CONTENT (TMDB via Proxy)
+           4. RELATED CONTENT (TMDB via Proxy)
            ========================================================= */
         async function proxyRequest(endpoint) {
             const url = `${API_BASE}/tmdb-proxy?endpoint=${encodeURIComponent(endpoint)}`;
@@ -562,7 +446,7 @@
         loadRelated();
     </script>
     
-    <!-- Hill Top Ads (Bottom Script) -->
+    <!-- Hill Top Ads (Ye script automatically video ad load karega) -->
     <script>
     (function(fcamb){
     var d = document,
