@@ -1,1 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Loading your content...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
+    <!-- 🛑 MONETAG / ADS SCRIPT HERE 🛑 -->
+    <!-- Put your Monetag meta tag or script here if required -->
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body {
+            background: #08080C; color: #fff; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: flex-start; padding: 30px 16px 60px; text-align: center;
+        }
+
+        .content-box {
+            background: #14141F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+            padding: 24px; max-width: 420px; width: 100%;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.8); position: relative;
+        }
+
+        /* Translate Button */
+        .lang-toggle {
+            position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 10px;
+            border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer;
+            transition: 0.3s; z-index: 10;
+        }
+        .lang-toggle:hover { background: #E50914; border-color: #E50914; }
+
+        /* Official Badge */
+        .official-badge {
+            display: inline-block; background: rgba(34, 197, 94, 0.15); color: #22C55E;
+            border: 1px solid rgba(34, 197, 94, 0.3); padding: 4px 12px; border-radius: 20px;
+            font-size: 11px; font-weight: 800; margin-bottom: 20px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .content-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+        .media-info { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .poster-wrap {
+            width: 120px; height: 180px; margin: 0 auto 14px; border-radius: 10px;
+            overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.6); background: #0a0a0f;
+        }
+        .poster-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        h1 { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #fff; line-height: 1.3; }
+        p.subtitle { font-size: 12px; color: #9CA3AF; margin-bottom: 0; }
+
+        .action-area { display: flex; flex-direction: column; justify-content: center; }
+
+        .instructions-box {
+            background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 10px; padding: 14px; text-align: left; margin-bottom: 20px;
+        }
+        .instructions-box h4 { font-size: 12px; color: #F59E0B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .instructions-box ul { list-style: none; padding-left: 0; }
+        .instructions-box li { font-size: 12px; color: #D1D5DB; margin-bottom: 6px; line-height: 1.4; display: flex; gap: 8px; }
+        .instructions-box li i { color: #E50914; margin-top: 2px; font-size: 10px; }
+
+        .banner-ad-space {
+            width: 100%; height: 60px; background: rgba(255,255,255,0.05);
+            border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px; font-size: 11px; color: #9CA3AF;
+        }
+
+        .btn-primary {
+            width: 100%; height: 50px; border-radius: 30px;
+            background: linear-gradient(135deg, #E50914 0%, #b20710 100%);
+            color: #fff; font-weight: 800; font-size: 14px; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            box-shadow: 0 6px 20px rgba(229,9,20,0.35); transition: 0.3s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(229,9,20,0.5); }
+
+        .timer-text {
+            font-size: 15px; font-weight: 700; color: #F59E0B; display: none;
+            padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        /* Ad Iframe Modal */
+        #ad-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 999999; display: none; flex-direction: column; }
+        #ad-modal.open { display: flex; }
+        .ad-modal-header {
+            padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
+            background: #14141F; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .ad-modal-header span { font-size: 14px; font-weight: 600; color: #9CA3AF; }
+        .close-ad-btn {
+            background: #E50914; color: #fff; border: none; padding: 8px 16px;
+            border-radius: 20px; font-weight: 700; font-size: 13px; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; transition: 0.3s;
+        }
+        .close-ad-btn:hover { background: #b20710; }
+        .ad-iframe-container { flex: 1; width: 100%; height: 100%; position: relative; background: #fff; }
+        .ad-iframe-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+        /* =========================================================
+           EXTRA SECTIONS (Related Content + Blog)
+           ========================================================= */
+        .extra-sections {
+            width: 100%; max-width: 900px; margin-top: 30px;
+        }
+        .section { margin-bottom: 34px; text-align: left; }
+        .section h2 {
+            font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section h2 i { color: #E50914; font-size: 16px; }
+
+        /* Related Grid */
+        .related-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+        }
+        .related-card {
+            background: #14141F; border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px; overflow: hidden; text-decoration: none; color: #fff;
+            transition: 0.3s; display: block;
+        }
+        .related-card:hover {
+            transform: translateY(-4px); border-color: rgba(229,9,20,0.5);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+        }
+        .related-poster {
+            width: 100%; aspect-ratio: 2 / 3; background: #0a0a0f; overflow: hidden;
+        }
+        .related-poster img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform 0.4s;
+        }
+        .related-card:hover .related-poster img { transform: scale(1.05); }
+        .related-title {
+            padding: 8px 10px; font-size: 12px; font-weight: 600; color: #D1D5DB;
+            line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden; min-height: 42px;
+        }
+
+        /* Skeleton */
+        .related-skeleton { background: #14141F; border-radius: 10px; overflow: hidden; }
+        .related-skeleton .sk-poster {
+            width: 100%; aspect-ratio: 2 / 3;
+            background: linear-gradient(90deg, #14141F 0%, #1f1f2e 50%, #14141F 100%);
+            background-size: 200% 100%; animation: sk-shine 1.5s infinite;
+        }
+        .related-skeleton .sk-title {
+            height: 12px; margin: 12px 10px;
+            background: linear-gradient(90deg, #14141F 0%, #1f1f2e 50%, #14141F 100%);
+            background-size: 200% 100%; animation: sk-shine 1.5s infinite; border-radius: 4px;
+        }
+        @keyframes sk-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .no-related {
+            grid-column: 1 / -1; font-size: 13px; color: #9CA3AF; padding: 24px 18px;
+            background: rgba(255,255,255,0.02); border-radius: 10px;
+            border: 1px dashed rgba(255,255,255,0.1); text-align: center; line-height: 1.6;
+        }
+        .no-related i { color: #F59E0B; margin-right: 6px; }
+
+        /* Blog Grid */
+        .blog-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .blog-card {
+            background: #14141F; border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px; padding: 16px; text-decoration: none; color: #fff;
+            transition: 0.3s; display: block; text-align: left;
+        }
+        .blog-card:hover {
+            transform: translateY(-3px); border-color: rgba(229,9,20,0.4);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.5);
+        }
+        .blog-card .blog-tag {
+            display: inline-block; background: rgba(229,9,20,0.15); color: #ff4d5e;
+            font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px;
+            margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.6px;
+        }
+        .blog-card h3 {
+            font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #fff; line-height: 1.4;
+        }
+        .blog-card p { font-size: 12px; color: #9CA3AF; line-height: 1.55; }
+
+        /* =========================================================
+           RESPONSIVE — TABLET & DESKTOP
+           ========================================================= */
+        @media (min-width: 640px) {
+            .related-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        }
+
+        @media (min-width: 768px) {
+            body { padding-top: 45px; }
+            .content-box { max-width: 900px; padding: 40px; }
+            .content-grid { grid-template-columns: 280px 1fr; gap: 40px; align-items: center; text-align: left; }
+            .media-info { align-items: flex-start; }
+            .poster-wrap { width: 100%; max-width: 260px; height: 390px; margin: 0 0 20px 0; }
+            h1 { font-size: 28px; margin-bottom: 10px; }
+            p.subtitle { font-size: 15px; }
+            .instructions-box { padding: 20px; margin-bottom: 24px; }
+            .instructions-box h4 { font-size: 14px; }
+            .instructions-box li { font-size: 14px; margin-bottom: 10px; }
+            .banner-ad-space { height: 90px; margin-bottom: 24px; }
+            .btn-primary { height: 55px; font-size: 16px; }
+            .timer-text { font-size: 18px; padding: 15px; }
+
+            .extra-sections { margin-top: 45px; }
+            .section { margin-bottom: 40px; }
+            .section h2 { font-size: 21px; margin-bottom: 18px; }
+            .related-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; }
+            .related-title { font-size: 13px; padding: 10px 12px; min-height: 46px; }
+            .blog-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+            .blog-card { padding: 20px; }
+            .blog-card h3 { font-size: 15px; }
+            .blog-card p { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+ads
+</body>
+</html>
