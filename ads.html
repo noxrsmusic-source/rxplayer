@@ -11,14 +11,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        /* Body me bottom padding badha di hai taaki ad footer ya content ko na dhake */
         body {
             background: #08080C; color: #fff; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
             justify-content: flex-start; padding: 30px 16px 120px; text-align: center;
         }
 
-        /* ✅ Ad Network ke floating video ad ko BOTTOM CENTER me fix karne ke liye CSS */
+        /* ✅ Floating Video Ad ko BOTTOM CENTER me rakhne ke liye */
         iframe[style*="position: fixed"], 
         div[style*="position: fixed"], 
         ins[style*="position: fixed"],
@@ -28,7 +27,7 @@
             left: 50% !important;
             right: auto !important;
             transform: translateX(-50%) !important;
-            bottom: 10px !important;   /* Ad niche rahega */
+            bottom: 10px !important;   
             top: auto !important;
             z-index: 9999999 !important;
         }
@@ -54,6 +53,7 @@
             text-transform: uppercase; letter-spacing: 0.5px;
         }
 
+        /* Grid Layout */
         .content-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 
         .media-info { display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -65,9 +65,13 @@
         h1 { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #fff; line-height: 1.3; }
         p.subtitle { font-size: 12px; color: #9CA3AF; margin-bottom: 0; }
 
-        .action-area { display: flex; flex-direction: column; justify-content: center; }
+        /* ✅ Action Area (Isse PC par layout bigad raha tha) */
+        .action-area { 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; 
+        }
 
         .instructions-box {
+            width: 100%;
             background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15);
             border-radius: 10px; padding: 14px; text-align: left; margin-bottom: 20px;
         }
@@ -76,7 +80,20 @@
         .instructions-box li { font-size: 12px; color: #D1D5DB; margin-bottom: 6px; line-height: 1.4; display: flex; gap: 8px; }
         .instructions-box li i { color: #E50914; margin-top: 2px; font-size: 10px; }
 
-        /* ✅ FIXED AD PLACEHOLDER (UI Break Rokne Ke Liye) */
+        /* ✅ TIMER (Center me rahega) */
+        .timer-text {
+            width: 100%; max-width: 350px; /* PC par bahut zyada wide nahi hoga */
+            font-size: 16px; font-weight: 800; color: #F59E0B; display: block;
+            padding: 15px; background: #1a1408; 
+            border-radius: 8px;
+            border: 1px solid #F59E0B;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+            position: relative;
+            z-index: 99999;
+            text-align: center; margin-bottom: 20px;
+        }
+
+        /* ✅ AD PLACEHOLDER (Mobile me space cover karega) */
         .ad-placeholder {
             width: 100%; 
             height: 200px;
@@ -87,18 +104,6 @@
             margin-bottom: 20px; padding: 0;
             overflow: hidden;
             position: relative;
-        }
-
-        /* ✅ TIMER FIX (Hamesha Upar Dikhega) */
-        .timer-text {
-            font-size: 16px; font-weight: 800; color: #F59E0B; display: block;
-            padding: 15px; background: #1a1408; 
-            border-radius: 8px;
-            border: 1px solid #F59E0B;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-            position: relative;
-            z-index: 99999;
-            text-align: center;
         }
 
         .extra-sections { width: 100%; max-width: 900px; margin-top: 30px; }
@@ -134,20 +139,24 @@
             .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
         }
 
+        /* ✅ PC VIEW FIX */
         @media (min-width: 768px) {
-            body { padding-top: 45px; padding-bottom: 150px; /* Desktop pe ad ke liye space */ }
+            body { padding-top: 45px; padding-bottom: 150px; }
             .content-box { max-width: 900px; padding: 40px; }
             .content-grid { grid-template-columns: 280px 1fr; gap: 40px; align-items: center; text-align: left; }
             .media-info { align-items: flex-start; }
             .poster-wrap { width: 100%; max-width: 260px; height: 390px; margin: 0 0 20px 0; }
             h1 { font-size: 28px; margin-bottom: 10px; }
             p.subtitle { font-size: 15px; }
+            
             .instructions-box { padding: 20px; margin-bottom: 24px; }
             .instructions-box h4 { font-size: 14px; }
             .instructions-box li { font-size: 14px; margin-bottom: 10px; }
             
-            .ad-placeholder { height: 250px; margin-bottom: 24px; }
-            .timer-text { font-size: 18px; padding: 15px; }
+            /* Ad box PC pe hide kar denge kyunki ad floating aayega, taaki khali box na dikhe */
+            .ad-placeholder { display: none; } 
+            
+            .timer-text { font-size: 18px; padding: 18px; margin-bottom: 0; max-width: 400px; }
 
             .extra-sections { margin-top: 45px; }
             .section { margin-bottom: 40px; }
@@ -168,6 +177,7 @@
         <div class="official-badge" data-i18n="official_page">Official Ads Page</div>
 
         <div class="content-grid">
+            <!-- Left Column: Poster -->
             <div class="media-info">
                 <div class="poster-wrap">
                     <img id="poster-img" src="https://placehold.co/300x450/14141F/666?text=Loading" alt="Poster">
@@ -175,11 +185,23 @@
                 <h1 id="media-title">Loading Title...</h1>
                 <p class="subtitle" id="media-subtitle">Preparing your content...</p>
             </div>
-                <!-- TIMER -->
+
+            <!-- Right Column: Action Area (Jo pehle toot gaya tha) -->
+            <div class="action-area">
+                
+                <div class="instructions-box">
+                    <h4 data-i18n="instructions_title">How to proceed:</h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step1">1. Please wait for the video ad to play.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step2">2. Do not refresh or close this page.</span></li>
+                        <li><i class="fas fa-circle"></i> <span data-i18n="step3">3. You will be redirected automatically.</span></li>
+                    </ul>
+                </div>
+
+                <!-- TIMER (Yaha set kiya hai) -->
                 <div id="timer-text" class="timer-text">
                     <i class="fas fa-clock"></i> <span id="timer-message">Redirecting in 30 seconds...</span>
                 </div>
-
 
                 <!-- AD CONTAINER -->
                 <div class="ad-placeholder">
@@ -196,7 +218,6 @@
                     })({})
                     </script>
                 </div>
-
 
             </div>
         </div>
