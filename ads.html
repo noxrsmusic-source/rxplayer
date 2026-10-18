@@ -10,13 +10,15 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        /* Body me bottom padding badha di hai taaki ad footer ya content ko na dhake */
         body {
             background: #08080C; color: #fff; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-start; padding: 30px 16px 60px; text-align: center;
+            justify-content: flex-start; padding: 30px 16px 120px; text-align: center;
         }
 
-        /* Ad Network ke floating iframe ko center me laane ke liye CSS Hack */
+        /* ✅ Ad Network ke floating video ad ko BOTTOM CENTER me fix karne ke liye CSS */
         iframe[style*="position: fixed"], 
         div[style*="position: fixed"], 
         ins[style*="position: fixed"],
@@ -26,7 +28,8 @@
             left: 50% !important;
             right: auto !important;
             transform: translateX(-50%) !important;
-            bottom: 0px !important;
+            bottom: 10px !important;   /* Ad niche rahega */
+            top: auto !important;
             z-index: 9999999 !important;
         }
 
@@ -76,25 +79,25 @@
         /* ✅ FIXED AD PLACEHOLDER (UI Break Rokne Ke Liye) */
         .ad-placeholder {
             width: 100%; 
-            height: 250px; /* Fixed Height taaki UI na bigde */
-            background: #000;
+            height: 200px;
+            background: rgba(255,255,255,0.02);
             border: 1px dashed rgba(255,255,255,0.15); 
             border-radius: 8px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             margin-bottom: 20px; padding: 0;
-            overflow: hidden; /* Ad box se bahar nahi niklega */
+            overflow: hidden;
             position: relative;
         }
 
         /* ✅ TIMER FIX (Hamesha Upar Dikhega) */
         .timer-text {
             font-size: 16px; font-weight: 800; color: #F59E0B; display: block;
-            padding: 15px; background: #1a1408; /* Solid dark background */
+            padding: 15px; background: #1a1408; 
             border-radius: 8px;
             border: 1px solid #F59E0B;
             box-shadow: 0 10px 25px rgba(0,0,0,0.9);
             position: relative;
-            z-index: 99999; /* Ad ke upar dikhne ke liye */
+            z-index: 99999;
             text-align: center;
         }
 
@@ -132,7 +135,7 @@
         }
 
         @media (min-width: 768px) {
-            body { padding-top: 45px; }
+            body { padding-top: 45px; padding-bottom: 150px; /* Desktop pe ad ke liye space */ }
             .content-box { max-width: 900px; padding: 40px; }
             .content-grid { grid-template-columns: 280px 1fr; gap: 40px; align-items: center; text-align: left; }
             .media-info { align-items: flex-start; }
@@ -143,7 +146,6 @@
             .instructions-box h4 { font-size: 14px; }
             .instructions-box li { font-size: 14px; margin-bottom: 10px; }
             
-            /* Desktop me bhi ad box fix rahega */
             .ad-placeholder { height: 250px; margin-bottom: 24px; }
             .timer-text { font-size: 18px; padding: 15px; }
 
@@ -184,7 +186,7 @@
                     </ul>
                 </div>
 
-                <!-- AD CONTAINER (Now fixed with height & overflow hidden) -->
+                <!-- AD CONTAINER -->
                 <div class="ad-placeholder">
                     <script>
                     (function(mapa){
@@ -200,7 +202,7 @@
                     </script>
                 </div>
 
-                <!-- TIMER (Now with z-index and solid background to stay on top) -->
+                <!-- TIMER -->
                 <div id="timer-text" class="timer-text">
                     <i class="fas fa-clock"></i> <span id="timer-message">Redirecting in 30 seconds...</span>
                 </div>
