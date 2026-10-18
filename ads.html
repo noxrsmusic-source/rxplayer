@@ -67,17 +67,81 @@
             text-align: center; margin-bottom: 20px;
         }
 
-        /* ✅ AD PLACEHOLDER (Banner Ad ke liye jagah) */
+        /* ✅ AD PLACEHOLDER (Banner Ad + Skip Button) */
         .ad-placeholder {
             width: 100%; 
-            min-height: 250px; /* Banner Ads ke liye fix space */
+            min-height: 250px; 
             background: rgba(255,255,255,0.02);
             border: 1px dashed rgba(255,255,255,0.15); 
             border-radius: 8px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-bottom: 10px; padding: 10px;
+            margin-bottom: 10px; padding: 20px;
             overflow: hidden;
             position: relative;
+            gap: 15px;
+        }
+
+        /* Ad Label */
+        .ad-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 10px;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        /* Telegram Banner Style */
+        .telegram-banner {
+            background: linear-gradient(135deg, #0088cc 0%, #005f8c 100%);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 15px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 90%;
+            max-width: 300px;
+            z-index: 2;
+        }
+        .telegram-banner:hover { 
+            transform: translateY(-2px) scale(1.02); 
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.6);
+        }
+        .telegram-banner i { font-size: 22px; }
+
+        /* Fake Skip Ad Button */
+        .fake-skip-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+            z-index: 2;
+        }
+        .fake-skip-btn:hover {
+            background: rgba(229, 9, 20, 0.9);
+            border-color: #E50914;
+            transform: scale(1.05);
         }
 
         .extra-sections { width: 100%; max-width: 900px; margin-top: 30px; }
@@ -166,7 +230,17 @@
 
                 <!-- ✅ BANNER AD CONTAINER -->
                 <div class="ad-placeholder">
+                    <span class="ad-label">Advertisement</span>
 
+                    <!-- Telegram Banner Link -->
+                    <a href="https://t.me/rxplayer" target="_blank" class="telegram-banner">
+                        <i class="fab fa-telegram-plane"></i> Join our Telegram
+                    </a>
+
+                    <!-- Fake Skip Ad Button -->
+                    <a href="https://uplcm.com/4/12062803" target="_blank" class="fake-skip-btn">
+                        Skip Ad <i class="fas fa-times"></i>
+                    </a>
                 </div>
 
             </div>
