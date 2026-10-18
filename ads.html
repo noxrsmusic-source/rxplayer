@@ -329,11 +329,8 @@
         /* =========================================================
            1. CONFIG
            ========================================================= */
-        // Get a free TMDB API key: https://www.themoviedb.org/settings/api
-        // Leave as-is to disable related content (it will show a friendly message).
-        const TMDB_API_KEY = 'YOUR_TMDB_API_KEY_HERE';
-
-        // Your live site base URL (redirects)
+        // ✅ TMDB ab aapke existing Vercel proxy se aayega (same as main site)
+        const API_BASE = '/api';
         const BASE_URL = 'https://rxplayer-indol.vercel.app';
 
         /* =========================================================
@@ -469,8 +466,20 @@
         }
 
         /* =========================================================
-           6. RELATED CONTENT (TMDB)
+           6. RELATED CONTENT (TMDB via Proxy — same as main site)
            ========================================================= */
+
+        // ✅ Proxy request helper (matches main site's rxPlayerApp.request())
+        async function proxyRequest(endpoint) {
+            const url = `${API_BASE}/tmdb-proxy?endpoint=${encodeURIComponent(endpoint)}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (!res.ok || data.success === false) {
+                throw new Error((data && data.error) || 'Proxy request failed');
+            }
+            return data;
+        }
+
         function escapeHtml(str) {
             if (str == null) return '';
             return String(str).replace(/[&<>"']/g, function (c) {
@@ -486,7 +495,7 @@
             if (item.poster_path) {
                 p.set('poster', `https://image.tmdb.org/t/p/w300${item.poster_path}`);
             }
-            if (action) p.set('action', action);
+            if (action) p.set('action', action);   // ✅ preserve watch/download flow
             if (mediaType === 'tv') {
                 p.set('season', '1');
                 p.set('episode', '1');
@@ -494,16 +503,38 @@
             return `${window.location.pathname}?${p.toString()}`;
         }
 
+        // ✅ Interleave + dedupe helper
+        function mergeUnique(listA, listB, limit) {
+            const seen = new Set();
+            const out = [];
+            const maxLen = Math.max(listA.length, listB.length);
+            for (let i = 0; i < maxLen; i++) {
+                if (listA[i] && listA[i].poster_path && !seen.has(listA[i].id)) {
+                    seen.add(listA[i].id);
+                    out.push(listA[i]);
+                    if (out.length >= limit) break;
+                }
+                if (listB[i] && listB[i].poster_path && !seen.has(listB[i].id)) {
+                    seen.add(listB[i].id);
+                    out.push(listB[i]);
+                    if (out.length >= limit) break;
+                }
+            }
+            return out;
+        }
+
         async function loadRelated() {
             const grid = document.getElementById('related-grid');
             if (!grid) return;
 
-            if (!id || (type !== 'movie' && type !== 'tv')) {
+            // Validate: must have numeric ID + valid type for TMDB
+            const numericId = id !== null && id !== '' && !isNaN(Number(id));
+            if (!numericId || (type !== 'movie' && type !== 'tv')) {
                 grid.innerHTML = '<p class="no-related"><i class="fas fa-info-circle"></i> Select a movie or series to see related content.</p>';
                 return;
             }
 
-            // Show skeletons while loading
+            // Skeleton loading
             grid.innerHTML = Array(6).fill(0).map(() => `
                 <div class="related-skeleton">
                     <div class="sk-poster"></div>
@@ -511,16 +542,34 @@
                 </div>
             `).join('');
 
-            if (!TMDB_API_KEY || TMDB_API_KEY === 'YOUR_TMDB_API_KEY_HERE') {
-                grid.innerHTML = '<p class="no-related"><i class="fas fa-key"></i> Related content is not configured yet. Add your free TMDB API key in the code to enable it.</p>';
-                return;
-            }
-
             try {
-                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/similar?api_key=${TMDB_API_KEY}&language=en-US&page=1`);
-                if (!res.ok) throw new Error('Fetch failed');
-                const data = await res.json();
-                const items = (data.results || []).filter(i => i.poster_path).slice(0, 6);
+                // Fetch similar + recommendations in parallel
+                const [similarRes, recRes] = await Promise.all([
+                    proxyRequest(`/${type}/${id}/similar?language=en-US&page=1`).catch(() => ({ results: [] })),
+                    proxyRequest(`/${type}/${id}/recommendations?language=en-US&page=1`).catch(() => ({ results: [] }))
+                ]);
+
+                const similar = (similarRes.results || [])
+                    .filter(i => i.poster_path)
+                    .map(i => ({ ...i, media_type: i.media_type || type }));
+
+                const recommendations = (recRes.results || [])
+                    .filter(i => i.poster_path)
+                    .map(i => ({ ...i, media_type: i.media_type || type }));
+
+                // Merge: recommendations first (usually more relevant), then similar
+                let items = mergeUnique(recommendations, similar, 6);
+
+                // Fallback if both empty → try popular of same type
+                if (items.length === 0) {
+                    const fallback = await proxyRequest(
+                        `/${type}/popular?language=en-US&page=1`
+                    ).catch(() => ({ results: [] }));
+                    items = (fallback.results || [])
+                        .filter(i => i.poster_path)
+                        .slice(0, 6)
+                        .map(i => ({ ...i, media_type: type }));
+                }
 
                 if (items.length === 0) {
                     grid.innerHTML = '<p class="no-related"><i class="fas fa-search"></i> No related titles found.</p>';
@@ -530,7 +579,7 @@
                 grid.innerHTML = items.map(item => {
                     const t = item.title || item.name || 'Untitled';
                     const p = `https://image.tmdb.org/t/p/w300${item.poster_path}`;
-                    const u = buildRelatedUrl(item, type);
+                    const u = buildRelatedUrl(item, item.media_type);
                     return `
                         <a href="${u}" class="related-card">
                             <div class="related-poster">
@@ -540,7 +589,9 @@
                         </a>
                     `;
                 }).join('');
+
             } catch (err) {
+                console.warn('loadRelated failed:', err);
                 grid.innerHTML = '<p class="no-related"><i class="fas fa-exclamation-triangle"></i> Could not load related content. Please try again later.</p>';
             }
         }
