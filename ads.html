@@ -293,21 +293,6 @@
                     <h3>Best TV Series to Binge This Month</h3>
                     <p>Bored? Here are the top binge-worthy series that everyone is talking about right now.</p>
                 </a>
-                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
-                    <span class="blog-tag">Tips</span>
-                    <h3>Streaming Tips: Save Data While Watching</h3>
-                    <p>Don't burn through your data plan — follow these simple tips to watch more, spend less.</p>
-                </a>
-                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
-                    <span class="blog-tag">News</span>
-                    <h3>New Releases Added Weekly</h3>
-                    <p>We're constantly updating our library — stay tuned to see what's coming next week.</p>
-                </a>
-                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
-                    <span class="blog-tag">Feature</span>
-                    <h3>Behind the Scenes: How We Pick Content</h3>
-                    <p>Ever wondered how your favourite titles end up here? Get a peek behind the curtain.</p>
-                </a>
             </div>
         </div>
     </div>
@@ -329,8 +314,8 @@
         /* =========================================================
            1. CONFIG
            ========================================================= */
-        // ✅ TMDB ab aapke existing Vercel proxy se aayega (same as main site)
-        const API_BASE = '/api';
+        // ✅ IMPORTANT: Fixed API Base URL to absolute Vercel URL to avoid CORS/404 
+        const API_BASE = 'https://rxplayer-indol.vercel.app/api';
         const BASE_URL = 'https://rxplayer-indol.vercel.app';
 
         /* =========================================================
@@ -466,17 +451,15 @@
         }
 
         /* =========================================================
-           6. RELATED CONTENT (TMDB via Proxy — same as main site)
+           6. RELATED CONTENT (TMDB via Proxy)
            ========================================================= */
 
-        // ✅ Proxy request helper (matches main site's rxPlayerApp.request())
         async function proxyRequest(endpoint) {
             const url = `${API_BASE}/tmdb-proxy?endpoint=${encodeURIComponent(endpoint)}`;
             const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
             const data = await res.json();
-            if (!res.ok || data.success === false) {
-                throw new Error((data && data.error) || 'Proxy request failed');
-            }
+            if (data.success === false) throw new Error(data.error || 'API returned success=false');
             return data;
         }
 
@@ -495,7 +478,7 @@
             if (item.poster_path) {
                 p.set('poster', `https://image.tmdb.org/t/p/w300${item.poster_path}`);
             }
-            if (action) p.set('action', action);   // ✅ preserve watch/download flow
+            if (action) p.set('action', action);
             if (mediaType === 'tv') {
                 p.set('season', '1');
                 p.set('episode', '1');
@@ -503,7 +486,6 @@
             return `${window.location.pathname}?${p.toString()}`;
         }
 
-        // ✅ Interleave + dedupe helper
         function mergeUnique(listA, listB, limit) {
             const seen = new Set();
             const out = [];
@@ -527,10 +509,10 @@
             const grid = document.getElementById('related-grid');
             if (!grid) return;
 
-            // Validate: must have numeric ID + valid type for TMDB
+            // Validate ID
             const numericId = id !== null && id !== '' && !isNaN(Number(id));
             if (!numericId || (type !== 'movie' && type !== 'tv')) {
-                grid.innerHTML = '<p class="no-related"><i class="fas fa-info-circle"></i> Select a movie or series to see related content.</p>';
+                grid.innerHTML = '<p class="no-related"><i class="fas fa-info-circle"></i> Invalid content ID or type.</p>';
                 return;
             }
 
@@ -543,30 +525,28 @@
             `).join('');
 
             try {
-                // Fetch similar + recommendations in parallel
+                console.log(`Fetching related for ${type} ID: ${id}...`);
+                
                 const [similarRes, recRes] = await Promise.all([
-                    proxyRequest(`/${type}/${id}/similar?language=en-US&page=1`).catch(() => ({ results: [] })),
-                    proxyRequest(`/${type}/${id}/recommendations?language=en-US&page=1`).catch(() => ({ results: [] }))
+                    proxyRequest(`/${type}/${id}/similar?language=en-US&page=1`).catch(e => { console.warn('Similar failed:', e.message); return { results: [] }; }),
+                    proxyRequest(`/${type}/${id}/recommendations?language=en-US&page=1`).catch(e => { console.warn('Recs failed:', e.message); return { results: [] }; })
                 ]);
 
                 const similar = (similarRes.results || [])
-                    .filter(i => i.poster_path)
+                    .filter(i => i.poster_path && String(i.id) !== String(id)) // Exclude current item
                     .map(i => ({ ...i, media_type: i.media_type || type }));
 
                 const recommendations = (recRes.results || [])
-                    .filter(i => i.poster_path)
+                    .filter(i => i.poster_path && String(i.id) !== String(id))
                     .map(i => ({ ...i, media_type: i.media_type || type }));
 
-                // Merge: recommendations first (usually more relevant), then similar
                 let items = mergeUnique(recommendations, similar, 6);
 
-                // Fallback if both empty → try popular of same type
                 if (items.length === 0) {
-                    const fallback = await proxyRequest(
-                        `/${type}/popular?language=en-US&page=1`
-                    ).catch(() => ({ results: [] }));
+                    console.log("No similar/recs found, fetching fallback popular...");
+                    const fallback = await proxyRequest(`/${type}/popular?language=en-US&page=1`).catch(() => ({ results: [] }));
                     items = (fallback.results || [])
-                        .filter(i => i.poster_path)
+                        .filter(i => i.poster_path && String(i.id) !== String(id))
                         .slice(0, 6)
                         .map(i => ({ ...i, media_type: type }));
                 }
@@ -591,8 +571,9 @@
                 }).join('');
 
             } catch (err) {
-                console.warn('loadRelated failed:', err);
-                grid.innerHTML = '<p class="no-related"><i class="fas fa-exclamation-triangle"></i> Could not load related content. Please try again later.</p>';
+                console.error('Related fetch error:', err);
+                // 🛑 Show the actual error in UI for debugging
+                grid.innerHTML = `<p class="no-related"><i class="fas fa-exclamation-triangle"></i> Error loading content: ${escapeHtml(err.message || 'Network failed')}</p>`;
             }
         }
 
