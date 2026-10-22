@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Download RX Player APP - Landing</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* =========================================================
+           🎬 CINEMATIC BACKGROUND
+           ========================================================= */
+        .bg-wrapper {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0.12;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .scroll-column { display: flex; flex-direction: column; gap: 12px; width: 25%; will-change: transform; }
+        @media (min-width: 768px) { .scroll-column { width: 15%; } }
+        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(calc(-50% - 6px)); } }
+        .col-1 { animation: scrollUp 40s linear infinite; }
+        .col-2 { animation: scrollUp 50s linear infinite; }
+        .col-3 { animation: scrollUp 45s linear infinite; }
+        .poster-card { border-radius: 12px; overflow: hidden; aspect-ratio: 2 / 3; background: #1c1c1e; flex-shrink: 0; }
+        .poster-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .bg-overlay {
+            position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(5,5,5,0.6) 0%, #050505 100%);
+            z-index: 2; pointer-events: none;
+        }
+
+        /* =========================================================
+           📱 MAIN CARD
+           ========================================================= */
+        .landing-card {
+            background: rgba(15, 15, 18, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 35px 25px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            animation: cardIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes cardIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .landing-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, #E50914, transparent);
+        }
+
+        /* App Icon Base (Shared between views) */
+        .app-icon-wrapper {
+            position: relative; width: 110px; height: 110px; margin: 0 auto 15px;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .app-icon-wrapper::after {
+            content: ''; position: absolute; inset: -10px;
+            background: radial-gradient(circle, rgba(229, 9, 20, 0.4) 0%, transparent 60%);
+            z-index: -1; border-radius: 50%; filter: blur(10px);
+        }
+        .app-icon {
+            width: 100%; height: 100%; border-radius: 24px; background: #1c1c1e;
+            border: 1px solid rgba(255, 255, 255, 0.15); overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+        .app-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+        .app-title {
+            font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .app-title .rx { color: #E50914; }
+        .app-title .player { color: #fff; font-weight: 300; }
+
+        /* =========================================================
+           🔄 VIEW SWITCHING LOGIC
+           ========================================================= */
+        .view-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .view {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .view.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           📱 PLATFORM SELECTION VIEW (Screen 1)
+           ========================================================= */
+        .platform-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .platform-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .platform-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Android Highlight (Primary) */
+        .platform-btn.android {
+            background: rgba(229, 9, 20, 0.1);
+            border-color: rgba(229, 9, 20, 0.4);
+        }
+        .platform-btn.android:hover {
+            background: rgba(229, 9, 20, 0.15);
+            border-color: #E50914;
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.2);
+        }
+
+        .platform-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .platform-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .platform-btn.android .platform-icon { background: #E50914; color: #fff; }
+        
+        .platform-text {
+            text-align: left;
+        }
+        .platform-text h4 {
+            font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px;
+        }
+        .platform-text p {
+            font-size: 11px; font-weight: 500; color: #9CA3AF;
+        }
+
+        .platform-arrow {
+            color: #6B7280;
+            transition: transform 0.3s;
+        }
+        .platform-btn:hover .platform-arrow {
+            transform: translateX(5px);
+            color: #fff;
+        }
+
+        /* =========================================================
+           🍏 ANDROID DETAILS VIEW (Screen 2)
+           ========================================================= */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #9CA3AF;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+        .specs-row {
+            display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .spec-badge {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+            color: #D1D5DB; display: flex; align-items: center; gap: 6px;
+        }
+        .spec-badge i { color: #E50914; }
+
+        .instructions-box {
+            text-align: left; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px;
+            padding: 18px; margin-bottom: 20px;
+        }
+        .instructions-box h3 {
+            font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 12px;
+            text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;
+        }
+        .instructions-box h3 i { color: #E50914; }
+        
+        .step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+        .step:last-child { margin-bottom: 0; }
+        .step-num {
+            background: rgba(229, 9, 20, 0.15); color: #ff4d5e; width: 20px; height: 20px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 800; flex-shrink: 0; margin-top: 1px;
+        }
+        .step-text { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
+        .step-text strong { color: #E5E7EB; }
+
+        .btn-continue {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px 24px; background: linear-gradient(135deg, #E50914 0%, #b20710 100%);
+            color: #ffffff; text-decoration: none; border-radius: 50px; font-size: 15px;
+            font-weight: 900; border: none; cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4); transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-continue:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(229, 9, 20, 0.7); }
+        .btn-continue::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg); animation: shine 3s infinite;
+        }
+        @keyframes shine { 0% { transform: translateX(-100%) rotate(45deg); } 20%, 100% { transform: translateX(100%) rotate(45deg); } }
+
+        /* =========================================================
+           🔔 COMING SOON TOAST (Popup)
+           ========================================================= */
+        .toast-overlay {
+            position: absolute; inset: 0; background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(5px); z-index: 50; border-radius: 24px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: 0.3s ease;
+        }
+        .toast-overlay.show {
+            opacity: 1; pointer-events: auto;
+        }
+
+        .toast-content {
+            background: #1c1c22; border: 1px solid rgba(255,255,255,0.1);
+            padding: 25px 30px; border-radius: 20px; text-align: center;
+            transform: scale(0.8); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+        .toast-overlay.show .toast-content {
+            transform: scale(1);
+        }
+
+        .toast-icon {
+            font-size: 40px; color: #F59E0B; margin-bottom: 15px;
+            animation: pulseWarn 2s infinite;
+        }
+        @keyframes pulseWarn {
+            0% { transform: scale(1); text-shadow: 0 0 0 rgba(245, 158, 11, 0.5); }
+            50% { transform: scale(1.1); text-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+            100% { transform: scale(1); text-shadow: 0 0 0 rgba(245, 158, 11, 0.5); }
+        }
+
+        .toast-content h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+        .toast-content p { font-size: 13px; color: #9CA3AF; margin-bottom: 20px; }
+        
+        .btn-toast-close {
+            background: rgba(255,255,255,0.1); color: #fff; border: none;
+            padding: 8px 24px; border-radius: 20px; font-size: 13px; font-weight: 700;
+            cursor: pointer; transition: 0.2s;
+        }
+        .btn-toast-close:hover { background: rgba(255,255,255,0.2); }
+
+        .back-link {
+            margin-top: 20px; display: inline-flex; align-items: center; gap: 6px;
+            color: #6B7280; text-decoration: none; font-size: 13px; font-weight: 600; transition: color 0.2s;
+        }
+        .back-link:hover { color: #ffffff; }
+
+    </style>
+</head>
+<body>
+
+    <!-- 🎬 Background Scrolling Posters -->
+    <div class="bg-wrapper">
+        <div class="scroll-column col-1">
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMTk2ZmFhYjctYWZiYy00N2IxLWEzMWItZGRiMDY4ZDQwZWFlXkEyXkFqcGc@._V1_QL75_UY281_CR11,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BOWNjYWM3NWItOGE0ZS00MWRjLThiZWEtYjc4ZmNmMmU5ZTVmXkEyXkFqcGc@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+        </div>
+        <div class="scroll-column col-2">
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMGUzOWE4NDItNzAxYy00M2VkLWFiNDEtNjczZTQ2Nzg5YmVhXkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BYmEzYTQ2OTEtMGM4MS00MWE1LWI3MGYtMTIyN2IwYzlkYmI0XkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+        </div>
+        <div class="scroll-column col-3">
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMWU1OGEwNmQtNGM3MS00YTYyLThmYmMtN2FjYzQzNzNmNTE0XkEyXkFqcGc@._V1_QL75_UX190_CR0,2,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BOWNjYWM3NWItOGE0ZS00MWRjLThiZWEtYjc4ZmNmMmU5ZTVmXkEyXkFqcGc@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+        </div>
+    </div>
+    
+    <div class="bg-overlay"></div>
+
+    <!-- 📱 Main Landing Card -->
+    <div class="landing-card">
+        
+        <!-- App Icon Base -->
+        <div class="app-icon-wrapper">
+            <div class="app-icon">
+                <img src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg" alt="RX Player App">
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h1 class="app-title"><span class="rx">RX</span><span class="player">PLAYER</span> APP</h1>
+
+        <div class="view-container">
+            
+            <!-- ========================================== -->
+            <!-- SCREEN 1: PLATFORM SELECTION -->
+            <!-- ========================================== -->
+            <div id="view-selection" class="view active">
+                <p style="font-size: 13px; color: #9CA3AF; font-weight: 600; margin-bottom: 20px;">Select your platform to download</p>
+                
+                <div class="platform-selector">
+                    <!-- Android Button -->
+                    <div class="platform-btn android" onclick="showAndroidView()">
+                        <div class="platform-info">
+                            <div class="platform-icon"><i class="fab fa-android"></i></div>
+                            <div class="platform-text">
+                                <h4>Android</h4>
+                                <p>v1.1.0 • 25 MB</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right platform-arrow"></i>
+                    </div>
+
+                    <!-- iOS Button -->
+                    <div class="platform-btn" onclick="showComingSoon()">
+                        <div class="platform-info">
+                            <div class="platform-icon" style="color: #fff;"><i class="fab fa-apple"></i></div>
+                            <div class="platform-text">
+                                <h4>iOS</h4>
+                                <p>Coming Soon</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-lock platform-arrow" style="font-size: 12px;"></i>
+                    </div>
+
+                    <!-- Windows Button -->
+                    <div class="platform-btn" onclick="showComingSoon()">
+                        <div class="platform-info">
+                            <div class="platform-icon" style="color: #fff;"><i class="fab fa-windows"></i></div>
+                            <div class="platform-text">
+                                <h4>Windows</h4>
+                                <p>Coming Soon</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-lock platform-arrow" style="font-size: 12px;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- SCREEN 2: ANDROID DETAILS -->
+            <!-- ========================================== -->
+            <div id="view-android" class="view">
+                <div style="text-align: left;">
+                    <button class="back-btn" onclick="showSelectionView()">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </div>
+
+                <div class="specs-row">
+                    <span class="spec-badge"><i class="fas fa-code-branch"></i> v1.1.0</span>
+                    <span class="spec-badge"><i class="fas fa-hdd"></i> 25 MB</span>
+                    <span class="spec-badge"><i class="fab fa-android"></i> Android 6.0+</span>
+                </div>
+
+                <div class="instructions-box">
+                    <h3><i class="fas fa-info-circle"></i> How to Download?</h3>
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-text">Click on the <strong>"Continue to Download"</strong> button below.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-text">You will be redirected. Please <strong>wait for 20 seconds</strong>.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-text">After the timer ends, click on <strong>"Download APP Now"</strong>.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-text">Allow <strong>"Install from Unknown Sources"</strong> if asked.</div>
+                    </div>
+                </div>
+
+                <a href="appads.html" class="btn-continue">
+                    Continue to Download <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Back Link -->
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <!-- ========================================== -->
+        <!-- COMING SOON OVERLAY POPUP -->
+        <!-- ========================================== -->
+        <div id="coming-soon-overlay" class="toast-overlay">
+            <div class="toast-content">
+                <div class="toast-icon"><i class="fas fa-tools"></i></div>
+                <h3>We're Working On It!</h3>
+                <p>iOS and Windows versions are currently in development.<br>Stay tuned for updates.</p>
+                <button class="btn-toast-close" onclick="closeComingSoon()">Got It</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS Logic for View Switching -->
+    <script>
+        const viewSelection = document.getElementById('view-selection');
+        const viewAndroid = document.getElementById('view-android');
+        const comingSoonOverlay = document.getElementById('coming-soon-overlay');
+
+        // Show Android Details
+        function showAndroidView() {
+            viewSelection.classList.remove('active');
+            setTimeout(() => {
+                viewSelection.style.display = 'none';
+                viewAndroid.style.display = 'block';
+                // Trigger reflow to restart animation
+                void viewAndroid.offsetWidth; 
+                viewAndroid.classList.add('active');
+            }, 300); // Matches CSS transition time
+        }
+
+        // Show Selection (Back button)
+        function showSelectionView() {
+            viewAndroid.classList.remove('active');
+            setTimeout(() => {
+                viewAndroid.style.display = 'none';
+                viewSelection.style.display = 'block';
+                void viewSelection.offsetWidth;
+                viewSelection.classList.add('active');
+            }, 300);
+        }
+
+        // Show Coming Soon Popup
+        function showComingSoon() {
+            comingSoonOverlay.classList.add('show');
+        }
+
+        // Close Coming Soon Popup
+        function closeComingSoon() {
+            comingSoonOverlay.classList.remove('show');
+        }
+    </script>
+</body>
+</html>
