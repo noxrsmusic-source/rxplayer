@@ -18,10 +18,11 @@
     <meta property="og:title" content="RX Player - Official Streaming App">
     <meta property="og:image" content="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg">
 
-    <!-- External Fonts -->
+    <!-- External Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
@@ -39,6 +40,18 @@
         .navbar .logo .rx { color: #e50914; }
         .navbar .logo .player { color: #fff; font-weight: 300; }
         
+        /* Hamburger Menu Button */
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 102;
+            padding: 5px;
+        }
+
         .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a { color: #e5e7eb; text-decoration: none; font-size: 12px; font-weight: 700; transition: color 0.2s; }
         .nav-links a:hover { color: #e50914; }
@@ -49,7 +62,49 @@
         }
         .btn-download-nav:hover { transform: scale(1.05); background: #b20710; }
 
-        @media (max-width: 768px) { .nav-links { display: none; } }
+        /* Mobile Navbar CSS */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 15, 18, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            }
+
+            .nav-links a {
+                font-size: 14px;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                border-radius: 8px;
+                background: rgba(255,255,255,0.03);
+            }
+
+            .nav-links a:hover {
+                background: rgba(255,255,255,0.08);
+            }
+
+            .btn-download-nav {
+                padding: 12px;
+                margin-top: 5px;
+            }
+        }
 
         /* ===== HERO SECTION (Fixed Background) ===== */
         .hero-section {
@@ -57,7 +112,6 @@
             justify-content: center; align-items: center; padding: 80px 20px 40px; overflow: hidden;
         }
 
-        /* Background fixed to viewport, covers full screen */
         .background-wrapper {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -69,12 +123,12 @@
 
         .scroll-column { 
             display: flex; flex-direction: column; gap: 12px; 
-            width: 30%; /* Mobile: 3 columns */
+            width: 30%;
             will-change: transform; 
         }
 
         @media (min-width: 768px) {
-            .scroll-column { width: 18%; } /* Desktop: ~5-6 columns */
+            .scroll-column { width: 18%; }
         }
 
         .scroll-column-up-fast { animation: scrollUp 45s linear infinite; }
@@ -92,7 +146,6 @@
         }
         .poster-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Exact Blogger-style overlay: Clear top, black bottom */
         .overlay-gradient {
             position: fixed;
             inset: 0;
@@ -100,7 +153,6 @@
             z-index: 2; pointer-events: none;
         }
 
-        /* Hero Content (Text & Buttons) */
         .hero-content {
             position: relative; z-index: 10; display: flex; flex-direction: column;
             align-items: center; text-align: center; max-width: 400px; width: 100%;
@@ -158,6 +210,19 @@
         }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
 
+        /* NAYA DONATE BUTTON STYLE */
+        .btn-donate {
+            background: rgba(229, 9, 20, 0.08);
+            color: #ff4d5e;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            margin-top: 4px;
+        }
+        .btn-donate:hover { 
+            background: rgba(229, 9, 20, 0.15); 
+            border-color: #e50914;
+            color: #fff;
+        }
+
         .btn svg { width: 16px; height: 16px; fill: currentColor; }
 
         /* ===== CONTENT SECTION (SEO & Articles) ===== */
@@ -206,14 +271,20 @@
         #loading-text { text-align: center; color: #9ca3af; padding: 40px; grid-column: 1 / -1; font-size: 13px; }
     </style>
 
-	    <!-- EZMob Site Validation Code: EZM0EP8I2WMJGQ1JK72 -->
+	<!-- EZMob Site Validation Code: EZM0EP8I2WMJGQ1JK72 -->
 </head>
 <body>
 
     <!-- Navbar -->
     <header class="navbar">
         <a class="logo" href="/"><span class="rx">RX</span><span class="player">PLAYER</span></a>
-        <nav class="nav-links">
+        
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="nav-links" id="navLinks">
             <a href="#articles">News & Guides</a>
 			<a href="donate.html">Donate</a>
             <a href="domin.html">Watch Web</a>
@@ -241,13 +312,22 @@
             </div>
 
             <div class="btn-container">
+                <!-- Download Button -->
                 <a class="btn btn-primary" href="downloadlanding.html" id="directDownloadBtn">
                     <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                     <span id="downloadBtnLabel">Download APK Now</span>
                 </a>
+                
+                <!-- Continue on Web Button -->
                 <a class="btn btn-secondary" href="domin.html">
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     Continue On Web
+                </a>
+
+                <!-- NAYA DONATE BUTTON -->
+                <a class="btn btn-donate" href="donate.html">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    Donate & Support Us
                 </a>
             </div>
         </main>
@@ -293,7 +373,37 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase Config
+        // ==========================================
+        // MOBILE NAVBAR TOGGLE LOGIC
+        // ==========================================
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        const icon = hamburgerBtn.querySelector('i');
+
+        hamburgerBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Menu band karo jab link click ho
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // ==========================================
+        // FIREBASE & BACKGROUND LOGIC
+        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyCa-Ut8CCiZac7MPpeuw0LSjLehqLO4ICw",
             authDomain: "rxplayer-a2582.firebaseapp.com",
@@ -318,7 +428,6 @@
 
         const bgWrapper = document.getElementById('backgroundWrapper');
         if(bgWrapper) {
-            // Create multiple columns
             for(let i=0; i<6; i++) {
                 const col = document.createElement('div');
                 const speeds = ['fast', 'slow', 'medium'];
