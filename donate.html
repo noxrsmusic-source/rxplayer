@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Support RX Player - Donate</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* =========================================================
+           🎬 CINEMATIC BACKGROUND
+           ========================================================= */
+        .bg-wrapper {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0.1;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .scroll-column { display: flex; flex-direction: column; gap: 12px; width: 30%; will-change: transform; }
+        @media (min-width: 768px) { .scroll-column { width: 15%; } }
+        
+        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(calc(-50% - 6px)); } }
+        .col-1 { animation: scrollUp 40s linear infinite; }
+        .col-2 { animation: scrollUp 50s linear infinite; }
+        .col-3 { animation: scrollUp 45s linear infinite; }
+        
+        .poster-card { border-radius: 12px; overflow: hidden; aspect-ratio: 2 / 3; background: #1c1c1e; flex-shrink: 0; }
+        .poster-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .bg-overlay {
+            position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(5,5,5,0.6) 0%, #050505 100%);
+            z-index: 2; pointer-events: none;
+        }
+
+        /* =========================================================
+           ❤️ DONATION CARD (Responsive)
+           ========================================================= */
+        .donate-card {
+            background: rgba(15, 15, 18, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px 20px;
+            max-width: 440px; /* Mobile Width */
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            animation: cardIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes cardIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .donate-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, #E50914, transparent);
+        }
+
+        /* Inner Grid Container */
+        .donate-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- Left Side (Text & Instructions) --- */
+        .donate-left {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Heart Icon */
+        .heart-icon-wrapper {
+            position: relative; width: 70px; height: 70px; margin: 10px auto 20px;
+        }
+        .heart-icon-wrapper::after {
+            content: ''; position: absolute; inset: -15px;
+            background: radial-gradient(circle, rgba(229, 9, 20, 0.4) 0%, transparent 70%);
+            z-index: -1; border-radius: 50%; filter: blur(10px);
+            animation: pulseGlow 2s infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+        .heart-icon {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: linear-gradient(135deg, #E50914 0%, #b20710 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: #fff;
+            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .title {
+            font-size: 24px; font-weight: 900; margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        .title span { color: #E50914; }
+
+        .description {
+            font-size: 13px; color: #9CA3AF; line-height: 1.6; margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .description strong { color: #E5E7EB; font-weight: 700; }
+
+        /* Instructions */
+        .steps {
+            text-align: left; background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 14px;
+            padding: 15px; margin-bottom: 20px; width: 100%;
+        }
+        .steps h4 {
+            font-size: 12px; color: #fff; font-weight: 800; margin-bottom: 10px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .steps ul {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .steps li {
+            font-size: 12px; color: #9CA3AF; display: flex; gap: 8px; align-items: flex-start; line-height: 1.5;
+        }
+        .steps li i { color: #E50914; margin-top: 3px; font-size: 10px; }
+
+        /* --- Right Side (QR & UPI) --- */
+        .donate-right {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* QR Code Container */
+        .qr-container {
+            background: #fff; padding: 12px; border-radius: 20px;
+            display: inline-block; margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .qr-container:hover { transform: scale(1.05); }
+        .qr-container img { width: 160px; height: 160px; display: block; border-radius: 10px; }
+        
+        .qr-logos { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+        .qr-logos span { font-size: 10px; color: #666; font-weight: 800; letter-spacing: 1px; }
+
+        /* UPI ID Box */
+        .upi-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px; padding: 12px 15px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 15px; width: 100%; max-width: 300px;
+        }
+        .upi-text {
+            font-size: 15px; font-weight: 800; color: #E5E7EB; letter-spacing: 0.5px;
+        }
+        .btn-copy {
+            background: rgba(229, 9, 20, 0.15); color: #ff4d5e;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: 0.2s;
+        }
+        .btn-copy:hover { background: #E50914; color: #fff; }
+        .btn-copy.copied { background: #22C55E; color: #fff; border-color: #22C55E; }
+
+        .note {
+            font-size: 11px; color: #F59E0B; font-weight: 600;
+            background: rgba(245, 158, 11, 0.1); padding: 8px 12px; border-radius: 8px;
+            margin-bottom: 20px; width: 100%; max-width: 300px; text-align: center;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #6B7280; text-decoration: none; font-size: 13px; font-weight: 600; transition: color 0.2s;
+            margin-top: 10px;
+        }
+        .back-link:hover { color: #ffffff; }
+
+        /* Toast Message */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: #22C55E; color: #fff; padding: 10px 20px; border-radius: 30px;
+            font-size: 13px; font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            opacity: 0; pointer-events: none; transition: 0.3s ease; z-index: 9999;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .toast.show {
+            opacity: 1; transform: translateX(-50%) translateY(0);
+        }
+
+        /* =========================================================
+           🖥️ DESKTOP / PC VIEW RESPONSIVE
+           ========================================================= */
+        @media (min-width: 768px) {
+            .donate-card {
+                max-width: 850px; /* Wide card for PC */
+                padding: 50px;
+            }
+            
+            .donate-content {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr; /* Left slightly wider */
+                gap: 40px;
+                align-items: center;
+                text-align: left;
+            }
+
+            .donate-left {
+                align-items: flex-start;
+            }
+
+            .heart-icon-wrapper {
+                margin: 0 0 20px 0;
+                width: 80px; height: 80px;
+            }
+            .heart-icon { font-size: 32px; }
+
+            .title { font-size: 30px; }
+            .description { font-size: 14px; max-width: 100%; margin-bottom: 30px; }
+
+            .donate-right {
+                align-items: center;
+                justify-content: center;
+            }
+
+            .qr-container { padding: 15px; margin-bottom: 25px; }
+            .qr-container img { width: 200px; height: 200px; }
+            
+            .upi-box { max-width: 320px; margin-bottom: 20px; }
+            .note { max-width: 320px; margin-bottom: 0; font-size: 12px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🎬 Background Scrolling Posters -->
+    <div class="bg-wrapper">
+        <div class="scroll-column col-1">
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMTk2ZmFhYjctYWZiYy00N2IxLWEzMWItZGRiMDY4ZDQwZWFlXkEyXkFqcGc@._V1_QL75_UY281_CR11,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BOWNjYWM3NWItOGE0ZS00MWRjLThiZWEtYjc4ZmNmMmU5ZTVmXkEyXkFqcGc@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+        </div>
+        <div class="scroll-column col-2">
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMGUzOWE4NDItNzAxYy00M2VkLWFiNDEtNjczZTQ2Nzg5YmVhXkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BYmEzYTQ2OTEtMGM4MS00MWE1LWI3MGYtMTIyN2IwYzlkYmI0XkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+        </div>
+        <div class="scroll-column col-3">
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BMWU1OGEwNmQtNGM3MS00YTYyLThmYmMtN2FjYzQzNzNmNTE0XkEyXkFqcGc@._V1_QL75_UX190_CR0,2,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg" alt="Poster"></div>
+            <div class="poster-card"><img src="https://m.media-amazon.com/images/M/MV5BOWNjYWM3NWItOGE0ZS00MWRjLThiZWEtYjc4ZmNmMmU5ZTVmXkEyXkFqcGc@._V1_QL75_UX190_CR0,0,190,281_.jpg" alt="Poster"></div>
+        </div>
+    </div>
+    
+    <div class="bg-overlay"></div>
+
+    <!-- ❤️ Main Donate Card -->
+    <div class="donate-card">
+        
+        <div class="donate-content">
+            
+            <!-- LEFT SIDE (Mobile Top) -->
+            <div class="donate-left">
+                <div class="heart-icon-wrapper">
+                    <div class="heart-icon"><i class="fas fa-heart"></i></div>
+                </div>
+
+                <h1 class="title">Support <br>RX <span> Player</span></h1>
+                <p class="description">
+                    We provide you with <strong>100% free, high-quality content</strong> without any annoying pop-ups or forced subscriptions. 
+                    However, maintaining servers and developing new features costs money. 
+                    If you love what we do, consider supporting us to keep this service alive!
+                </p>
+
+                <!-- How to Pay -->
+                <div class="steps">
+                    <h4>How to Pay?</h4>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Scan the QR code using any UPI app (GPay, PhonePe, Paytm).</li>
+                        <li><i class="fas fa-circle"></i> Or click on "Copy" to copy the UPI ID.</li>
+                        <li><i class="fas fa-circle"></i> Enter any amount you wish to donate.</li>
+                        <li><i class="fas fa-circle"></i> Complete the payment securely.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (Mobile Bottom) -->
+            <div class="donate-right">
+                <!-- Dynamic QR Code -->
+                <div class="qr-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi%3A%2F%2Fpay%3Fpa%3Dkumarxz%40fam%26pn%3DRX%2520Player%26cu%3DINR" alt="UPI QR Code">
+                    <div class="qr-logos">
+                        <span>SCAN & PAY</span>
+                    </div>
+                </div>
+
+                <!-- UPI ID Copy Box -->
+                <div class="upi-box">
+                    <span class="upi-text" id="upiId">kumarxz@fam</span>
+                    <button class="btn-copy" id="copyBtn" onclick="copyUPI()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+
+                <!-- Note -->
+                <div class="note">
+                    <i class="fas fa-star"></i> No minimum or maximum limit. Pay as you wish!
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Back Link -->
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+    </div>
+
+    <!-- Toast Message -->
+    <div class="toast" id="toastMsg">
+        <i class="fas fa-check-circle"></i> UPI ID Copied!
+    </div>
+
+    <script>
+        function copyUPI() {
+            const upiId = document.getElementById('upiId').textContent;
+            const copyBtn = document.getElementById('copyBtn');
+            const toast = document.getElementById('toastMsg');
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(upiId).then(() => {
+                // Change button state
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
+                copyBtn.classList.add('copied');
+
+                // Show Toast
+                toast.classList.add('show');
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    copyBtn.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = upiId;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
+                copyBtn.classList.add('copied');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    copyBtn.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
