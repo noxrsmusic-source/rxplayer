@@ -13,9 +13,6 @@
   const posters2 = ['https://m.media-amazon.com/images/M/MV5BMjEzMDAxOTUyMV5BMl5BanBnXkFtZTgwNzAxMzYzOTE@._V1_QL75_UX190_CR0,0,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BMGUzOWE4NDItNzAxYy00M2VkLWFiNDEtNjczZTQ2Nzg5YmVhXkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BYmEzYTQ2OTEtMGM4MS00MWE1LWI3MGYtMTIyN2IwYzlkYmI0XkEyXkFqcGc@._V1_QL75_UY281_CR18,0,190,281_.jpg'];
   const posters3 = ['https://m.media-amazon.com/images/M/MV5BMWU1OGEwNmQtNGM3MS00YTYyLThmYmMtN2FjYzQzNzNmNTE0XkEyXkFqcGc@._V1_QL75_UX190_CR0,2,190,281_.jpg', 'https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg'];
 
-  /* ============================================================
-     TRANSLATIONS
-  ============================================================ */
   const translations = {
     en: {
       title: "Ad Blocker Detected",
@@ -41,9 +38,6 @@
 
   let currentLang = localStorage.getItem('adblock_lang') || 'en';
 
-  /* ============================================================
-     1. DETECTION LOGIC
-  ============================================================ */
   async function isBraveBrowser() {
     try {
       if (navigator.brave && typeof navigator.brave.isBrave === 'function') {
@@ -106,9 +100,6 @@
     return { blocked: false };
   }
 
-  /* ============================================================
-     2. OVERLAY UI (With Poster Background & Forced Music)
-  ============================================================ */
   function createOverlayHost() {
     const host = document.createElement('div');
     host.id = OVERLAY_ID;
@@ -119,84 +110,29 @@
     shadow.innerHTML = `
       <style>
         :host { all: initial; }
-        
-        /* Background Scroll Animation */
         @keyframes scrollUp {
           0% { transform: translateY(0); }
           100% { transform: translateY(calc(-50% - 6px)); }
         }
-        
-        .wrap { 
-          position: fixed; inset: 0; background: #050505;
-          display: flex; align-items: center; justify-content: center; 
-          padding: 24px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; 
-          text-align: center; z-index: 2147483647; overflow: hidden;
-        }
-        
-        /* Poster Background Layer */
-        .overlay-bg-wrapper {
-          position: absolute; inset: 0; display: flex; justify-content: center; gap: 12px;
-          opacity: 0.65; z-index: 1; pointer-events: none; overflow: hidden;
-        }
-        
-        .scroll-column { 
-          display: flex; flex-direction: column; gap: 12px; 
-          width: 30%; /* Mobile: 3 columns */
-          will-change: transform; 
-        }
-        
+        .wrap { position: fixed; inset: 0; background: #050505; display: flex; align-items: center; justify-content: center; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; text-align: center; z-index: 2147483647; overflow: hidden; }
+        .overlay-bg-wrapper { position: absolute; inset: 0; display: flex; justify-content: center; gap: 12px; opacity: 0.65; z-index: 1; pointer-events: none; overflow: hidden; }
+        .scroll-column { display: flex; flex-direction: column; gap: 12px; width: 30%; will-change: transform; }
         @media (min-width: 768px) { .scroll-column { width: 18%; } }
-
         .scroll-column-up-fast { animation: scrollUp 45s linear infinite; }
         .scroll-column-up-slow { animation: scrollUp 60s linear infinite; }
         .scroll-column-up-medium { animation: scrollUp 50s linear infinite; }
-
-        .poster-card {
-          border-radius: 12px; overflow: hidden; aspect-ratio: 2 / 3;
-          background: #1c1c1e; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); flex-shrink: 0;
-        }
+        .poster-card { border-radius: 12px; overflow: hidden; aspect-ratio: 2 / 3; background: #1c1c1e; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); flex-shrink: 0; }
         .poster-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* Dark Gradient so text is readable */
-        .overlay-gradient {
-          position: absolute; inset: 0;
-          background: linear-gradient(180deg, rgba(15, 15, 15, 0.6) 0%, rgba(15, 15, 15, 0.9) 45%, #0f0f0f 100%);
-          z-index: 2; pointer-events: none;
-        }
-
-        /* The Main Dialog Box */
-        .box { 
-          position: relative; z-index: 10; max-width: 480px; background: rgba(28, 28, 31, 0.85); 
-          backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-          padding: 40px 30px; border-radius: 16px; 
-          box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-          border: 1px solid rgba(255,255,255,0.1);
-        }
-        
+        .overlay-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 15, 15, 0.6) 0%, rgba(15, 15, 15, 0.9) 45%, #0f0f0f 100%); z-index: 2; pointer-events: none; }
+        .box { position: relative; z-index: 10; max-width: 480px; background: rgba(28, 28, 31, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); }
         h2 { margin: 0 0 16px; font-size: 24px; color: #fff; font-weight: 700; letter-spacing: 0.5px;}
         p { margin: 0 0 24px; line-height: 1.6; font-size: 16px; color: #b3b3b3; }
-        
-        button.main-btn { 
-          background: #e50914; color: #fff; border: 0; border-radius: 8px; 
-          padding: 14px 24px; cursor: pointer; font-size: 16px; font-weight: bold; 
-          transition: 0.2s; width: 100%; max-width: 320px; 
-          box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-        }
+        button.main-btn { background: #e50914; color: #fff; border: 0; border-radius: 8px; padding: 14px 24px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; width: 100%; max-width: 320px; box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4); }
         button.main-btn:hover { background: #f40612; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6); }
         button.main-btn:disabled { opacity: 0.6; cursor: wait; transform: none; box-shadow: none; }
-        
-        .top-controls {
-          position: absolute; top: 12px; left: 16px; right: 16px;
-          display: flex; justify-content: flex-end; align-items: center;
-        }
-        
-        .ctrl-btn {
-          background: transparent; border: 1px solid #444; color: #aaa; 
-          padding: 5px 12px; border-radius: 6px; cursor: pointer; 
-          font-size: 12px; font-weight: bold; transition: 0.2s;
-        }
+        .top-controls { position: absolute; top: 12px; left: 16px; right: 16px; display: flex; justify-content: flex-end; align-items: center; }
+        .ctrl-btn { background: transparent; border: 1px solid #444; color: #aaa; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
         .ctrl-btn:hover { background: #333; color: #fff; border-color: #666; }
-        
         .hint { color: #777; font-size: 13px; margin-top: 24px; line-height: 1.5; }
         .hint b { color: #aaa; }
       </style>
@@ -206,21 +142,15 @@
       </audio>
 
       <div class="wrap">
-        <!-- Dynamic Poster Background -->
         <div class="overlay-bg-wrapper" id="overlay-bg-wrapper"></div>
         <div class="overlay-gradient"></div>
-
-        <!-- Dialog Box -->
         <div class="box">
           <div class="top-controls">
             <button class="ctrl-btn" id="lang-toggle">${translations[currentLang].toggleLabel}</button>
           </div>
-          
           <h2 id="ad-title" style="margin-top: 10px;">${translations[currentLang].title}</h2>
           <p id="ad-body">${translations[currentLang].body}</p>
-          
           <button class="main-btn" id="adblock-retry">${translations[currentLang].btnCheck}</button>
-          
           <p class="hint" id="ad-hint">
             ${translations[currentLang].hint1}<br>
             ${translations[currentLang].hint2}
@@ -231,7 +161,7 @@
     return host;
   }
 
-  function showWarning() {
+  function showWarning(onSuccessCallback) {
     if (overlayHost) return; 
 
     overlayHost = createOverlayHost();
@@ -240,15 +170,8 @@
     const shadowRoot = overlayHost.shadowRoot;
     const bgWrapper = shadowRoot.getElementById('overlay-bg-wrapper');
 
-    /* --- Populate Background Posters --- */
-    function createPosterHTML(url) { 
-      return `<div class="poster-card"><img src="${url}" alt="Poster"></div>`; 
-    }
-    function buildColumn(arr) { 
-      let html = ''; 
-      for(let i=0; i<5; i++) { arr.forEach(url => html += createPosterHTML(url)); } 
-      return html; 
-    }
+    function createPosterHTML(url) { return `<div class="poster-card"><img src="${url}" alt="Poster"></div>`; }
+    function buildColumn(arr) { let html = ''; for(let i=0; i<5; i++) { arr.forEach(url => html += createPosterHTML(url)); } return html; }
 
     if(bgWrapper) {
       for(let i=0; i<6; i++) {
@@ -261,7 +184,6 @@
       }
     }
 
-    /* --- Overlay Persistence --- */
     observer = new MutationObserver(() => {
       if (!document.getElementById(OVERLAY_ID) && overlayHost) {
         document.documentElement.appendChild(overlayHost);
@@ -275,7 +197,6 @@
       }
     }, 300);
 
-    /* --- Elements --- */
     const retryBtn = shadowRoot.getElementById('adblock-retry');
     const langToggleBtn = shadowRoot.getElementById('lang-toggle');
     const titleEl = shadowRoot.getElementById('ad-title');
@@ -283,14 +204,10 @@
     const hintEl = shadowRoot.getElementById('ad-hint');
     const bgMusic = shadowRoot.getElementById('bg-music');
 
-    /* --- Music Logic (Forced ON, No Toggle) --- */
     bgMusic.volume = 0.3;
-
-    // 1. Try to play immediately
+    
+    // Ab music pakka chalega kyunki yeh user ke click ke baad trigger hua hai
     bgMusic.play().catch(() => {
-      // 2. Agar browser block kare, toh user ke first click par play karein
-      console.log("Autoplay blocked. Waiting for user interaction...");
-      
       const playMusicOnInteraction = () => {
         if (bgMusic.paused) {
           bgMusic.play().catch(e => console.log("Play failed:", e));
@@ -299,28 +216,21 @@
         document.removeEventListener('click', playMusicOnInteraction);
         document.removeEventListener('touchstart', playMusicOnInteraction);
       };
-
       overlayHost.addEventListener('click', playMusicOnInteraction);
       document.addEventListener('click', playMusicOnInteraction);
       document.addEventListener('touchstart', playMusicOnInteraction);
     });
 
-    /* --- Language Toggle --- */
     langToggleBtn.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
       localStorage.setItem('adblock_lang', currentLang);
-
       titleEl.innerHTML = translations[currentLang].title;
       bodyEl.innerHTML = translations[currentLang].body;
       hintEl.innerHTML = `${translations[currentLang].hint1}<br>${translations[currentLang].hint2}`;
       langToggleBtn.textContent = translations[currentLang].toggleLabel;
-
-      if (!retryBtn.disabled) {
-        retryBtn.textContent = translations[currentLang].btnCheck;
-      }
+      if (!retryBtn.disabled) retryBtn.textContent = translations[currentLang].btnCheck;
     });
 
-    /* --- Retry Button --- */
     retryBtn.addEventListener('click', async () => {
       retryBtn.disabled = true;
       retryBtn.textContent = translations[currentLang].btnWait;
@@ -336,32 +246,40 @@
           bgMusic.pause(); 
           overlayHost.remove();
           overlayHost = null;
+          
+          // Adblock hatega toh user ko aage badhne dega
+          if (typeof onSuccessCallback === 'function') {
+            onSuccessCallback();
+          }
         }
       }, 800);
     });
   }
 
-  /* ============================================================
-     3. INITIALIZATION
-  ============================================================ */
-  async function runCheck() {
-    if (detectionRunning || !document.body) return;
+  // Yahan humne global function banaya hai jise HTML call karega
+  window.runAdBlockCheck = async function(onSuccessCallback) {
+    if (detectionRunning) return;
+    if (!document.body) { setTimeout(() => window.runAdBlockCheck(onSuccessCallback), 100); return; }
+    
     detectionRunning = true;
     try {
       const result = await detectAdBlock();
       if (result.blocked) {
-        showWarning();
+        showWarning(onSuccessCallback);
+      } else {
+        // Agar adblock nahi hai, toh direct aage badho
+        if (typeof onSuccessCallback === 'function') {
+          onSuccessCallback();
+        }
       }
     } catch (e) {
       console.warn("Detection error:", e);
+      if (typeof onSuccessCallback === 'function') {
+        onSuccessCallback(); // Error aaye toh bhi user ko roko mat
+      }
     } finally {
       detectionRunning = false;
     }
-  }
+  };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runCheck);
-  } else {
-    runCheck();
-  }
 })();
