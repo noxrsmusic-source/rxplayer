@@ -90,7 +90,18 @@
             background: linear-gradient(90deg, transparent, #E50914, transparent);
         }
 
-        /* App Icon Base (Shared between views) */
+        /* Translate Button */
+        .lang-toggle {
+            position: absolute; top: 15px; right: 15px; 
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2); color: #fff; 
+            padding: 4px 12px; border-radius: 20px; 
+            font-size: 11px; font-weight: 700; cursor: pointer;
+            transition: 0.3s; z-index: 20;
+        }
+        .lang-toggle:hover { background: #E50914; border-color: #E50914; }
+
+        /* App Icon Base */
         .app-icon-wrapper {
             position: relative; width: 110px; height: 110px; margin: 0 auto 15px;
             animation: float 4s ease-in-out infinite;
@@ -314,7 +325,7 @@
         }
 
         .toast-content h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 8px; }
-        .toast-content p { font-size: 13px; color: #9CA3AF; margin-bottom: 20px; }
+        .toast-content p { font-size: 13px; color: #9CA3AF; margin-bottom: 20px; line-height: 1.4; }
         
         .btn-toast-close {
             background: rgba(255,255,255,0.1); color: #fff; border: none;
@@ -357,6 +368,9 @@
     <!-- 📱 Main Landing Card -->
     <div class="landing-card">
         
+        <!-- Translate Button -->
+        <button id="lang-toggle" class="lang-toggle">हिंदी</button>
+
         <!-- App Icon Base -->
         <div class="app-icon-wrapper">
             <div class="app-icon">
@@ -373,7 +387,7 @@
             <!-- SCREEN 1: PLATFORM SELECTION -->
             <!-- ========================================== -->
             <div id="view-selection" class="view active">
-                <p style="font-size: 13px; color: #9CA3AF; font-weight: 600; margin-bottom: 20px;">Select your platform to download</p>
+                <p id="txt-select" style="font-size: 13px; color: #9CA3AF; font-weight: 600; margin-bottom: 20px;">Select your platform to download</p>
                 
                 <div class="platform-selector">
                     <!-- Android Button -->
@@ -381,7 +395,7 @@
                         <div class="platform-info">
                             <div class="platform-icon"><i class="fab fa-android"></i></div>
                             <div class="platform-text">
-                                <h4>Android</h4>
+                                <h4 id="txt-android">Android</h4>
                                 <p>v1.1.0 • 25 MB</p>
                             </div>
                         </div>
@@ -393,8 +407,8 @@
                         <div class="platform-info">
                             <div class="platform-icon" style="color: #fff;"><i class="fab fa-apple"></i></div>
                             <div class="platform-text">
-                                <h4>iOS</h4>
-                                <p>Coming Soon</p>
+                                <h4 id="txt-ios">iOS</h4>
+                                <p id="txt-soon-ios">Coming Soon</p>
                             </div>
                         </div>
                         <i class="fas fa-lock platform-arrow" style="font-size: 12px;"></i>
@@ -405,8 +419,8 @@
                         <div class="platform-info">
                             <div class="platform-icon" style="color: #fff;"><i class="fab fa-windows"></i></div>
                             <div class="platform-text">
-                                <h4>Windows</h4>
-                                <p>Coming Soon</p>
+                                <h4 id="txt-windows">Windows</h4>
+                                <p id="txt-soon-win">Coming Soon</p>
                             </div>
                         </div>
                         <i class="fas fa-lock platform-arrow" style="font-size: 12px;"></i>
@@ -419,7 +433,7 @@
             <!-- ========================================== -->
             <div id="view-android" class="view">
                 <div style="text-align: left;">
-                    <button class="back-btn" onclick="showSelectionView()">
+                    <button class="back-btn" onclick="showSelectionView()" id="txt-back">
                         <i class="fas fa-arrow-left"></i> Back
                     </button>
                 </div>
@@ -431,26 +445,26 @@
                 </div>
 
                 <div class="instructions-box">
-                    <h3><i class="fas fa-info-circle"></i> How to Download?</h3>
+                    <h3 id="txt-how"><i class="fas fa-info-circle"></i> How to Download?</h3>
                     <div class="step">
                         <div class="step-num">1</div>
-                        <div class="step-text">Click on the <strong>"Continue to Download"</strong> button below.</div>
+                        <div class="step-text" id="txt-step1">Click on the <strong>"Continue to Download"</strong> button below.</div>
                     </div>
                     <div class="step">
                         <div class="step-num">2</div>
-                        <div class="step-text">You will be redirected. Please <strong>wait for 20 seconds</strong>.</div>
+                        <div class="step-text" id="txt-step2">You will be redirected. Please <strong>wait for 20 seconds</strong>.</div>
                     </div>
                     <div class="step">
                         <div class="step-num">3</div>
-                        <div class="step-text">After the timer ends, click on <strong>"Download APP Now"</strong>.</div>
+                        <div class="step-text" id="txt-step3">After the timer ends, click on <strong>"Download APP Now"</strong>.</div>
                     </div>
                     <div class="step">
                         <div class="step-num">4</div>
-                        <div class="step-text">Allow <strong>"Install from Unknown Sources"</strong> if asked.</div>
+                        <div class="step-text" id="txt-step4">Allow <strong>"Install from Unknown Sources"</strong> if asked.</div>
                     </div>
                 </div>
 
-                <a href="appads.html" class="btn-continue">
+                <a href="appads.html" class="btn-continue" id="txt-continue">
                     Continue to Download <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -458,7 +472,7 @@
         </div>
 
         <!-- Back Link -->
-        <a href="index.html" class="back-link">
+        <a href="index.html" class="back-link" id="txt-home">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
 
@@ -468,33 +482,119 @@
         <div id="coming-soon-overlay" class="toast-overlay">
             <div class="toast-content">
                 <div class="toast-icon"><i class="fas fa-tools"></i></div>
-                <h3>We're Working On It!</h3>
-                <p>iOS and Windows versions are currently in development.<br>Stay tuned for updates.</p>
-                <button class="btn-toast-close" onclick="closeComingSoon()">Got It</button>
+                <h3 id="txt-working-title">We're Working On It!</h3>
+                <p id="txt-working-body">iOS and Windows versions are currently in development.<br>Stay tuned for updates.</p>
+                <button class="btn-toast-close" onclick="closeComingSoon()" id="txt-gotit">Got It</button>
             </div>
         </div>
 
     </div>
 
-    <!-- JS Logic for View Switching -->
+    <!-- JS Logic for View Switching & Translation -->
     <script>
         const viewSelection = document.getElementById('view-selection');
         const viewAndroid = document.getElementById('view-android');
         const comingSoonOverlay = document.getElementById('coming-soon-overlay');
 
-        // Show Android Details
+        // ==========================================
+        // TRANSLATIONS DATA
+        // ==========================================
+        let currentLang = 'en';
+        const translations = {
+            en: {
+                select: "Select your platform to download",
+                android: "Android",
+                ios: "iOS",
+                windows: "Windows",
+                soon: "Coming Soon",
+                back: "<i class='fas fa-arrow-left'></i> Back",
+                how: "<i class='fas fa-info-circle'></i> How to Download?",
+                step1: "Click on the <strong>\"Continue to Download\"</strong> button below.",
+                step2: "You will be redirected. Please <strong>wait for 20 seconds</strong>.",
+                step3: "After the timer ends, click on <strong>\"Download APP Now\"</strong>.",
+                step4: "Allow <strong>\"Install from Unknown Sources\"</strong> if asked.",
+                contBtn: "Continue to Download <i class='fas fa-arrow-right'></i>",
+                home: "<i class='fas fa-arrow-left'></i> Back to Home",
+                workingTitle: "We're Working On It!",
+                workingBody: "iOS and Windows versions are currently in development.<br>Stay tuned for updates.",
+                gotIt: "Got It",
+                toggleBtn: "हिंदी"
+            },
+            hi: {
+                select: "डाउनलोड करने के लिए अपना प्लेटफ़ॉर्म चुनें",
+                android: "एंड्रॉइड",
+                ios: "आईओएस",
+                windows: "विंडोज़",
+                soon: "जल्द आ रहा है",
+                back: "<i class='fas fa-arrow-left'></i> पीछे",
+                how: "<i class='fas fa-info-circle'></i> डाउनलोड कैसे करें?",
+                step1: "नीचे दिए गए <strong>\"Continue to Download\"</strong> बटन पर क्लिक करें।",
+                step2: "आपको रीडायरेक्ट किया जाएगा। कृपया <strong>20 सेकंड प्रतीक्षा करें</strong>।",
+                step3: "टाइमर खत्म होने के बाद, <strong>\"Download APP Now\"</strong> पर क्लिक करें।",
+                step4: "अगर पूछा जाए तो <strong>\"Install from Unknown Sources\"</strong> को अनुमति दें।",
+                contBtn: "डाउनलोड के लिए आगे बढ़ें <i class='fas fa-arrow-right'></i>",
+                home: "<i class='fas fa-arrow-left'></i> होम पर वापस जाएं",
+                workingTitle: "हम इस पर काम कर रहे हैं!",
+                workingBody: "iOS और Windows वर्ज़न फिलहाल डेवलपमेंट में हैं।<br>अपडेट के लिए बने रहें।",
+                gotIt: "समझ गया",
+                toggleBtn: "English"
+            }
+        };
+
+        // ==========================================
+        // LANGUAGE TOGGLE LOGIC
+        // ==========================================
+        const langToggleBtn = document.getElementById('lang-toggle');
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            // Update texts
+            document.getElementById('txt-select').textContent = t.select;
+            document.getElementById('txt-android').textContent = t.android;
+            document.getElementById('txt-ios').textContent = t.ios;
+            document.getElementById('txt-windows').textContent = t.windows;
+            document.getElementById('txt-soon-ios').textContent = t.soon;
+            document.getElementById('txt-soon-win').textContent = t.soon;
+            
+            document.getElementById('txt-back').innerHTML = t.back;
+            document.getElementById('txt-how').innerHTML = t.how;
+            
+            // Use innerHTML because they contain <strong> tags
+            document.getElementById('txt-step1').innerHTML = t.step1;
+            document.getElementById('txt-step2').innerHTML = t.step2;
+            document.getElementById('txt-step3').innerHTML = t.step3;
+            document.getElementById('txt-step4').innerHTML = t.step4;
+            
+            document.getElementById('txt-continue').innerHTML = t.contBtn;
+            document.getElementById('txt-home').innerHTML = t.home;
+            
+            document.getElementById('txt-working-title').textContent = t.workingTitle;
+            document.getElementById('txt-working-body').innerHTML = t.workingBody;
+            document.getElementById('txt-gotit').textContent = t.gotIt;
+            
+            // Change toggle button text
+            langToggleBtn.textContent = t.toggleBtn;
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            applyLanguage(currentLang === 'en' ? 'hi' : 'en');
+        });
+
+        // ==========================================
+        // VIEW SWITCHING LOGIC
+        // ==========================================
         function showAndroidView() {
             viewSelection.classList.remove('active');
             setTimeout(() => {
                 viewSelection.style.display = 'none';
                 viewAndroid.style.display = 'block';
-                // Trigger reflow to restart animation
                 void viewAndroid.offsetWidth; 
                 viewAndroid.classList.add('active');
-            }, 300); // Matches CSS transition time
+            }, 300);
         }
 
-        // Show Selection (Back button)
         function showSelectionView() {
             viewAndroid.classList.remove('active');
             setTimeout(() => {
@@ -505,12 +605,10 @@
             }, 300);
         }
 
-        // Show Coming Soon Popup
         function showComingSoon() {
             comingSoonOverlay.classList.add('show');
         }
 
-        // Close Coming Soon Popup
         function closeComingSoon() {
             comingSoonOverlay.classList.remove('show');
         }
