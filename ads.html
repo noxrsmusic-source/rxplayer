@@ -37,6 +37,7 @@
             text-transform: uppercase; letter-spacing: 0.5px;
         }
 
+        /* Grid Layout */
         .content-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 
         .media-info { display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -48,11 +49,12 @@
         h1 { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #fff; line-height: 1.3; }
         p.subtitle { font-size: 12px; color: #9CA3AF; margin-bottom: 0; }
 
+        /* ✅ Action Area */
         .action-area { 
             display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; 
         }
 
-        /* TIMER */
+        /* ✅ TIMER */
         .timer-text {
             width: 100%; max-width: 350px; 
             font-size: 16px; font-weight: 800; color: #ff4d5e; display: block;
@@ -65,23 +67,252 @@
             text-align: center; margin-bottom: 20px;
         }
 
-        /* VIDEO PLAYER */
-        .video-player {
+        /* =========================================================
+           ✅ AD PLACEHOLDER
+           ========================================================= */
+        .ad-placeholder {
+            width: 100%;
+            min-height: 272px;
+            background: #0a0a0f;
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 12px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin-bottom: 10px;
+            padding: 28px 14px 52px;
+            overflow: hidden;
+            position: relative;
+            gap: 0;
+        }
+
+        .ad-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 10px;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* ============ PROMO SLIDER ============ */
+        .promo-slider {
             position: relative;
             width: 100%;
-            max-width: 420px;
-            aspect-ratio: 16 / 9;
-            border-radius: 14px;
+            max-width: 380px;
+            height: 212px;
+            border-radius: 16px;
             overflow: hidden;
-            background: #000;
             box-shadow: 0 14px 34px rgba(0,0,0,0.8), 0 0 0 1px rgba(229, 9, 20, 0.3);
-            margin-bottom: 10px;
+            --promo-dur: 4500ms;
+            isolation: isolate;
         }
-        .video-player iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-            display: block;
+
+        /* FIXED RX PLAYER LOGO */
+        .rx-logo-static {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9));
+            pointer-events: none; /* Text ke click ko block nahi karega */
+        }
+        .rx-logo-static .rx-logo-icon {
+            background: #E50914;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            padding-left: 2px;
+            box-shadow: 0 0 15px rgba(229,9,20,0.8);
+        }
+        .rx-logo-static .rx-logo-text {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            display: flex;
+            text-shadow: 0 2px 5px rgba(0,0,0,1);
+        }
+        .rx-logo-static .rx-logo-text .rx { color: #fff; }
+        .rx-logo-static .rx-logo-text .player { color: #E50914; }
+
+        .promo-track { position: absolute; inset: 0; }
+
+        /* RICH CINEMATIC SLIDE */
+        .promo-slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: flex-end;
+            padding: 14px 18px 35px; /* Neeche se space badhaya taaki text upar logo se na takraye */
+            text-align: center; text-decoration: none; color: #fff;
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity .6s ease, transform .6s ease;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .promo-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        /* Background Image with Ken Burns Zoom */
+        .promo-bg {
+            position: absolute; inset: -5%;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            animation: bgZoom 12s linear infinite alternate;
+        }
+        @keyframes bgZoom {
+            0%   { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        /* Dark Gradient Overlay for readability */
+        .promo-slide::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(8,8,12,1) 0%, rgba(8,8,12,0.7) 60%, rgba(229,9,20,0.2) 100%);
+            z-index: 1;
+        }
+        
+        .promo-slide > * { position: relative; z-index: 2; }
+
+        /* Tag pill */
+        .promo-tag {
+            font-size: 9px; font-weight: 800;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            padding: 4px 12px; border-radius: 999px;
+            background: rgba(229, 9, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .promo-title {
+            font-size: 16px; font-weight: 900; line-height: 1.2;
+            letter-spacing: -0.2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+            margin-bottom: 4px;
+        }
+
+        .promo-sub {
+            font-size: 11px; font-weight: 500; line-height: 1.35;
+            color: rgba(255,255,255,0.85);
+            max-width: 280px;
+            margin-bottom: 10px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
+
+        /* CTA Button */
+        .promo-cta {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: #fff; color: #E50914;
+            font-size: 11.5px; font-weight: 800;
+            padding: 8px 18px; border-radius: 999px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            transition: transform .25s ease, box-shadow .25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .promo-cta i { font-size: 10px; }
+        .promo-slide:hover .promo-cta {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(255,255,255,0.4);
+        }
+
+        /* Entrance Animations for Text Elements */
+        @keyframes promoRise {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        
+        .promo-slide.active .promo-tag   { animation: promoRise .5s ease backwards; }
+        .promo-slide.active .promo-title { animation: promoRise .5s ease .1s backwards; }
+        .promo-slide.active .promo-sub   { animation: promoRise .5s ease .15s backwards; }
+        .promo-slide.active .promo-cta   { animation: promoRise .5s ease .2s backwards; }
+
+        /* Dots */
+        .promo-dots {
+            position: absolute; left: 0; right: 0; bottom: 12px;
+            display: flex; justify-content: center; gap: 6px;
+            z-index: 5;
+        }
+        .promo-dot {
+            width: 7px; height: 7px; padding: 0; border: none;
+            border-radius: 50%; cursor: pointer;
+            background: rgba(255,255,255,0.4);
+            transition: all .3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .promo-dot.active {
+            width: 20px; border-radius: 999px;
+            background: #E50914;
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.8);
+        }
+
+        /* Progress bar */
+        .promo-progress {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            height: 3px; background: rgba(255,255,255,0.2);
+            z-index: 5;
+        }
+        .promo-progress span {
+            display: block; height: 100%; width: 0%;
+            background: #E50914;
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.8);
+        }
+        .promo-progress span.run {
+            animation: promoFill var(--promo-dur) linear forwards;
+        }
+        @keyframes promoFill {
+            from { width: 0%; }
+            to   { width: 100%; }
+        }
+
+        /* Fake Skip Ad Button */
+        .fake-skip-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+        .fake-skip-btn:hover {
+            background: #E50914;
+            border-color: #E50914;
+            transform: scale(1.05);
         }
 
         .extra-sections { width: 100%; max-width: 900px; margin-top: 30px; }
@@ -117,7 +348,7 @@
             .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
         }
 
-        /* PC VIEW */
+        /* ✅ PC VIEW FIX */
         @media (min-width: 768px) {
             body { padding-top: 45px; padding-bottom: 60px; }
             .content-box { max-width: 900px; padding: 40px; }
@@ -127,7 +358,15 @@
             h1 { font-size: 28px; margin-bottom: 10px; }
             p.subtitle { font-size: 15px; }
             
-            .video-player { margin-bottom: 0; }
+            .ad-placeholder { min-height: 278px; margin-bottom: 0; padding: 30px 18px 54px; }
+            .promo-slider { max-width: 420px; height: 228px; }
+            .promo-title { font-size: 18px; }
+            .promo-sub { font-size: 12px; max-width: 340px; }
+            
+            .rx-logo-static { top: 14px; }
+            .rx-logo-static .rx-logo-text { font-size: 22px; }
+            .rx-logo-static .rx-logo-icon { width: 28px; height: 28px; font-size: 12px; }
+            
             .timer-text { font-size: 18px; padding: 18px; margin-bottom: 20px; max-width: 400px; }
 
             .extra-sections { margin-top: 45px; }
@@ -140,13 +379,19 @@
             .blog-card h3 { font-size: 15px; }
             .blog-card p { font-size: 13px; }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .promo-bg {
+                animation: none !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="content-box">
         <button id="lang-toggle" class="lang-toggle">हिंदी</button>
-        <div class="official-badge" data-i18n="official_page">Official Page</div>
+        <div class="official-badge" data-i18n="official_page">Official Ads Page</div>
 
         <div class="content-grid">
             <!-- Left Column: Poster -->
@@ -163,18 +408,31 @@
                 
                 <!-- TIMER -->
                 <div id="timer-text" class="timer-text">
-                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait... Auto-redirecting in 11 seconds</span>
+                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait... Auto-redirecting in 30 seconds</span>
                 </div>
 
-                <!-- VIDEO PLAYER (Dailymotion with fix) -->
-                <div class="video-player">
-                    <iframe
-                        src="https://www.dailymotion.com/embed/video/xbr7cuy?autoplay=1&mute=1"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen
-                        frameborder="0">
-                    </iframe>
+                <!-- ✅ AD CONTAINER : ROTATING RX PLAYER BANNERS -->
+                <div class="ad-placeholder">
+                    <span class="ad-label">Advertisement</span>
+
+                    <!-- Rotating app promo banners -->
+                    <div class="promo-slider" id="promoSlider">
+                        
+                        <!-- FIXED LOGO -->
+                        <div class="rx-logo-static">
+                            <div class="rx-logo-icon"><i class="fas fa-play"></i></div>
+                            <div class="rx-logo-text"><span class="rx">RX</span><span class="player">PLAYER</span></div>
+                        </div>
+
+                        <div class="promo-track" id="promoTrack"></div>
+                        <div class="promo-dots" id="promoDots"></div>
+                        <div class="promo-progress"><span id="promoBar"></span></div>
+                    </div>
+
+                    <!-- Fake Skip Ad Button -->
+                    <a href="https://uplcm.com/4/12062803" target="_blank" rel="noopener" class="fake-skip-btn">
+                        Skip Ad <i class="fas fa-times"></i>
+                    </a>
                 </div>
 
             </div>
@@ -213,7 +471,6 @@
         /* =========================================================
            1. CONFIG & URL PARAMS
            ========================================================= */
-        // API_BASE is kept only for TMDB related content proxy
         const API_BASE = 'https://rxplayer-indol.vercel.app/api';
         const BASE_URL = 'https://rxplayer-indol.vercel.app';
 
@@ -242,11 +499,11 @@
         let currentLang = 'en';
         const translations = {
             en: {
-                official_page: "Official Page",
+                official_page: "Official Ads Page",
                 timer_msg: "Wait {time}s, Auto-redirecting..."
             },
             hi: {
-                official_page: "आधिकारिक पृष्ठ",
+                official_page: "आधिकारिक विज्ञापन पृष्ठ",
                 timer_msg: "प्रतीक्षा करें... {time} सेकंड में आगे बढ़ रहे हैं"
             }
         };
@@ -260,15 +517,183 @@
             document.getElementById('lang-toggle').textContent = lang === 'en' ? 'हिंदी' : 'English';
 
             const timerMsg = document.getElementById('timer-message');
-            if (timerMsg) {
+            if (timerMsg && (timerMsg.textContent.includes('in') || timerMsg.textContent.includes('प्रतीक्षा'))) {
                 const m = timerMsg.textContent.match(/\d+/);
-                const t = m ? m[0] : '11';
+                const t = m ? m[0] : '30';
                 timerMsg.textContent = translations[lang].timer_msg.replace('{time}', t);
             }
+
+            applyPromoLang(lang);
         }
 
         /* =========================================================
-           4. POSTER / TITLE SETUP
+           4. ✅ ROTATING RICH RX PLAYER PROMO BANNERS
+           ========================================================= */
+        const PROMO_DURATION = 4500; // ms per banner
+
+        const PROMOS = [
+            {
+                bgImg: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=800&auto=format&fit=crop',
+                tag:   { en: 'Movies · Web Series · Anime', hi: 'मूवीज़ · वेब सीरीज़ · एनीमे' },
+                title: { en: 'Watch & Download 100% Free', hi: '100% फ्री में देखें और डाउनलोड करें' },
+                sub:   { en: 'HD movies, web series and anime. No subscription required.', hi: 'HD मूवीज़, वेब सीरीज़ और एनीमे। कोई सब्सक्रिप्शन नहीं चाहिए।' },
+                cta:   { en: 'Browse Library', hi: 'लाइब्रेरी देखें' },
+                link: BASE_URL + '/'
+            },
+            {
+                bgImg: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop',
+                tag:   { en: 'Free Music Streaming', hi: 'फ्री म्यूजिक स्ट्रीमिंग' },
+                title: { en: 'Stream Music For Free', hi: 'फ्री में म्यूजिक स्ट्रीम करें' },
+                sub:   { en: 'Millions of songs, no login required. Play anywhere.', hi: 'लाखों गाने, लॉगिन की जरूरत नहीं। कहीं भी सुनें।' },
+                cta:   { en: 'Play Now', hi: 'अभी चलाएं' },
+                link: BASE_URL + '/'
+            },
+            {
+                bgImg: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=800&auto=format&fit=crop',
+                tag:   { en: 'Clean Experience', hi: 'साफ़ अनुभव' },
+                title: { en: 'Only Banner Ads. No Pop-ups.', hi: 'सिर्फ बैनर विज्ञापन। कोई पॉप-अप नहीं।' },
+                sub:   { en: 'Not like Spotify style forced ads — just one small banner.', hi: 'Spotify जैसे फोर्स्ड विज्ञापन नहीं — बस एक छोटा बैनर।' },
+                cta:   { en: 'See How It Works', hi: 'देखें कैसे काम करता है' },
+                link: BASE_URL + '/'
+            },
+            {
+                bgImg: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop',
+                tag:   { en: 'Fast & Safe', hi: 'तेज़ और सुरक्षित' },
+                title: { en: 'Blazing Fast Downloads', hi: 'सुपरफास्ट डाउनलोड' },
+                sub:   { en: 'No waiting queues, no fake links. High-speed downloads.', hi: 'कोई कतार नहीं, कोई फर्जी लिंक नहीं। हाई-स्पीड डाउनलोड।' },
+                cta:   { en: 'Download Now', hi: 'अभी डाउनलोड करें' },
+                link: BASE_URL + '/'
+            },
+            {
+                bgImg: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop',
+                tag:   { en: 'Join Our Community', hi: 'हमारी कम्युनिटी जॉइन करें' },
+                title: { en: 'Join Our Telegram Channel', hi: 'हमारा टेलीग्राम चैनल जॉइन करें' },
+                sub:   { en: 'Get new movie & series updates instantly.', hi: 'नई मूवी और सीरीज़ के अपडेट तुरंत पाएं।' },
+                cta:   { en: 'Join Telegram', hi: 'टेलीग्राम जॉइन करें' },
+                link: 'https://t.me/rxplayer'
+            }
+        ];
+
+        const promoSlider = document.getElementById('promoSlider');
+        const promoTrack  = document.getElementById('promoTrack');
+        const promoDots   = document.getElementById('promoDots');
+        const promoBar    = document.getElementById('promoBar');
+
+        let promoIndex = 0;
+        let promoTimer = null;
+        let promoTouchX = null;
+
+        function buildPromos() {
+            // LOGO HATA DIYA GAYA HAI TRACK SE KYUNKI WO AB STATIC HAI
+            promoTrack.innerHTML = PROMOS.map((p, i) => `
+                <a class="promo-slide ${i === 0 ? 'active' : ''}"
+                   href="${escapeHtml(p.link)}" target="_blank" rel="noopener">
+                    <div class="promo-bg" style="background-image: url('${p.bgImg}')"></div>
+                    
+                    <span class="promo-tag"   data-en="${escapeHtml(p.tag.en)}"   data-hi="${escapeHtml(p.tag.hi)}">${escapeHtml(p.tag.en)}</span>
+                    <span class="promo-title" data-en="${escapeHtml(p.title.en)}" data-hi="${escapeHtml(p.title.hi)}">${escapeHtml(p.title.en)}</span>
+                    <span class="promo-sub"   data-en="${escapeHtml(p.sub.en)}"   data-hi="${escapeHtml(p.sub.hi)}">${escapeHtml(p.sub.en)}</span>
+                    <span class="promo-cta">
+                        <span class="promo-cta-txt" data-en="${escapeHtml(p.cta.en)}" data-hi="${escapeHtml(p.cta.hi)}">${escapeHtml(p.cta.en)}</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+            `).join('');
+
+            promoDots.innerHTML = PROMOS.map((_, i) =>
+                `<button type="button" class="promo-dot${i === 0 ? ' active' : ''}" data-i="${i}" aria-label="Promo ${i + 1}"></button>`
+            ).join('');
+        }
+
+        function applyPromoLang(lang) {
+            const track = document.getElementById('promoTrack');
+            if (!track) return;
+            track.querySelectorAll('[data-en]').forEach(el => {
+                const val = el.getAttribute('data-' + lang);
+                if (val) el.textContent = val;
+            });
+        }
+
+        function restartPromoBar() {
+            if (!promoBar) return;
+            promoBar.classList.remove('run');
+            void promoBar.offsetWidth; 
+            promoBar.classList.add('run');
+        }
+
+        function showPromo(i) {
+            const slides = promoTrack.children;
+            if (!slides.length) return;
+            promoIndex = (i + slides.length) % slides.length;
+
+            for (let s = 0; s < slides.length; s++) {
+                slides[s].classList.toggle('active', s === promoIndex);
+            }
+            for (let d = 0; d < promoDots.children.length; d++) {
+                promoDots.children[d].classList.toggle('active', d === promoIndex);
+            }
+            restartPromoBar();
+        }
+
+        function stopPromoRotation() {
+            if (promoTimer) { clearInterval(promoTimer); promoTimer = null; }
+        }
+
+        function startPromoRotation() {
+            stopPromoRotation();
+            restartPromoBar();
+            promoTimer = setInterval(() => showPromo(promoIndex + 1), PROMO_DURATION);
+        }
+
+        function initPromoSlider() {
+            if (!promoSlider) return;
+
+            promoSlider.style.setProperty('--promo-dur', PROMO_DURATION + 'ms');
+            buildPromos();
+
+            promoDots.addEventListener('click', (e) => {
+                const dot = e.target.closest('.promo-dot');
+                if (!dot) return;
+                showPromo(Number(dot.dataset.i));
+                startPromoRotation();
+            });
+
+            promoSlider.addEventListener('mouseenter', () => {
+                stopPromoRotation();
+                if (promoBar) promoBar.style.animationPlayState = 'paused';
+            });
+            promoSlider.addEventListener('mouseleave', () => {
+                if (promoBar) promoBar.style.animationPlayState = 'running';
+                startPromoRotation();
+            });
+
+            promoSlider.addEventListener('touchstart', (e) => {
+                promoTouchX = e.touches[0].clientX;
+            }, { passive: true });
+
+            promoSlider.addEventListener('touchend', (e) => {
+                if (promoTouchX === null) return;
+                const dx = e.changedTouches[0].clientX - promoTouchX;
+                if (Math.abs(dx) > 45) {
+                    showPromo(promoIndex + (dx < 0 ? 1 : -1));
+                    startPromoRotation();
+                }
+                promoTouchX = null;
+            }, { passive: true });
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) stopPromoRotation();
+                else startPromoRotation();
+            });
+
+            showPromo(0);
+            startPromoRotation();
+        }
+
+        initPromoSlider();
+
+        /* =========================================================
+           5. POSTER / TITLE SETUP
            ========================================================= */
         document.getElementById('poster-img').src = poster;
         document.getElementById('media-title').textContent = title;
@@ -284,79 +709,44 @@
         document.getElementById('lang-toggle').addEventListener('click', () => {
             setLanguage(currentLang === 'en' ? 'hi' : 'en');
         });
-    </script>
 
-    <!-- =========================================================
-       5. LOCAL TIMER FLOW (11 SECONDS) - NO API CALLS
-       ========================================================= -->
-    <script>
-    (function () {
-      const WAIT = 11;
-      const msgEl = document.getElementById('timer-message');
-      let timeLeft = WAIT;
-      let started = false;
+        /* =========================================================
+           6. AUTO TIMER & REDIRECT LOGIC
+           ========================================================= */
+        const timerMessage = document.getElementById('timer-message');
+        let countdownInterval;
+        let timeLeft = 30;
 
-      function show(text) { if (msgEl) msgEl.textContent = text; }
-
-      function tickText() {
-        if (document.hidden) {
-          show(currentLang === 'hi'
-            ? 'टाइमर रुका है — इस टैब पर वापस आएं'
-            : 'Timer paused — return to this tab');
-        } else {
-          show(translations[currentLang].timer_msg.replace('{time}', timeLeft));
+        function updateTimerText() {
+            const template = translations[currentLang].timer_msg;
+            timerMessage.textContent = template.replace('{time}', timeLeft);
         }
-      }
 
-      function redirectUser() {
-        // Generate a local dummy pass token just in case the next page expects a URL param
-        const passToken = 'local_' + Date.now();
-        const q = `id=${encodeURIComponent(id)}&type=${encodeURIComponent(type)}` +
-                  `&season=${encodeURIComponent(season)}&episode=${encodeURIComponent(episode)}` +
-                  `&pass=${encodeURIComponent(passToken)}`;
-                  
-        location.href = action === 'download'
-          ? `${BASE_URL}/download.html?${q}`
-          : `${BASE_URL}/player.html?${q}`;
-      }
-
-      function startTimer() {
-        tickText();
-        setInterval(() => {
-          if (!started) return;
-          
-          // Only decrease time if the tab is active
-          if (!document.hidden && timeLeft > 0) {
-            timeLeft--;
-          }
-          
-          tickText();
-          
-          if (timeLeft <= 0) {
-            started = false; // Stop the timer to prevent multiple redirects
-            redirectUser();
-          }
-        }, 1000);
-      }
-
-      function init() {
-        if (!id || isNaN(Number(id))) { 
-          show('Invalid link.'); 
-          return; 
+        function startTimer() {
+            updateTimerText();
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerText();
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    redirectUser();
+                }
+            }, 1000);
         }
-        // Start immediately without checking any API
-        started = true;
+
+        function redirectUser() {
+            const q = `id=${encodeURIComponent(id)}&type=${encodeURIComponent(type)}&season=${encodeURIComponent(season)}&episode=${encodeURIComponent(episode)}`;
+            const targetUrl = action === 'download'
+                ? `${BASE_URL}/download.html?${q}`
+                : `${BASE_URL}/player.html?${q}`;
+            window.location.href = targetUrl;
+        }
+
         startTimer();
-      }
 
-      window.addEventListener('load', init);
-    })();
-    </script>
-
-    <!-- =========================================================
-       6. RELATED CONTENT (TMDB via Proxy)
-       ========================================================= -->
-    <script>
+        /* =========================================================
+           7. RELATED CONTENT (TMDB via Proxy)
+           ========================================================= */
         async function proxyRequest(endpoint) {
             const url = `${API_BASE}/tmdb-proxy?endpoint=${encodeURIComponent(endpoint)}`;
             const res = await fetch(url);
@@ -469,6 +859,18 @@
 
         loadRelated();
     </script>
-
+    <script src ="anti-adblock.js"></script>
+    <!-- monitag vignat ads-->
+    <script>(function(s){s.dataset.zone='12062804',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!--monitag in page ads-->
+    <script>
+        (function(s){
+            s.dataset.zone='12062782',s.src='https://nap5k.com/tag.min.js'
+        })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+    </script>
+    <!-- monitag push notification ads-->
+    <script src="https://5gvci.com/act/files/tag.min.js?z=12062817" data-cfasync="false" async></script>
+    <!-- monitag popunder ads-->
+    <script>(function(s){s.dataset.zone='12062924',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 </body>
 </html>
