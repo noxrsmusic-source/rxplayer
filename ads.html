@@ -512,7 +512,7 @@
     </script>
 
     <!-- =========================================================
-       5. TIMER + PASS FLOW (11 SECONDS, LOCAL & ERROR-FREE)
+       5. TIMER LOGIC (Global Function, starts ONLY if no adblock)
        ========================================================= -->
     <script>
     (function () {
@@ -520,6 +520,7 @@
       const msgEl = document.getElementById('timer-message');
       let timeLeft = WAIT;
       let started = false;
+      let timerInterval = null;
 
       function show(text) { if (msgEl) msgEl.textContent = text; }
 
@@ -547,30 +548,29 @@
           : `${BASE_URL}/player.html?${q}`;
       }
 
-      function startTimer() {
+      // Expose this global function to be called by the Anti-Adblock script
+      window.beginRedirectTimer = function() {
+        if (started) return; // Prevent multiple triggers
+        started = true;
         tickText();
-        setInterval(() => {
-          if (!started) return;
+        
+        timerInterval = setInterval(() => {
           if (!document.hidden && timeLeft > 0) timeLeft--;
           tickText();
           if (timeLeft <= 0) {
             started = false;
+            clearInterval(timerInterval);
             redirectUser();
           }
         }, 1000);
+      };
+
+      // Initial setup for invalid links
+      if (!id || isNaN(Number(id))) {
+           document.getElementById('media-title').textContent = 'Invalid Link';
+           document.getElementById('media-subtitle').textContent = 'Redirecting to Homepage...';
       }
 
-      function init() {
-        started = true;
-        startTimer();
-        
-        if (!id || isNaN(Number(id))) {
-             document.getElementById('media-title').textContent = 'Invalid Link';
-             document.getElementById('media-subtitle').textContent = 'Redirecting to Homepage...';
-        }
-      }
-
-      window.addEventListener('load', init);
     })();
     </script>
 
@@ -917,11 +917,22 @@
         detectionRunning = true;
         try {
           const result = await detectAdBlock();
+          
           if (result.blocked) {
+            // Show popup, DO NOT start timer
             showWarning();
+          } else {
+            // NO ADBLOCK DETECTED -> Start the 11 second timer
+            if (typeof window.beginRedirectTimer === 'function') {
+                window.beginRedirectTimer();
+            }
           }
         } catch (e) {
           console.warn("Detection error:", e);
+          // If check fails due to error, start timer anyway so user isn't stuck
+          if (typeof window.beginRedirectTimer === 'function') {
+              window.beginRedirectTimer();
+          }
         } finally {
           detectionRunning = false;
         }
