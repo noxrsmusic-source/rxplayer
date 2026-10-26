@@ -15,23 +15,17 @@
 
   const translations = {
     en: {
-      title: "Ad Blocker Detected",
-      body: "Please disable your <b>Ad Blocker</b>, lower <b>Brave Shields</b> for this site, or try using a different browser.",
-      btnCheck: "I've Disabled It – Check Again",
-      btnWait: "Checking...",
-      btnStillBlocked: "Still blocked! Check Again",
+      title: "Please Disable AdBlocker",
+      body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive.",
       hint1: "<b>Using Brave?</b> Click the Lion icon in the address bar and select \"Shields Down\".",
-      hint2: "<b>Using a DNS Blocker?</b> Please whitelist our domain.",
+      hint2: "<b>After disabling, please REFRESH the page to continue.</b>",
       toggleLabel: "हिंदी"
     },
     hi: {
-      title: "Ad Blocker Detected",
-      body: "Kripya apna <b>Ad Blocker</b> band karein, <b>Brave Shields</b> ko is site ke liye disable karein, ya kisi anya browser mein try karein.",
-      btnCheck: "Maine Ad Blocker Band Kar Diya – Check Karein",
-      btnWait: "Checking...",
-      btnStillBlocked: "Abhi bhi block hai! Check Again",
+      title: "Kripya AdBlocker Band Karein",
+      body: "Hamari puri site <b>100% pop-up ads free</b> hai. Lekin is page ko access karne ke liye, kripya apna <b>Brave Shields</b>, <b>AdBlocker</b>, ya <b>AdGuard DNS</b> band karein. <br><br> Yeh hamare server costs ko cover karne ke liye bahut zaroori hai.",
       hint1: "<b>Brave use kar rahe hain?</b> Address bar mein Lion icon par click karke \"Shields Down\" karein.",
-      hint2: "<b>DNS Blocker?</b> Kripya is domain ko whitelist karein.",
+      hint2: "<b>Band karne ke baad, aage badhne ke liye kripya page ko REFRESH karein.</b>",
       toggleLabel: "English"
     }
   };
@@ -124,23 +118,25 @@
         .poster-card { border-radius: 12px; overflow: hidden; aspect-ratio: 2 / 3; background: #1c1c1e; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); flex-shrink: 0; }
         .poster-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .overlay-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 15, 15, 0.6) 0%, rgba(15, 15, 15, 0.9) 45%, #0f0f0f 100%); z-index: 2; pointer-events: none; }
-        .box { position: relative; z-index: 10; max-width: 480px; background: rgba(28, 28, 31, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 30px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); }
-        h2 { margin: 0 0 16px; font-size: 24px; color: #fff; font-weight: 700; letter-spacing: 0.5px;}
-        p { margin: 0 0 24px; line-height: 1.6; font-size: 16px; color: #b3b3b3; }
-        button.main-btn { background: #e50914; color: #fff; border: 0; border-radius: 8px; padding: 14px 24px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; width: 100%; max-width: 320px; box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4); }
-        button.main-btn:hover { background: #f40612; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6); }
-        button.main-btn:disabled { opacity: 0.6; cursor: wait; transform: none; box-shadow: none; }
+        
+        .box { position: relative; z-index: 10; max-width: 480px; background: rgba(28, 28, 31, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 30px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* GIF Styling */
+        .gif-container { width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1); background: #000; }
+        .gif-container iframe { width: 100%; height: 100%; border: none; object-fit: cover; }
+
+        h2 { margin: 0 0 16px; font-size: 22px; color: #fff; font-weight: 700; letter-spacing: 0.5px;}
+        p { margin: 0 0 20px; line-height: 1.6; font-size: 15px; color: #b3b3b3; }
+        p b { color: #e50914; }
+        
         .top-controls { position: absolute; top: 12px; left: 16px; right: 16px; display: flex; justify-content: flex-end; align-items: center; }
         .ctrl-btn { background: transparent; border: 1px solid #444; color: #aaa; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
         .ctrl-btn:hover { background: #333; color: #fff; border-color: #666; }
-        .hint { color: #777; font-size: 13px; margin-top: 24px; line-height: 1.5; }
-        .hint b { color: #aaa; }
+        
+        .hint { color: #fff; background: rgba(229, 9, 20, 0.15); border: 1px solid rgba(229, 9, 20, 0.3); padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.5; margin-top: 20px; margin-bottom: 0; }
+        .hint b { color: #e50914; }
       </style>
       
-      <audio id="bg-music" loop>
-        <source src="https://res.cloudinary.com/du9nysbwl/video/upload/v1792581281/Silent_Partner_-_Space_Walk_Youtube_Premiere_Countdown_download_60_fps_jphhye.mp3" type="audio/mpeg">
-      </audio>
-
       <div class="wrap">
         <div class="overlay-bg-wrapper" id="overlay-bg-wrapper"></div>
         <div class="overlay-gradient"></div>
@@ -148,11 +144,17 @@
           <div class="top-controls">
             <button class="ctrl-btn" id="lang-toggle">${translations[currentLang].toggleLabel}</button>
           </div>
-          <h2 id="ad-title" style="margin-top: 10px;">${translations[currentLang].title}</h2>
+          
+          <!-- Penguin GIF -->
+          <div class="gif-container">
+            <iframe src="https://tenor.com/embed/9297265781728325576" frameborder="0"></iframe>
+          </div>
+
+          <h2 id="ad-title" style="margin-top: 5px;">${translations[currentLang].title}</h2>
           <p id="ad-body">${translations[currentLang].body}</p>
-          <button class="main-btn" id="adblock-retry">${translations[currentLang].btnCheck}</button>
+          
           <p class="hint" id="ad-hint">
-            ${translations[currentLang].hint1}<br>
+            ${translations[currentLang].hint1}<br><br>
             ${translations[currentLang].hint2}
           </p>
         </div>
@@ -184,6 +186,7 @@
       }
     }
 
+    // Ensure overlay cannot be removed by scripts
     observer = new MutationObserver(() => {
       if (!document.getElementById(OVERLAY_ID) && overlayHost) {
         document.documentElement.appendChild(overlayHost);
@@ -197,66 +200,22 @@
       }
     }, 300);
 
-    const retryBtn = shadowRoot.getElementById('adblock-retry');
     const langToggleBtn = shadowRoot.getElementById('lang-toggle');
     const titleEl = shadowRoot.getElementById('ad-title');
     const bodyEl = shadowRoot.getElementById('ad-body');
     const hintEl = shadowRoot.getElementById('ad-hint');
-    const bgMusic = shadowRoot.getElementById('bg-music');
-
-    bgMusic.volume = 0.3;
-    
-    // Ab music pakka chalega kyunki yeh user ke click ke baad trigger hua hai
-    bgMusic.play().catch(() => {
-      const playMusicOnInteraction = () => {
-        if (bgMusic.paused) {
-          bgMusic.play().catch(e => console.log("Play failed:", e));
-        }
-        overlayHost.removeEventListener('click', playMusicOnInteraction);
-        document.removeEventListener('click', playMusicOnInteraction);
-        document.removeEventListener('touchstart', playMusicOnInteraction);
-      };
-      overlayHost.addEventListener('click', playMusicOnInteraction);
-      document.addEventListener('click', playMusicOnInteraction);
-      document.addEventListener('touchstart', playMusicOnInteraction);
-    });
 
     langToggleBtn.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'hi' : 'en';
       localStorage.setItem('adblock_lang', currentLang);
       titleEl.innerHTML = translations[currentLang].title;
       bodyEl.innerHTML = translations[currentLang].body;
-      hintEl.innerHTML = `${translations[currentLang].hint1}<br>${translations[currentLang].hint2}`;
+      hintEl.innerHTML = `${translations[currentLang].hint1}<br><br>${translations[currentLang].hint2}`;
       langToggleBtn.textContent = translations[currentLang].toggleLabel;
-      if (!retryBtn.disabled) retryBtn.textContent = translations[currentLang].btnCheck;
-    });
-
-    retryBtn.addEventListener('click', async () => {
-      retryBtn.disabled = true;
-      retryBtn.textContent = translations[currentLang].btnWait;
-
-      setTimeout(async () => {
-        const result = await detectAdBlock();
-        if (result.blocked) {
-          retryBtn.disabled = false;
-          retryBtn.textContent = translations[currentLang].btnStillBlocked;
-        } else {
-          observer.disconnect();
-          clearInterval(reAddInterval);
-          bgMusic.pause(); 
-          overlayHost.remove();
-          overlayHost = null;
-          
-          // Adblock hatega toh user ko aage badhne dega
-          if (typeof onSuccessCallback === 'function') {
-            onSuccessCallback();
-          }
-        }
-      }, 800);
     });
   }
 
-  // Yahan humne global function banaya hai jise HTML call karega
+  // Main execution function
   window.runAdBlockCheck = async function(onSuccessCallback) {
     if (detectionRunning) return;
     if (!document.body) { setTimeout(() => window.runAdBlockCheck(onSuccessCallback), 100); return; }
@@ -265,17 +224,19 @@
     try {
       const result = await detectAdBlock();
       if (result.blocked) {
+        // Blocked - show overlay without any bypass button
         showWarning(onSuccessCallback);
       } else {
-        // Agar adblock nahi hai, toh direct aage badho
+        // Not blocked - proceed normally
         if (typeof onSuccessCallback === 'function') {
           onSuccessCallback();
         }
       }
     } catch (e) {
       console.warn("Detection error:", e);
+      // On error, allow access to avoid breaking user experience
       if (typeof onSuccessCallback === 'function') {
-        onSuccessCallback(); // Error aaye toh bhi user ko roko mat
+        onSuccessCallback();
       }
     } finally {
       detectionRunning = false;
