@@ -78,15 +78,24 @@
             margin-bottom: 10px;
         }
         
-        /* 🔥 TRICK: iframe ko thoda zoom karke upar ka title bar cut kar rahe hain */
+        /* iframe ko zoom kiya hai taaki title bar hide ho jaye */
         .video-player iframe {
             width: 100%;
             height: 100%;
             border: 0;
             display: block;
-            transform: scale(1.2); /* Zoom in */
+            transform: scale(1.2); 
             transform-origin: center;
-            pointer-events: auto; /* taaki user click karke awaz on kar sake */
+            pointer-events: none; /* iframe ke andar click block */
+        }
+
+        /* 🔥 INVISIBLE OVERLAY: Ye user ko video pause/play karne se rokega */
+        .video-blocker {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            background: transparent;
+            cursor: default;
         }
 
         .extra-sections { width: 100%; max-width: 900px; margin-top: 30px; }
@@ -171,18 +180,19 @@
                     <i class="fas fa-clock"></i> <span id="timer-message">Please wait... Auto-redirecting in 11 seconds</span>
                 </div>
 
-                <!-- VIDEO PLAYER (YouTube Clean View) -->
+                <!-- VIDEO PLAYER (No Controls, No Pause) -->
                 <div class="video-player">
                   <iframe 
-                    width="560" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/nFEVeJhh-eU?si=HGl0ljFiWB1TNVMM&autoplay=1&mute=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&playsinline=1" 
+                    src="https://www.youtube.com/embed/nFEVeJhh-eU?si=HGl0ljFiWB1TNVMM&autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&playsinline=1&disablekb=1" 
                     title="YouTube video player" 
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     referrerpolicy="strict-origin-when-cross-origin" 
                     allowfullscreen>
                   </iframe>
+                  
+                  <!-- 🔥 THIS BLOCKS ALL CLICKS SO USER CANNOT PAUSE -->
+                  <div class="video-blocker"></div>
                 </div>
 
             </div>
