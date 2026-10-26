@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Loading your content...</title>
+    <title>RX Player App - Coming Soon</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -13,13 +13,18 @@
         body {
             background: #08080C; color: #fff; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-start; padding: 30px 16px 60px; text-align: center;
+            justify-content: center; padding: 30px 16px; text-align: center;
+            overflow: hidden;
         }
 
+        /* =========================================================
+           MAIN AD VIEW (Shows initially)
+           ========================================================= */
         .content-box {
             background: #14141F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
             padding: 24px; max-width: 420px; width: 100%;
             box-shadow: 0 16px 40px rgba(0,0,0,0.8); position: relative;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .lang-toggle {
@@ -40,13 +45,17 @@
         .content-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 
         .media-info { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .poster-wrap {
-            width: 120px; height: 180px; margin: 0 auto 14px; border-radius: 10px;
-            overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.6); background: #0a0a0f;
+        
+        /* App Logo */
+        .app-logo-wrap {
+            width: 100px; height: 100px; margin: 0 auto 14px; border-radius: 22px;
+            overflow: hidden; box-shadow: 0 8px 24px rgba(229,9,20,0.3); background: #0a0a0f;
+            border: 2px solid rgba(255,255,255,0.1);
         }
-        .poster-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #fff; line-height: 1.3; }
-        p.subtitle { font-size: 12px; color: #9CA3AF; margin-bottom: 0; }
+        .app-logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        h1 { font-size: 22px; font-weight: 900; margin-bottom: 6px; color: #fff; line-height: 1.3; letter-spacing: -0.5px; }
+        p.subtitle { font-size: 13px; color: #9CA3AF; margin-bottom: 0; }
 
         .action-area { 
             display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; 
@@ -78,84 +87,89 @@
             margin-bottom: 10px;
         }
         .video-player iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
+            width: 100%; height: 100%; border: 0; display: block;
+        }
+
+        /* =========================================================
+           UNDER CONSTRUCTION VIEW (Shows after timer)
+           ========================================================= */
+        .construction-view {
+            display: none; /* Hidden initially */
+            background: #14141F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+            padding: 40px 24px; max-width: 420px; width: 100%;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.8), inset 0 0 50px rgba(229,9,20,0.1);
+            position: relative; text-align: center;
+            opacity: 0; transform: scale(0.9); transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+            border-top: 4px solid #E50914;
+        }
+
+        .construction-view.show {
             display: block;
+            opacity: 1; transform: scale(1);
         }
 
-        .extra-sections { width: 100%; max-width: 900px; margin-top: 30px; }
-        .section { margin-bottom: 34px; text-align: left; }
-        .section h2 { font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-        .section h2 i { color: #E50914; font-size: 16px; }
-
-        .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .related-card { background: #14141F; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; text-decoration: none; color: #fff; transition: 0.3s; display: block; }
-        .related-card:hover { transform: translateY(-4px); border-color: rgba(229,9,20,0.5); box-shadow: 0 10px 24px rgba(0,0,0,0.6); }
-        .related-poster { width: 100%; aspect-ratio: 2 / 3; background: #0a0a0f; overflow: hidden; }
-        .related-poster img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-        .related-card:hover .related-poster img { transform: scale(1.05); }
-        .related-title { padding: 8px 10px; font-size: 12px; font-weight: 600; color: #D1D5DB; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
-
-        .related-skeleton { background: #14141F; border-radius: 10px; overflow: hidden; }
-        .related-skeleton .sk-poster { width: 100%; aspect-ratio: 2 / 3; background: linear-gradient(90deg, #14141F 0%, #1f1f2e 50%, #14141F 100%); background-size: 200% 100%; animation: sk-shine 1.5s infinite; }
-        .related-skeleton .sk-title { height: 12px; margin: 12px 10px; background: linear-gradient(90deg, #14141F 0%, #1f1f2e 50%, #14141F 100%); background-size: 200% 100%; animation: sk-shine 1.5s infinite; border-radius: 4px; }
-        @keyframes sk-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .no-related { grid-column: 1 / -1; font-size: 13px; color: #9CA3AF; padding: 24px 18px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1); text-align: center; line-height: 1.6; }
-        .no-related i { color: #E50914; margin-right: 6px; }
-
-        .blog-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .blog-card { background: #14141F; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; text-decoration: none; color: #fff; transition: 0.3s; display: block; text-align: left; }
-        .blog-card:hover { transform: translateY(-3px); border-color: rgba(229,9,20,0.4); box-shadow: 0 10px 22px rgba(0,0,0,0.5); }
-        .blog-card .blog-tag { display: inline-block; background: rgba(229,9,20,0.15); color: #ff4d5e; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.6px; }
-        .blog-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #fff; line-height: 1.4; }
-        .blog-card p { font-size: 12px; color: #9CA3AF; line-height: 1.55; }
-
-        @media (min-width: 640px) {
-            .related-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-            .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .construction-icon {
+            font-size: 60px; color: #E50914; margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(229,9,20,0.4));
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
-        /* PC VIEW */
+        .construction-view h2 {
+            font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -0.5px;
+        }
+        .construction-view p {
+            font-size: 14px; color: #9CA3AF; line-height: 1.6; margin-bottom: 24px;
+        }
+
+        .notify-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: #E50914; color: #fff; padding: 14px 24px; border-radius: 30px;
+            font-size: 15px; font-weight: 700; border: none; cursor: pointer; text-decoration: none;
+            box-shadow: 0 8px 24px rgba(229,9,20,0.4); transition: 0.3s;
+            width: 100%;
+        }
+        .notify-btn:hover { background: #b20710; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(229,9,20,0.6); }
+
         @media (min-width: 768px) {
-            body { padding-top: 45px; padding-bottom: 60px; }
             .content-box { max-width: 900px; padding: 40px; }
             .content-grid { grid-template-columns: 280px 1fr; gap: 40px; align-items: center; text-align: left; }
             .media-info { align-items: flex-start; }
-            .poster-wrap { width: 100%; max-width: 260px; height: 390px; margin: 0 0 20px 0; }
-            h1 { font-size: 28px; margin-bottom: 10px; }
-            p.subtitle { font-size: 15px; }
-            
+            .app-logo-wrap { margin: 0 0 20px 0; width: 140px; height: 140px; }
+            h1 { font-size: 32px; margin-bottom: 10px; }
+            p.subtitle { font-size: 16px; }
             .video-player { margin-bottom: 0; }
             .timer-text { font-size: 18px; padding: 18px; margin-bottom: 20px; max-width: 400px; }
-
-            .extra-sections { margin-top: 45px; }
-            .section { margin-bottom: 40px; }
-            .section h2 { font-size: 21px; margin-bottom: 18px; }
-            .related-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; }
-            .related-title { font-size: 13px; padding: 10px 12px; min-height: 46px; }
-            .blog-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-            .blog-card { padding: 20px; }
-            .blog-card h3 { font-size: 15px; }
-            .blog-card p { font-size: 13px; }
+            
+            .construction-view { max-width: 600px; padding: 60px 40px; }
+            .construction-view h2 { font-size: 36px; }
+            .construction-view p { font-size: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="content-box">
+    <!-- =========================================================
+         AD VIEW (Initially Visible)
+         ========================================================= -->
+    <div class="content-box" id="ad-view">
         <button id="lang-toggle" class="lang-toggle">हिंदी</button>
-        <div class="official-badge" data-i18n="official_page">Official Page</div>
+        <div class="official-badge" data-i18n="official_page">Official App Page</div>
 
         <div class="content-grid">
-            <!-- Left Column: Poster -->
+            <!-- Left Column: App Info -->
             <div class="media-info">
-                <div class="poster-wrap">
-                    <img id="poster-img" src="https://placehold.co/300x450/14141F/666?text=Loading" alt="Poster">
+                <div class="app-logo-wrap">
+                    <!-- Yahan apna App Logo image src daalein -->
+                    <img id="app-logo" src="https://placehold.co/200x200/14141F/E50914?text=RX+APP" alt="App Logo">
                 </div>
-                <h1 id="media-title">Loading Title...</h1>
-                <p class="subtitle" id="media-subtitle">Preparing your content...</p>
+                <h1 id="app-title">RX Player App</h1>
+                <p class="subtitle">Experience the fastest & ad-free streaming!</p>
             </div>
 
             <!-- Right Column: Action Area -->
@@ -163,10 +177,10 @@
                 
                 <!-- TIMER -->
                 <div id="timer-text" class="timer-text">
-                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait... Auto-redirecting in 11 seconds</span>
+                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait... 11 seconds</span>
                 </div>
 
-                <!-- VIDEO PLAYER (Dailymotion New Embed Format) -->
+                <!-- VIDEO PLAYER (Dailymotion) -->
                 <div class="video-player">
                     <iframe
                         src="https://geo.dailymotion.com/player/x8lr5.html?video=xbr7cuy&autoplay=1&mute=1"
@@ -181,72 +195,41 @@
         </div>
     </div>
 
-    <div class="extra-sections">
-        <div class="section related-section">
-            <h2><i class="fas fa-fire"></i> You May Also Like</h2>
-            <div class="related-grid" id="related-grid"></div>
+    <!-- =========================================================
+         UNDER CONSTRUCTION VIEW (Revealed after timer)
+         ========================================================= -->
+    <div class="construction-view" id="construction-view">
+        <div class="app-logo-wrap" style="margin: 0 auto 20px; width: 80px; height: 80px; box-shadow: none;">
+            <img src="https://placehold.co/200x200/14141F/E50914?text=RX+APP" alt="App Logo">
         </div>
-
-        <div class="section blog-section">
-            <h2><i class="fas fa-newspaper"></i> Latest from Our Blog</h2>
-            <div class="blog-grid">
-                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
-                    <span class="blog-tag">Movies</span>
-                    <h3>Top 10 Must-Watch Movies of 2024</h3>
-                    <p>From blockbuster hits to hidden gems — here's our carefully curated list of the best films this year.</p>
-                </a>
-                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
-                    <span class="blog-tag">Guide</span>
-                    <h3>How to Download Movies Safely &amp; Fast</h3>
-                    <p>Learn the safest way to download your favourite content without compromising your device.</p>
-                </a>
-                <a href="https://rxplayer-indol.vercel.app/" class="blog-card" target="_blank" rel="noopener">
-                    <span class="blog-tag">TV Shows</span>
-                    <h3>Best TV Series to Binge This Month</h3>
-                    <p>Bored? Here are the top binge-worthy series that everyone is talking about right now.</p>
-                </a>
-            </div>
-        </div>
+        <div class="construction-icon"><i class="fas fa-tools"></i></div>
+        <h2 data-i18n="under_construction">App Under Construction</h2>
+        <p data-i18n="construction_msg">We are working hard to bring the ultimate streaming experience to your phone. Stay tuned!</p>
+        <a href="https://t.me/rxplayer" target="_blank" class="notify-btn">
+            <i class="fas fa-bell"></i> <span data-i18n="notify_me">Notify Me on Telegram</span>
+        </a>
     </div>
 
     <script>
         /* =========================================================
-           1. CONFIG & URL PARAMS
-           ========================================================= */
-        const API_BASE = 'https://rxplayer-indol.vercel.app/api';
-        const BASE_URL = 'https://rxplayer-indol.vercel.app';
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const id      = urlParams.get('id');
-        const type    = urlParams.get('type');
-        const action  = urlParams.get('action');
-        const title   = urlParams.get('title')    || 'Untitled';
-        const poster  = urlParams.get('poster')   || 'https://placehold.co/300x450/14141F/666?text=No+Image';
-        const season  = urlParams.get('season')   || '1';
-        const episode = urlParams.get('episode')  || '1';
-
-        /* =========================================================
-           2. HELPERS
-           ========================================================= */
-        function escapeHtml(str) {
-            if (str == null) return '';
-            return String(str).replace(/[&<>"']/g, function (c) {
-                return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
-            });
-        }
-
-        /* =========================================================
-           3. TRANSLATIONS & UI SETUP
+           1. CONFIG & TRANSLATIONS
            ========================================================= */
         let currentLang = 'en';
+        
         const translations = {
             en: {
-                official_page: "Official Page",
-                timer_msg: "Wait {time}s, Auto-redirecting..."
+                official_page: "Official App Page",
+                timer_msg: "Please wait... {time} seconds",
+                under_construction: "App Under Construction",
+                construction_msg: "We are working hard to bring the ultimate streaming experience to your phone. Stay tuned!",
+                notify_me: "Notify Me on Telegram"
             },
             hi: {
-                official_page: "आधिकारिक पृष्ठ",
-                timer_msg: "प्रतीक्षा करें... {time} सेकंड में आगे बढ़ रहे हैं"
+                official_page: "आधिकारिक ऐप पेज",
+                timer_msg: "कृपया प्रतीक्षा करें... {time} सेकंड",
+                under_construction: "ऐप निर्माणाधीन है",
+                construction_msg: "हम आपके फोन पर शानदार स्ट्रीमिंग अनुभव लाने के लिए कड़ी मेहनत कर रहे हैं। बने रहें!",
+                notify_me: "टेलीग्राम पर सूचित करें"
             }
         };
 
@@ -256,8 +239,11 @@
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key]) el.textContent = translations[lang][key];
             });
-            document.getElementById('lang-toggle').textContent = lang === 'en' ? 'हिंदी' : 'English';
+            
+            const toggleBtn = document.getElementById('lang-toggle');
+            if(toggleBtn) toggleBtn.textContent = lang === 'en' ? 'हिंदी' : 'English';
 
+            // Update timer text based on new language
             const timerMsg = document.getElementById('timer-message');
             if (timerMsg) {
                 const m = timerMsg.textContent.match(/\d+/);
@@ -266,195 +252,69 @@
             }
         }
 
-        /* =========================================================
-           4. POSTER / TITLE SETUP
-           ========================================================= */
-        document.getElementById('poster-img').src = poster;
-        document.getElementById('media-title').textContent = title;
-
-        if (type === 'tv') {
-            document.getElementById('media-subtitle').textContent = `Season ${season}, Episode ${episode}`;
-        } else {
-            document.getElementById('media-subtitle').textContent = 'Movie';
-        }
-
-        setLanguage('en');
-
         document.getElementById('lang-toggle').addEventListener('click', () => {
             setLanguage(currentLang === 'en' ? 'hi' : 'en');
         });
-    </script>
 
-    <!-- =========================================================
-       5. TIMER + PASS FLOW (11 SECONDS, LOCAL & ERROR-FREE)
-       ========================================================= -->
-    <script>
-    (function () {
-      const WAIT = 11;
-      const msgEl = document.getElementById('timer-message');
-      let timeLeft = WAIT;
-      let started = false;
+        // Initialize language
+        setLanguage('en');
 
-      function show(text) { if (msgEl) msgEl.textContent = text; }
+        /* =========================================================
+           2. TIMER & TRANSITION LOGIC
+           ========================================================= */
+        (function () {
+            const WAIT = 11;
+            const msgEl = document.getElementById('timer-message');
+            let timeLeft = WAIT;
+            let started = false;
 
-      function tickText() {
-        if (document.hidden) {
-          show(currentLang === 'hi'
-            ? 'टाइमर रुका है — इस टैब पर वापस आएं'
-            : 'Timer paused — return to this tab');
-        } else {
-          show(translations[currentLang].timer_msg.replace('{time}', timeLeft));
-        }
-      }
+            function show(text) { if (msgEl) msgEl.textContent = text; }
 
-      function redirectUser() {
-        // Redirect to player or download page with pass token
-        const q = `id=${encodeURIComponent(id)}&type=${encodeURIComponent(type)}` +
-                  `&season=${encodeURIComponent(season)}&episode=${encodeURIComponent(episode)}` +
-                  `&pass=${encodeURIComponent('local_' + Date.now())}`;
-        location.href = action === 'download'
-          ? `${BASE_URL}/download.html?${q}`
-          : `${BASE_URL}/player.html?${q}`;
-      }
-
-      function startTimer() {
-        tickText();
-        setInterval(() => {
-          if (!started) return;
-          if (!document.hidden && timeLeft > 0) timeLeft--;
-          tickText();
-          if (timeLeft <= 0) {
-            started = false; // prevent multiple redirects
-            redirectUser();
-          }
-        }, 1000);
-      }
-
-      function init() {
-        if (!id || isNaN(Number(id))) { show('Invalid link.'); return; }
-        started = true;
-        startTimer();
-      }
-
-      window.addEventListener('load', init);
-    })();
-    </script>
-
-    <!-- =========================================================
-       6. RELATED CONTENT (TMDB via Proxy)
-       ========================================================= -->
-    <script>
-        async function proxyRequest(endpoint) {
-            const url = `${API_BASE}/tmdb-proxy?endpoint=${encodeURIComponent(endpoint)}`;
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-            const data = await res.json();
-            if (data.success === false) throw new Error(data.error || 'API returned success=false');
-            return data;
-        }
-
-        function buildRelatedUrl(item, mediaType) {
-            const p = new URLSearchParams();
-            p.set('id', item.id);
-            p.set('type', mediaType);
-            p.set('title', item.title || item.name || 'Untitled');
-            if (item.poster_path) {
-                p.set('poster', `https://image.tmdb.org/t/p/w300${item.poster_path}`);
-            }
-            if (action) p.set('action', action);
-            if (mediaType === 'tv') {
-                p.set('season', '1');
-                p.set('episode', '1');
-            }
-            return `${window.location.pathname}?${p.toString()}`;
-        }
-
-        function mergeUnique(listA, listB, limit) {
-            const seen = new Set();
-            const out = [];
-            const maxLen = Math.max(listA.length, listB.length);
-            for (let i = 0; i < maxLen; i++) {
-                if (listA[i] && listA[i].poster_path && !seen.has(listA[i].id)) {
-                    seen.add(listA[i].id);
-                    out.push(listA[i]);
-                    if (out.length >= limit) break;
-                }
-                if (listB[i] && listB[i].poster_path && !seen.has(listB[i].id)) {
-                    seen.add(listB[i].id);
-                    out.push(listB[i]);
-                    if (out.length >= limit) break;
+            function tickText() {
+                if (document.hidden) {
+                    show(currentLang === 'hi'
+                        ? 'टाइमर रुका है — इस टैब पर वापस आएं'
+                        : 'Timer paused — return to this tab');
+                } else {
+                    show(translations[currentLang].timer_msg.replace('{time}', timeLeft));
                 }
             }
-            return out;
-        }
 
-        async function loadRelated() {
-            const grid = document.getElementById('related-grid');
-            if (!grid) return;
+            function revealConstructionView() {
+                const adView = document.getElementById('ad-view');
+                const constructionView = document.getElementById('construction-view');
 
-            const numericId = id !== null && id !== '' && !isNaN(Number(id));
-            if (!numericId || (type !== 'movie' && type !== 'tv')) {
-                grid.innerHTML = '<p class="no-related"><i class="fas fa-info-circle"></i> Invalid content ID or type.</p>';
-                return;
+                // Fade out ad view
+                adView.style.opacity = '0';
+                adView.style.transform = 'scale(0.95)';
+                
+                // After fade out, hide ad view and show construction view
+                setTimeout(() => {
+                    adView.style.display = 'none';
+                    constructionView.classList.add('show');
+                }, 500);
             }
 
-            grid.innerHTML = Array(6).fill(0).map(() => `
-                <div class="related-skeleton">
-                    <div class="sk-poster"></div>
-                    <div class="sk-title"></div>
-                </div>
-            `).join('');
-
-            try {
-                const [similarRes, recRes] = await Promise.all([
-                    proxyRequest(`/${type}/${id}/similar?language=en-US&page=1`).catch(() => ({ results: [] })),
-                    proxyRequest(`/${type}/${id}/recommendations?language=en-US&page=1`).catch(() => ({ results: [] }))
-                ]);
-
-                const similar = (similarRes.results || [])
-                    .filter(i => i.poster_path && String(i.id) !== String(id))
-                    .map(i => ({ ...i, media_type: i.media_type || type }));
-
-                const recommendations = (recRes.results || [])
-                    .filter(i => i.poster_path && String(i.id) !== String(id))
-                    .map(i => ({ ...i, media_type: i.media_type || type }));
-
-                let items = mergeUnique(recommendations, similar, 6);
-
-                if (items.length === 0) {
-                    const fallback = await proxyRequest(`/${type}/popular?language=en-US&page=1`).catch(() => ({ results: [] }));
-                    items = (fallback.results || [])
-                        .filter(i => i.poster_path && String(i.id) !== String(id))
-                        .slice(0, 6)
-                        .map(i => ({ ...i, media_type: type }));
-                }
-
-                if (items.length === 0) {
-                    grid.innerHTML = '<p class="no-related"><i class="fas fa-search"></i> No related titles found.</p>';
-                    return;
-                }
-
-                grid.innerHTML = items.map(item => {
-                    const t = item.title || item.name || 'Untitled';
-                    const p = `https://image.tmdb.org/t/p/w300${item.poster_path}`;
-                    const u = buildRelatedUrl(item, item.media_type);
-                    return `
-                        <a href="${u}" class="related-card">
-                            <div class="related-poster">
-                                <img src="${p}" alt="${escapeHtml(t)}" loading="lazy">
-                            </div>
-                            <div class="related-title">${escapeHtml(t)}</div>
-                        </a>
-                    `;
-                }).join('');
-
-            } catch (err) {
-                console.error('Related fetch error:', err);
-                grid.innerHTML = `<p class="no-related"><i class="fas fa-exclamation-triangle"></i> Error loading content: ${escapeHtml(err.message || 'Network failed')}</p>`;
+            function startTimer() {
+                tickText();
+                setInterval(() => {
+                    if (!started) return;
+                    if (!document.hidden && timeLeft > 0) timeLeft--;
+                    tickText();
+                    if (timeLeft <= 0) {
+                        started = false; // Stop timer
+                        revealConstructionView(); // Show the coming soon screen
+                    }
+                }, 1000);
             }
-        }
 
-        loadRelated();
+            function init() {
+                started = true;
+                startTimer();
+            }
+
+            window.addEventListener('load', init);
+        })();
     </script>
 
 </body>
