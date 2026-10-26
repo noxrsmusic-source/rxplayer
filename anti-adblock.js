@@ -16,7 +16,7 @@
   const translations = {
     en: {
       title: "Please Disable AdBlocker",
-      body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive. <br><br> <b>Note: After passing this page, you can turn your AdBlocker, Brave Shields, or AdGuard DNS back ON.</b>",
+      body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive. <br><br>  After this pege you can activate your ad blocker<br><br><b>Note: After passing this page, you can turn your AdBlocker, Brave Shields, or AdGuard DNS back ON.</b>",
       hint1: "<b>Using Brave?</b> Click the Lion icon in the address bar and select \"Shields Down\".",
       hint2: "<b>After disabling, please REFRESH the page to continue.</b>",
       toggleLabel: "हिंदी"
