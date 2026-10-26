@@ -65,9 +65,7 @@
             text-align: center; margin-bottom: 20px;
         }
 
-        /* =========================================================
-           VIDEO PLAYER
-           ========================================================= */
+        /* VIDEO PLAYER */
         .video-player {
             position: relative;
             width: 100%;
@@ -168,11 +166,12 @@
                     <i class="fas fa-clock"></i> <span id="timer-message">Please wait... Auto-redirecting in 11 seconds</span>
                 </div>
 
-                <!-- ✅ VIDEO PLAYER (replaces old promo ads) -->
+                <!-- VIDEO PLAYER (Dailymotion with fix) -->
                 <div class="video-player">
                     <iframe
                         src="https://www.dailymotion.com/embed/video/xbr7cuy?autoplay=1&mute=1"
                         allow="autoplay; fullscreen; picture-in-picture"
+                        referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen
                         frameborder="0">
                     </iframe>
@@ -214,6 +213,7 @@
         /* =========================================================
            1. CONFIG & URL PARAMS
            ========================================================= */
+        // API_BASE is kept only for TMDB related content proxy
         const API_BASE = 'https://rxplayer-indol.vercel.app/api';
         const BASE_URL = 'https://rxplayer-indol.vercel.app';
 
@@ -287,20 +287,16 @@
     </script>
 
     <!-- =========================================================
-       5. TIMER + PASS FLOW (11 SECONDS, NO AD-BLOCK DEPENDENCY)
+       5. LOCAL TIMER FLOW (11 SECONDS) - NO API CALLS
        ========================================================= -->
     <script>
     (function () {
-      const API = BASE_URL + '/api';
       const WAIT = 11;
-
       const msgEl = document.getElementById('timer-message');
       let timeLeft = WAIT;
-      let startToken = null;
       let started = false;
-      let claiming = false;
 
-      function show(text) { msgEl.textContent = text; }
+      function show(text) { if (msgEl) msgEl.textContent = text; }
 
       function tickText() {
         if (document.hidden) {
@@ -312,38 +308,13 @@
         }
       }
 
-      async function beginSession() {
-        const r = await fetch(`${API}/ad-start?id=${encodeURIComponent(id)}`);
-        const d = await r.json();
-        if (!d.success) throw new Error(d.error || 'session failed');
-        startToken = d.start;
-      }
-
-      async function claim() {
-        if (claiming) return;
-        claiming = true;
-        try {
-          const r = await fetch(`${API}/ad-claim`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ start: startToken })
-          });
-          const d = await r.json();
-          if (d.success) return redirectUser(d.pass);
-          if (r.status === 425 && d.wait) { timeLeft = d.wait; }
-          else if (r.status === 410) { location.reload(); }
-          else { show('Something went wrong. Please refresh.'); }
-        } catch (e) {
-          timeLeft = 3;
-        } finally {
-          claiming = false;
-        }
-      }
-
-      function redirectUser(pass) {
+      function redirectUser() {
+        // Generate a local dummy pass token just in case the next page expects a URL param
+        const passToken = 'local_' + Date.now();
         const q = `id=${encodeURIComponent(id)}&type=${encodeURIComponent(type)}` +
                   `&season=${encodeURIComponent(season)}&episode=${encodeURIComponent(episode)}` +
-                  `&pass=${encodeURIComponent(pass)}`;
+                  `&pass=${encodeURIComponent(passToken)}`;
+                  
         location.href = action === 'download'
           ? `${BASE_URL}/download.html?${q}`
           : `${BASE_URL}/player.html?${q}`;
@@ -353,21 +324,29 @@
         tickText();
         setInterval(() => {
           if (!started) return;
-          if (!document.hidden && timeLeft > 0) timeLeft--;
+          
+          // Only decrease time if the tab is active
+          if (!document.hidden && timeLeft > 0) {
+            timeLeft--;
+          }
+          
           tickText();
-          if (timeLeft <= 0) claim();
+          
+          if (timeLeft <= 0) {
+            started = false; // Stop the timer to prevent multiple redirects
+            redirectUser();
+          }
         }, 1000);
       }
 
-      async function init() {
-        if (!id || isNaN(Number(id))) { show('Invalid link.'); return; }
-        try {
-          await beginSession();
-          started = true;
-          startTimer();
-        } catch (e) {
-          show('Could not start session. Please refresh.');
+      function init() {
+        if (!id || isNaN(Number(id))) { 
+          show('Invalid link.'); 
+          return; 
         }
+        // Start immediately without checking any API
+        started = true;
+        startTimer();
       }
 
       window.addEventListener('load', init);
