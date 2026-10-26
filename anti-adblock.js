@@ -16,14 +16,14 @@
   const translations = {
     en: {
       title: "Please Disable AdBlocker",
-      body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive. <br><br>  After this pege you can activate your ad blocker<br><br><b>Note: After passing this page, you can turn your AdBlocker, Brave Shields, or AdGuard DNS back ON.</b>",
+      body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive. <br><br><span style='color: #22C55E; font-weight: 700; font-size: 16px;'>Note: After passing this page, you can turn your AdBlocker, Brave Shields, or AdGuard DNS back ON.</span>",
       hint1: "<b>Using Brave?</b> Click the Lion icon in the address bar and select \"Shields Down\".",
       hint2: "<b>After disabling, please REFRESH the page to continue.</b>",
       toggleLabel: "हिंदी"
     },
     hi: {
       title: "Kripya AdBlocker Band Karein",
-      body: "Hamari puri site <b>100% pop-up ads free</b> hai. Lekin is page ko access karne ke liye, kripya apna <b>Brave Shields</b>, <b>AdBlocker</b>, ya <b>AdGuard DNS</b> band karein. <br><br> Yeh hamare server costs ko cover karne ke liye bahut zaroori hai. <br><br> <b>Note: Is page ke baad, aap apna AdBlocker, Brave Shields, ya AdGuard DNS wapas ON kar sakte hain.</b>",
+      body: "Hamari puri site <b>100% pop-up ads free</b> hai. Lekin is page ko access karne ke liye, kripya apna <b>Brave Shields</b>, <b>AdBlocker</b>, ya <b>AdGuard DNS</b> band karein. <br><br> Yeh hamare server costs ko cover karne ke liye bahut zaroori hai. <br><br><span style='color: #22C55E; font-weight: 700; font-size: 16px;'>Note: Is page ko cross karne ke baad, aap apna AdBlocker, Brave Shields, ya AdGuard DNS wapas ON kar sakte hain.</span>",
       hint1: "<b>Brave use kar rahe hain?</b> Address bar mein Lion icon par click karke \"Shields Down\" karein.",
       hint2: "<b>Band karne ke baad, aage badhne ke liye kripya page ko REFRESH karein.</b>",
       toggleLabel: "English"
