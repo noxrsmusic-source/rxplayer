@@ -14,7 +14,6 @@
             background: #08080C; color: #fff; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
             justify-content: flex-start; text-align: center;
-            /* Padding adjusted for floating banners */
             padding: 100px 16px 100px;
         }
 
@@ -701,7 +700,7 @@
       'use strict';
 
       const OVERLAY_ID = 'adblock-overlay-host';
-      const CHECK_TIMEOUT = 2000; 
+      const CHECK_TIMEOUT = 3500; // Increased timeout for slow networks
       let overlayHost = null;
       let observer = null;
       let reAddInterval = null;
@@ -714,16 +713,22 @@
       const translations = {
         en: {
           title: "Please Disable AdBlocker",
-          body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive. <br><br><span style='color: #22C55E; font-weight: 700; font-size: 16px;'>Note: After passing this page, you can turn your AdBlocker, Brave Shields, or AdGuard DNS back ON.</span>",
+          body: "Our entire site is <b>100% pop-up ad-free</b>. However, to access this specific page, please turn off your <b>Brave Shields</b>, <b>AdBlocker</b>, or <b>AdGuard DNS</b>. <br><br> This is crucial for covering our server costs and keeping the service alive. <br><br><span style='color: #22C55E; font-weight: 700; font-size: 15px;'>Note: After passing this page, you can turn your AdBlocker back ON.</span>",
           hint1: "<b>Using Brave?</b> Click the Lion icon in the address bar and select \"Shields Down\".",
-          hint2: "<b>After disabling, please REFRESH the page to continue.</b>",
+          hint2: "<b>After disabling, please click the button below to continue.</b>",
+          retryBtn: "<i class='fas fa-sync-alt'></i> I've Disabled It - Check Again",
+          checkingBtn: "<i class='fas fa-circle-notch fa-spin'></i> Checking...",
+          stillBlocked: "<i class='fas fa-exclamation-triangle'></i> Still Blocked! Check Again",
           toggleLabel: "हिंदी"
         },
         hi: {
           title: "Kripya AdBlocker Band Karein",
-          body: "Hamari puri site <b>100% pop-up ads free</b> hai. Lekin is page ko access karne ke liye, kripya apna <b>Brave Shields</b>, <b>AdBlocker</b>, ya <b>AdGuard DNS</b> band karein. <br><br> Yeh hamare server costs ko cover karne ke liye bahut zaroori hai. <br><br><span style='color: #22C55E; font-weight: 700; font-size: 16px;'>Note: Is page ko cross karne ke baad, aap apna AdBlocker, Brave Shields, ya AdGuard DNS wapas ON kar sakte hain.</span>",
+          body: "Hamari puri site <b>100% pop-up ads free</b> hai. Lekin is page ko access karne ke liye, kripya apna <b>Brave Shields</b>, <b>AdBlocker</b>, ya <b>AdGuard DNS</b> band karein. <br><br> Yeh hamare server costs ko cover karne ke liye bahut zaroori hai. <br><br><span style='color: #22C55E; font-weight: 700; font-size: 15px;'>Note: Is page ko cross karne ke baad, aap apna AdBlocker wapas ON kar sakte hain.</span>",
           hint1: "<b>Brave use kar rahe hain?</b> Address bar mein Lion icon par click karke \"Shields Down\" karein.",
-          hint2: "<b>Band karne ke baad, aage badhne ke liye kripya page ko REFRESH karein.</b>",
+          hint2: "<b>Band karne ke baad, aage badhne ke liye neeche diye gaye button par click karein.</b>",
+          retryBtn: "<i class='fas fa-sync-alt'></i> Maine Disable Kar Diya - Check Karein",
+          checkingBtn: "<i class='fas fa-circle-notch fa-spin'></i> Check Ho Raha Hai...",
+          stillBlocked: "<i class='fas fa-exclamation-triangle'></i> Abhi Bhi Block Hai! Check Again",
           toggleLabel: "English"
         }
       };
@@ -755,8 +760,9 @@
             if (completed >= totalTests) resolve(blockedSignals > 0);
           };
 
+          // Add random query param to bypass cache completely
           const script = document.createElement('script');
-          script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?cb=' + Math.random();
+          script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?cb=' + Date.now() + Math.random();
           script.async = true;
           script.onload = () => finish();
           script.onerror = () => { blockedSignals++; finish(); };
@@ -764,7 +770,7 @@
           setTimeout(() => { script.remove(); }, CHECK_TIMEOUT);
 
           const img = new Image();
-          img.src = 'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/123456789/?cb=' + Math.random();
+          img.src = 'https://googleads.g.doubleclick.net/pagead/viewthroughconversion/123456789/?cb=' + Date.now() + Math.random();
           img.onload = () => finish();
           img.onerror = () => { blockedSignals++; finish(); };
           
@@ -830,8 +836,18 @@
             .ctrl-btn { background: transparent; border: 1px solid #444; color: #aaa; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
             .ctrl-btn:hover { background: #333; color: #fff; border-color: #666; }
             
-            .hint { color: #fff; background: rgba(229, 9, 20, 0.15); border: 1px solid rgba(229, 9, 20, 0.3); padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.5; margin-top: 20px; margin-bottom: 0; }
+            .hint { color: #fff; background: rgba(229, 9, 20, 0.15); border: 1px solid rgba(229, 9, 20, 0.3); padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.5; margin-top: 20px; margin-bottom: 20px; text-align: left; }
             .hint b { color: #e50914; }
+            
+            /* NEW: Retry Button Styles */
+            .main-btn { 
+              background: #e50914; color: #fff; border: none; border-radius: 8px; 
+              padding: 12px 20px; font-size: 14px; font-weight: 700; cursor: pointer; 
+              width: 100%; transition: 0.2s; display: flex; align-items: center; 
+              justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(229,9,20,0.3);
+            }
+            .main-btn:hover { background: #f40612; transform: translateY(-2px); }
+            .main-btn:disabled { opacity: 0.7; cursor: wait; transform: none; }
           </style>
           
           <div class="wrap">
@@ -853,13 +869,16 @@
                 ${translations[currentLang].hint1}<br><br>
                 ${translations[currentLang].hint2}
               </p>
+
+              <!-- NEW: Retry Button -->
+              <button class="main-btn" id="retry-btn">${translations[currentLang].retryBtn}</button>
             </div>
           </div>
         `;
         return host;
       }
 
-      function showWarning() {
+      function showWarning(onSuccessCallback) {
         if (overlayHost) return; 
 
         overlayHost = createOverlayHost();
@@ -899,6 +918,7 @@
         const titleEl = shadowRoot.getElementById('ad-title');
         const bodyEl = shadowRoot.getElementById('ad-body');
         const hintEl = shadowRoot.getElementById('ad-hint');
+        const retryBtn = shadowRoot.getElementById('retry-btn');
 
         langToggleBtn.addEventListener('click', () => {
           currentLang = currentLang === 'en' ? 'hi' : 'en';
@@ -907,31 +927,57 @@
           bodyEl.innerHTML = translations[currentLang].body;
           hintEl.innerHTML = `${translations[currentLang].hint1}<br><br>${translations[currentLang].hint2}`;
           langToggleBtn.textContent = translations[currentLang].toggleLabel;
+          if (!retryBtn.disabled) retryBtn.innerHTML = translations[currentLang].retryBtn;
+        });
+
+        // NEW: Retry Button Logic
+        retryBtn.addEventListener('click', async () => {
+          retryBtn.disabled = true;
+          retryBtn.innerHTML = translations[currentLang].checkingBtn;
+
+          // Small delay to let the browser register the adblocker is OFF
+          setTimeout(async () => {
+            const result = await detectAdBlock();
+            
+            if (result.blocked) {
+              retryBtn.disabled = false;
+              retryBtn.innerHTML = translations[currentLang].stillBlocked;
+            } else {
+              // SUCCESS! Adblocker is OFF. Remove overlay and start timer.
+              observer.disconnect();
+              clearInterval(reAddInterval);
+              overlayHost.remove();
+              overlayHost = null;
+              
+              if (typeof onSuccessCallback === 'function') {
+                onSuccessCallback();
+              }
+            }
+          }, 800);
         });
       }
 
-      async function runAdBlockCheck() {
+      async function runAdBlockCheck(onSuccessCallback) {
         if (detectionRunning) return;
-        if (!document.body) { setTimeout(runAdBlockCheck, 100); return; }
+        if (!document.body) { setTimeout(() => runAdBlockCheck(onSuccessCallback), 100); return; }
         
         detectionRunning = true;
         try {
           const result = await detectAdBlock();
           
           if (result.blocked) {
-            // Show popup, DO NOT start timer
-            showWarning();
+            // Show popup with retry button
+            showWarning(onSuccessCallback);
           } else {
             // NO ADBLOCK DETECTED -> Start the 11 second timer
-            if (typeof window.beginRedirectTimer === 'function') {
-                window.beginRedirectTimer();
+            if (typeof onSuccessCallback === 'function') {
+                onSuccessCallback();
             }
           }
         } catch (e) {
           console.warn("Detection error:", e);
-          // If check fails due to error, start timer anyway so user isn't stuck
-          if (typeof window.beginRedirectTimer === 'function') {
-              window.beginRedirectTimer();
+          if (typeof onSuccessCallback === 'function') {
+              onSuccessCallback();
           }
         } finally {
           detectionRunning = false;
@@ -939,7 +985,13 @@
       }
 
       window.addEventListener('load', () => {
-          setTimeout(runAdBlockCheck, 500);
+          setTimeout(() => {
+              runAdBlockCheck(() => {
+                  if (typeof window.beginRedirectTimer === 'function') {
+                      window.beginRedirectTimer();
+                  }
+              });
+          }, 500);
       });
 
     })();
