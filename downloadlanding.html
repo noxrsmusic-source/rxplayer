@@ -254,16 +254,17 @@
         }
         .spec-badge i { color: #E50914; }
 
-        .instructions-box {
+        /* Instructions & Video Boxes */
+        .instructions-box, .video-guide-section {
             text-align: left; background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px;
             padding: 18px; margin-bottom: 20px;
         }
-        .instructions-box h3 {
+        .instructions-box h3, .video-guide-section h3 {
             font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 12px;
             text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;
         }
-        .instructions-box h3 i { color: #E50914; }
+        .instructions-box h3 i, .video-guide-section h3 i { color: #E50914; }
         
         .step { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
         .step:last-child { margin-bottom: 0; }
@@ -274,6 +275,17 @@
         }
         .step-text { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
         .step-text strong { color: #E5E7EB; }
+
+        /* Video Guide Styles */
+        .video-wrapper {
+            position: relative; width: 100%; aspect-ratio: 16 / 9;
+            border-radius: 12px; overflow: hidden; background: #000;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .video-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
 
         .btn-continue {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -445,37 +457,16 @@
                 </div>
 
                 <div class="instructions-box">
-                    <h3 id="txt-how"><i class="fas fa-info-circle"></i> How to Download & Install?</h3>
                     
-                    <div class="step">
-                        <div class="step-num">1</div>
-                        <div class="step-text" id="txt-step1">Click on the <strong>"Continue to Download"</strong> button below.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">2</div>
-                        <div class="step-text" id="txt-step2">Wait for the <strong>20-second timer</strong> on the next page.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">3</div>
-                        <div class="step-text" id="txt-step3">Click the green <strong>"Download RX Player.apk"</strong> button.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">4</div>
-                        <div class="step-text" id="txt-step4">A popup will appear. Tap <strong>"Download"</strong> to save the file.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">5</div>
-                        <div class="step-text" id="txt-step5">Open the downloaded APK file from your notification panel or file manager.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">6</div>
-                        <div class="step-text" id="txt-step6">If Google Play Protect warns you, tap <strong>"Settings"</strong> and enable <strong>"Allow from this source"</strong> or <strong>"Install Unknown Apps"</strong>.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">7</div>
-                        <div class="step-text" id="txt-step7">Tap <strong>"Install"</strong> and wait for the process to finish. Open the app and enjoy!</div>
-                    </div>
 
+                <!-- VIDEO GUIDE SECTION -->
+                <div class="video-guide-section">
+                    <h3 id="txt-video"><i class="fas fa-video"></i> How To Download</h3>
+                    <div class="video-wrapper">
+                        <!-- YAHAN APNI YOUTUBE VIDEO KA EMBED LINK DAALEIN -->
+                        <!-- Example: https://www.youtube.com/embed/VIDEO_ID -->
+                        <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID?rel=0" title="How to Download and Install RX Player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
 
                 <a href="appads.html" class="btn-continue" id="txt-continue">
@@ -523,6 +514,7 @@
                 soon: "Coming Soon",
                 back: "<i class='fas fa-arrow-left'></i> Back",
                 how: "<i class='fas fa-info-circle'></i> How to Download & Install?",
+                video: "<i class='fas fa-video'></i> Video Guide",
                 
                 // English Steps
                 step1: "Click on the <strong>\"Continue to Download\"</strong> button below.",
@@ -530,8 +522,8 @@
                 step3: "Click the green <strong>\"Download RX Player.apk\"</strong> button.",
                 step4: "A popup will appear. Tap <strong>\"Download\"</strong> to save the file.",
                 step5: "Open the downloaded APK file from your notification panel or file manager.",
-                step6: "If Google Play Protect warns you, tap <strong>\"Settings\"</strong> and enable <strong>\"Allow from this source\"</strong> or <strong>\"Install Unknown Apps\"</strong>.",
-                step7: "Tap <strong>\"Install\"</strong> and wait for the process to finish. Open the app and enjoy!",
+                step6: "If Google Play Protect warns you, tap <strong>\"Settings\"</strong> and enable <strong>\"Allow from this source\"</strong>.",
+                step7: "Tap <strong>\"Install\"</strong> and wait for the process to finish.",
                 
                 contBtn: "Continue to Download <i class='fas fa-arrow-right'></i>",
                 home: "<i class='fas fa-arrow-left'></i> Back to Home",
@@ -548,6 +540,7 @@
                 soon: "जल्द आ रहा है",
                 back: "<i class='fas fa-arrow-left'></i> पीछे",
                 how: "<i class='fas fa-info-circle'></i> डाउनलोड और इंस्टॉल कैसे करें?",
+                video: "<i class='fas fa-video'></i> वीडियो गाइड",
                 
                 // Hindi Steps
                 step1: "नीचे दिए गए <strong>\"Continue to Download\"</strong> बटन पर क्लिक करें।",
@@ -555,8 +548,8 @@
                 step3: "हरे रंग के <strong>\"Download RX Player.apk\"</strong> बटन पर क्लिक करें।",
                 step4: "एक पॉपअप आएगा। फाइल सेव करने के लिए <strong>\"Download\"</strong> पर टैप करें।",
                 step5: "डाउनलोड की गई APK फाइल को नोटिफिकेशन या फाइल मैनेजर से खोलें।",
-                step6: "अगर Google Play Protect चेतावनी दे, तो <strong>\"Settings\"</strong> पर टैप करें और <strong>\"Allow from this source\"</strong> या <strong>\"Install Unknown Apps\"</strong> को चालू करें।",
-                step7: "<strong>\"Install\"</strong> पर टैप करें और प्रोसेस पूरा होने का इंतज़ार करें। ऐप खोलें और आनंद लें!",
+                step6: "अगर Google Play Protect चेतावनी दे, तो <strong>\"Settings\"</strong> पर टैप करें और <strong>\"Allow from this source\"</strong> चालू करें।",
+                step7: "<strong>\"Install\"</strong> पर टैप करें और प्रोसेस पूरा होने का इंतज़ार करें।",
                 
                 contBtn: "डाउनलोड के लिए आगे बढ़ें <i class='fas fa-arrow-right'></i>",
                 home: "<i class='fas fa-arrow-left'></i> होम पर वापस जाएं",
@@ -586,6 +579,7 @@
             
             document.getElementById('txt-back').innerHTML = t.back;
             document.getElementById('txt-how').innerHTML = t.how;
+            document.getElementById('txt-video').innerHTML = t.video;
             
             // Use innerHTML because they contain <strong> tags
             document.getElementById('txt-step1').innerHTML = t.step1;
