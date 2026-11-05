@@ -67,19 +67,6 @@
         }
         .ad-btn:hover { background: #b20710; transform: translateY(-2px); }
 
-        /* TIMER */
-        .timer-text {
-            width: 100%; max-width: 350px; 
-            font-size: 16px; font-weight: 800; color: #ff4d5e; display: block;
-            padding: 15px; background: #1a080a; 
-            border-radius: 8px;
-            border: 1px solid #E50914;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-            position: relative;
-            z-index: 99999;
-            text-align: center; margin-bottom: 20px;
-        }
-
         /* DOWNLOAD SECTION */
         .download-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -114,32 +101,6 @@
         .install-guide ol { padding-left: 20px; color: #9CA3AF; font-size: 12.5px; line-height: 1.6; }
         .install-guide li { margin-bottom: 6px; }
 
-        /* AD OVERLAY */
-        .ad-overlay {
-            position: fixed; inset: 0; z-index: 999999;
-            background: #000; display: none; flex-direction: column;
-        }
-        .ad-overlay.show { display: flex; }
-        
-        .ad-header {
-            height: 50px; width: 100%; background: #14141F;
-            display: flex; justify-content: flex-end; align-items: center;
-            padding: 0 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .close-ad-btn {
-            background: #E50914; color: #fff; border: none;
-            width: 36px; height: 36px; border-radius: 50%;
-            font-size: 18px; cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
-            transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .close-ad-btn:hover { background: #b20710; transform: scale(1.1); }
-        
-        #ad-iframe {
-            flex: 1; width: 100%; border: none;
-        }
-
         @media (min-width: 768px) {
             .content-box { max-width: 900px; padding: 40px; }
             .content-grid { grid-template-columns: 280px 1fr; gap: 40px; align-items: center; text-align: left; }
@@ -147,7 +108,6 @@
             .app-logo-wrap { margin: 0 0 20px 0; width: 140px; height: 140px; }
             h1 { font-size: 32px; margin-bottom: 10px; }
             p.subtitle { font-size: 16px; }
-            .timer-text { font-size: 18px; padding: 18px; margin-bottom: 20px; max-width: 400px; }
         }
     </style>
 </head>
@@ -162,7 +122,8 @@
             <!-- Left Column: App Info -->
             <div class="media-info">
                 <div class="app-logo-wrap">
-                    <img id="app-logo" src="https://placehold.co/200x200/14141F/E50914?text=RX+APP" alt="App Logo">
+                    <!-- Yahan apna app logo daalein -->
+                    <img id="app-logo" src="https://res.cloudinary.com/du9nysbwl/image/upload/v1788457070/rxplayerlogo_ppyvfr.jpg" alt="App Logo">
                 </div>
                 <h1 id="app-title" data-i18n="app_title">RX Player App</h1>
                 <p class="subtitle" data-i18n="app_subtitle">Experience the fastest & ad-free streaming!</p>
@@ -173,23 +134,16 @@
                 
                 <!-- STEP 1: UNLOCK BUTTON -->
                 <div id="step-buttons" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-                    <button id="unlock-btn" class="ad-btn" onclick="showAdOverlay()">
+                    <button id="unlock-btn" class="ad-btn" onclick="unlockAndShowDownload()">
                         <i class="fas fa-lock-open"></i> <span data-i18n="unlock_btn">Click to Unlock Download</span>
                     </button>
                 </div>
 
-                <!-- STEP 2: TIMER (Hidden Initially) -->
-                <div id="step-timer" style="width: 100%; display: none; justify-content: center;">
-                    <div id="timer-text" class="timer-text">
-                        <i class="fas fa-clock"></i> <span id="timer-message">Please wait... 20 seconds</span>
-                    </div>
-                </div>
-
-                <!-- STEP 3: DOWNLOAD & GUIDE (Hidden Initially) -->
+                <!-- STEP 2: DOWNLOAD & GUIDE (Hidden Initially) -->
                 <div id="step-download" style="width: 100%; display: none; flex-direction: column; align-items: center;">
                     
-                    <!-- YAHAN APNA DIRECT APK LINK DAALEIN -->
-                    <!-- Example: https://firebasestorage.googleapis.com/.../Rx%20Player.apk?alt=media -->
+                    <!-- APK Download Link -->
+                    <!-- Agar aapke paas direct link hai toh yahan daalein, warna "Rx Player.apk" hi rakhein agar file same folder me hai -->
                     <a href="Rx Player.apk" download="Rx Player.apk" class="download-btn" id="final-download-btn">
                         <i class="fas fa-download"></i> <span data-i18n="download_btn">Download Rx Player.apk</span>
                     </a>
@@ -209,16 +163,6 @@
         </div>
     </div>
 
-    <!-- FULL SCREEN AD OVERLAY -->
-    <div id="ad-overlay" class="ad-overlay">
-        <div class="ad-header">
-            <button class="close-ad-btn" onclick="closeAdAndStartTimer()" title="Close Ad">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <iframe id="ad-iframe" src="" allow="autoplay; fullscreen"></iframe>
-    </div>
-
     <script>
         /* =========================================================
            1. CONFIG & TRANSLATIONS
@@ -231,7 +175,6 @@
                 app_title: "RX Player App",
                 app_subtitle: "Experience the fastest & ad-free streaming!",
                 unlock_btn: "Click to Unlock Download",
-                timer_msg: "Please wait... {time} seconds",
                 download_btn: "Download Rx Player.apk",
                 install_title: "Installation Guide",
                 step1: "Tap the Download button to download the APK.",
@@ -244,7 +187,6 @@
                 app_title: "RX Player ऐप",
                 app_subtitle: "सबसे तेज़ और विज्ञापन-मुक्त स्ट्रीमिंग का अनुभव करें!",
                 unlock_btn: "डाउनलोड अनलॉक करने के लिए क्लिक करें",
-                timer_msg: "कृपया प्रतीक्षा करें... {time} सेकंड",
                 download_btn: "RX Player.apk डाउनलोड करें",
                 install_title: "इंस्टॉलेशन गाइड",
                 step1: "APK डाउनलोड करने के लिए डाउनलोड बटन पर टैप करें।",
@@ -263,14 +205,6 @@
             
             const toggleBtn = document.getElementById('lang-toggle');
             if(toggleBtn) toggleBtn.textContent = lang === 'en' ? 'हिंदी' : 'English';
-
-            // Update timer text if timer is active
-            const timerMsg = document.getElementById('timer-message');
-            if (timerMsg && document.getElementById('step-timer').style.display !== 'none') {
-                const m = timerMsg.textContent.match(/\d+/);
-                const t = m ? m[0] : '20';
-                timerMsg.textContent = translations[lang].timer_msg.replace('{time}', t);
-            }
         }
 
         document.getElementById('lang-toggle').addEventListener('click', () => {
@@ -281,85 +215,34 @@
         setLanguage('en');
 
         /* =========================================================
-           2. AD OVERLAY & TIMER LOGIC
+           2. UNLOCK & DOWNLOAD LOGIC
            ========================================================= */
-        let timerInterval;
-
-        // 1. Show Ad in Overlay
-        function showAdOverlay() {
-            const overlay = document.getElementById('ad-overlay');
-            const iframe = document.getElementById('ad-iframe');
+        
+        function unlockAndShowDownload() {
+            // 1. Open Ad in New Window (Pop-Under)
+            // Yahan aap apna pop-under ad link daal sakte hain
+            window.open('https://uplcm.com/4/10362569', '_blank');
             
-            // Set the ad link inside iframe
-            iframe.src = 'https://uplcm.com/4/10362569';
-            
-            // Show overlay
-            overlay.classList.add('show');
-        }
-
-        // 2. Close Ad & Start Timer
-        function closeAdAndStartTimer() {
-            const overlay = document.getElementById('ad-overlay');
-            const iframe = document.getElementById('ad-iframe');
-
-            // Hide overlay and stop ad playing by clearing src
-            overlay.classList.remove('show');
-            iframe.src = '';
-
-            // Switch UI from Unlock Button to Timer
+            // 2. Hide the Unlock Button
             document.getElementById('step-buttons').style.display = 'none';
-            document.getElementById('step-timer').style.display = 'flex';
-            document.getElementById('step-download').style.display = 'none';
-
-            // Start 20 Seconds Timer
-            let timeLeft = 20;
-            const msgEl = document.getElementById('timer-message');
             
-            function updateTimer() {
-                if (document.hidden) {
-                    msgEl.textContent = currentLang === 'hi' 
-                        ? 'टाइमर रुका है — इस टैब पर वापस आएं' 
-                        : 'Timer paused — return to this tab';
-                } else {
-                    msgEl.textContent = translations[currentLang].timer_msg.replace('{time}', timeLeft);
-                }
-            }
-
-            updateTimer();
-            if(timerInterval) clearInterval(timerInterval);
-
-            timerInterval = setInterval(() => {
-                if (!document.hidden) {
-                    timeLeft--;
-                }
-                updateTimer();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    showDownload();
-                }
-            }, 1000);
-        }
-
-        // 3. Show Download Button
-        function showDownload() {
-            document.getElementById('step-timer').style.display = 'none';
+            // 3. Instantly Show the Download Section
             document.getElementById('step-download').style.display = 'flex';
-            setLanguage(currentLang); // Refresh translations for new screen
+            
+            // 4. Refresh translations for newly visible section
+            setLanguage(currentLang); 
         }
 
-        // 4. Force Download (Optional Safety for cross-origin)
-        // Agar upar wala tarika kaam na kare toh ye JS fallback trigger karega
+        // Force Download Logic (Safety for direct download)
         document.getElementById('final-download-btn').addEventListener('click', function(e) {
             const url = this.getAttribute('href');
             
-            // Agar URL "YOUR_DIRECT_APK_LINK_HERE" hai to kuch mat karo (default anchor behavior)
-            if(url === 'YOUR_DIRECT_APK_LINK_HERE') {
-                return;
+            // Agar file name local hai (same folder me), toh default download trigger hoga
+            if(url === 'Rx Player.apk') {
+                return; 
             }
             
-            // Agar cross-origin hai, toh browser default redirect kar sakta hai, 
-            // isliye hum ek naya temporary anchor banayenge download attribute ke sath.
+            // Agar aapne yahan koi external URL daala hai (jaise cloudinary/firebase), toh force download hoga
             e.preventDefault();
             const link = document.createElement('a');
             link.href = url;
