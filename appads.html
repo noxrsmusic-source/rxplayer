@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RX Player App - Coming Soon</title>
+    <title>RX Player App - Download</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -17,9 +17,6 @@
             overflow: hidden;
         }
 
-        /* =========================================================
-           MAIN AD VIEW (Shows initially)
-           ========================================================= */
         .content-box {
             background: #14141F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
             padding: 24px; max-width: 420px; width: 100%;
@@ -46,7 +43,6 @@
 
         .media-info { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* App Logo */
         .app-logo-wrap {
             width: 100px; height: 100px; margin: 0 auto 14px; border-radius: 22px;
             overflow: hidden; box-shadow: 0 8px 24px rgba(229,9,20,0.3); background: #0a0a0f;
@@ -61,6 +57,16 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; 
         }
 
+        /* BUTTONS */
+        .ad-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: #E50914; color: #fff; padding: 14px 24px; border-radius: 30px;
+            font-size: 16px; font-weight: 800; border: none; cursor: pointer; text-decoration: none;
+            box-shadow: 0 8px 24px rgba(229,9,20,0.4); transition: 0.3s;
+            width: 100%; margin-bottom: 12px; animation: pulse 2s infinite;
+        }
+        .ad-btn:hover { background: #b20710; transform: translateY(-2px); }
+
         /* TIMER */
         .timer-text {
             width: 100%; max-width: 350px; 
@@ -74,67 +80,65 @@
             text-align: center; margin-bottom: 20px;
         }
 
-        /* VIDEO PLAYER */
-        .video-player {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            aspect-ratio: 16 / 9;
-            border-radius: 14px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 14px 34px rgba(0,0,0,0.8), 0 0 0 1px rgba(229, 9, 20, 0.3);
-            margin-bottom: 10px;
-        }
-        .video-player iframe {
-            width: 100%; height: 100%; border: 0; display: block;
-        }
-
-        /* =========================================================
-           UNDER CONSTRUCTION VIEW (Shows after timer)
-           ========================================================= */
-        .construction-view {
-            display: none; /* Hidden initially */
-            background: #14141F; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
-            padding: 40px 24px; max-width: 420px; width: 100%;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.8), inset 0 0 50px rgba(229,9,20,0.1);
-            position: relative; text-align: center;
-            opacity: 0; transform: scale(0.9); transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
-            border-top: 4px solid #E50914;
-        }
-
-        .construction-view.show {
-            display: block;
-            opacity: 1; transform: scale(1);
-        }
-
-        .construction-icon {
-            font-size: 60px; color: #E50914; margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-            filter: drop-shadow(0 10px 20px rgba(229,9,20,0.4));
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .construction-view h2 {
-            font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -0.5px;
-        }
-        .construction-view p {
-            font-size: 14px; color: #9CA3AF; line-height: 1.6; margin-bottom: 24px;
-        }
-
-        .notify-btn {
+        /* DOWNLOAD SECTION */
+        .download-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            background: #E50914; color: #fff; padding: 14px 24px; border-radius: 30px;
-            font-size: 15px; font-weight: 700; border: none; cursor: pointer; text-decoration: none;
-            box-shadow: 0 8px 24px rgba(229,9,20,0.4); transition: 0.3s;
-            width: 100%;
+            background: #22C55E; color: #fff; padding: 14px 24px; border-radius: 30px;
+            font-size: 16px; font-weight: 800; border: none; cursor: pointer; text-decoration: none;
+            box-shadow: 0 8px 24px rgba(34,197,94,0.4); transition: 0.3s;
+            width: 100%; margin-bottom: 20px; animation: pulse-green 2s infinite;
         }
-        .notify-btn:hover { background: #b20710; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(229,9,20,0.6); }
+        .download-btn:hover { background: #16a34a; transform: translateY(-2px); }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(229,9,20, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(229,9,20, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229,9,20, 0); }
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(34,197,94, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(34,197,94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34,197,94, 0); }
+        }
+
+        /* INSTALL GUIDE */
+        .install-guide {
+            text-align: left; background: rgba(255,255,255,0.03); padding: 16px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-top: 10px;
+        }
+        .install-guide h3 { 
+            font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; 
+            display: flex; align-items: center; gap: 6px; 
+        }
+        .install-guide h3 i { color: #38bdf8; }
+        .install-guide ol { padding-left: 20px; color: #9CA3AF; font-size: 12.5px; line-height: 1.6; }
+        .install-guide li { margin-bottom: 6px; }
+
+        /* AD OVERLAY */
+        .ad-overlay {
+            position: fixed; inset: 0; z-index: 999999;
+            background: #000; display: none; flex-direction: column;
+        }
+        .ad-overlay.show { display: flex; }
+        
+        .ad-header {
+            height: 50px; width: 100%; background: #14141F;
+            display: flex; justify-content: flex-end; align-items: center;
+            padding: 0 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .close-ad-btn {
+            background: #E50914; color: #fff; border: none;
+            width: 36px; height: 36px; border-radius: 50%;
+            font-size: 18px; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .close-ad-btn:hover { background: #b20710; transform: scale(1.1); }
+        
+        #ad-iframe {
+            flex: 1; width: 100%; border: none;
+        }
 
         @media (min-width: 768px) {
             .content-box { max-width: 900px; padding: 40px; }
@@ -143,21 +147,14 @@
             .app-logo-wrap { margin: 0 0 20px 0; width: 140px; height: 140px; }
             h1 { font-size: 32px; margin-bottom: 10px; }
             p.subtitle { font-size: 16px; }
-            .video-player { margin-bottom: 0; }
             .timer-text { font-size: 18px; padding: 18px; margin-bottom: 20px; max-width: 400px; }
-            
-            .construction-view { max-width: 600px; padding: 60px 40px; }
-            .construction-view h2 { font-size: 36px; }
-            .construction-view p { font-size: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- =========================================================
-         AD VIEW (Initially Visible)
-         ========================================================= -->
-    <div class="content-box" id="ad-view">
+    <!-- MAIN CONTENT -->
+    <div class="content-box" id="app-box">
         <button id="lang-toggle" class="lang-toggle">हिंदी</button>
         <div class="official-badge" data-i18n="official_page">Official App Page</div>
 
@@ -165,48 +162,61 @@
             <!-- Left Column: App Info -->
             <div class="media-info">
                 <div class="app-logo-wrap">
-                    <img id="app-logo" src="icon48" alt="App Logo">
+                    <img id="app-logo" src="https://placehold.co/200x200/14141F/E50914?text=RX+APP" alt="App Logo">
                 </div>
-                <h1 id="app-title">RX Player App</h1>
-                <p class="subtitle">Experience the fastest & ad-free streaming!</p>
+                <h1 id="app-title" data-i18n="app_title">RX Player App</h1>
+                <p class="subtitle" data-i18n="app_subtitle">Experience the fastest & ad-free streaming!</p>
             </div>
 
             <!-- Right Column: Action Area -->
             <div class="action-area">
                 
-                <!-- TIMER -->
-                <div id="timer-text" class="timer-text">
-                    <i class="fas fa-clock"></i> <span id="timer-message">Please wait... 11 seconds</span>
+                <!-- STEP 1: UNLOCK BUTTON -->
+                <div id="step-buttons" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                    <button id="unlock-btn" class="ad-btn" onclick="showAdOverlay()">
+                        <i class="fas fa-lock-open"></i> <span data-i18n="unlock_btn">Click to Unlock Download</span>
+                    </button>
                 </div>
 
-                <!-- VIDEO PLAYER (Dailymotion) - Added ID here -->
-                <div class="video-player">
-                    <iframe id="promo-video"
-                        src="https://geo.dailymotion.com/player/x8lr5.html?video=xbr7cuy&autoplay=1&mute=1"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen
-                        frameborder="0">
-                    </iframe>
+                <!-- STEP 2: TIMER (Hidden Initially) -->
+                <div id="step-timer" style="width: 100%; display: none; justify-content: center;">
+                    <div id="timer-text" class="timer-text">
+                        <i class="fas fa-clock"></i> <span id="timer-message">Please wait... 20 seconds</span>
+                    </div>
+                </div>
+
+                <!-- STEP 3: DOWNLOAD & GUIDE (Hidden Initially) -->
+                <div id="step-download" style="width: 100%; display: none; flex-direction: column; align-items: center;">
+                    
+                    <!-- YAHAN APNA DIRECT APK LINK DAALEIN -->
+                    <!-- Example: https://firebasestorage.googleapis.com/.../Rx%20Player.apk?alt=media -->
+                    <a href="YOUR_DIRECT_APK_LINK_HERE" download="Rx Player.apk" class="download-btn" id="final-download-btn">
+                        <i class="fas fa-download"></i> <span data-i18n="download_btn">Download Rx Player.apk</span>
+                    </a>
+                    
+                    <div class="install-guide">
+                        <h3><i class="fas fa-info-circle"></i> <span data-i18n="install_title">Installation Guide</span></h3>
+                        <ol>
+                            <li data-i18n="step1">Tap the Download button to download the APK.</li>
+                            <li data-i18n="step2">Open the downloaded APK file.</li>
+                            <li data-i18n="step3">If prompted, enable 'Install from Unknown Sources' in your device settings.</li>
+                            <li data-i18n="step4">Tap 'Install' and enjoy RX Player!</li>
+                        </ol>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- =========================================================
-         UNDER CONSTRUCTION VIEW (Revealed after timer)
-         ========================================================= -->
-    <div class="construction-view" id="construction-view">
-        <div class="app-logo-wrap" style="margin: 0 auto 20px; width: 80px; height: 80px; box-shadow: none;">
-            <img src="https://placehold.co/200x200/14141F/E50914?text=RX+APP" alt="App Logo">
+    <!-- FULL SCREEN AD OVERLAY -->
+    <div id="ad-overlay" class="ad-overlay">
+        <div class="ad-header">
+            <button class="close-ad-btn" onclick="closeAdAndStartTimer()" title="Close Ad">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <div class="construction-icon"><i class="fas fa-tools"></i></div>
-        <h2 data-i18n="under_construction">App Under Construction</h2>
-        <p data-i18n="construction_msg">We are working hard to bring the ultimate streaming experience to your phone. Stay tuned!</p>
-        <a href="https://t.me/rxplayer" target="_blank" class="notify-btn">
-            <i class="fas fa-bell"></i> <span data-i18n="notify_me">Notify Me on Telegram</span>
-        </a>
+        <iframe id="ad-iframe" src="" allow="autoplay; fullscreen"></iframe>
     </div>
 
     <script>
@@ -218,17 +228,29 @@
         const translations = {
             en: {
                 official_page: "Official App Page",
+                app_title: "RX Player App",
+                app_subtitle: "Experience the fastest & ad-free streaming!",
+                unlock_btn: "Click to Unlock Download",
                 timer_msg: "Please wait... {time} seconds",
-                under_construction: "App Under Construction",
-                construction_msg: "We are working hard to bring the ultimate streaming experience to your phone. Stay tuned!",
-                notify_me: "Notify Me on Telegram"
+                download_btn: "Download Rx Player.apk",
+                install_title: "Installation Guide",
+                step1: "Tap the Download button to download the APK.",
+                step2: "Open the downloaded APK file.",
+                step3: "If prompted, enable 'Install from Unknown Sources' in your device settings.",
+                step4: "Tap 'Install' and enjoy RX Player!"
             },
             hi: {
                 official_page: "आधिकारिक ऐप पेज",
+                app_title: "RX Player ऐप",
+                app_subtitle: "सबसे तेज़ और विज्ञापन-मुक्त स्ट्रीमिंग का अनुभव करें!",
+                unlock_btn: "डाउनलोड अनलॉक करने के लिए क्लिक करें",
                 timer_msg: "कृपया प्रतीक्षा करें... {time} सेकंड",
-                under_construction: "ऐप निर्माणाधीन है",
-                construction_msg: "हम आपके फोन पर शानदार स्ट्रीमिंग अनुभव लाने के लिए कड़ी मेहनत कर रहे हैं। बने रहें!",
-                notify_me: "टेलीग्राम पर सूचित करें"
+                download_btn: "RX Player.apk डाउनलोड करें",
+                install_title: "इंस्टॉलेशन गाइड",
+                step1: "APK डाउनलोड करने के लिए डाउनलोड बटन पर टैप करें।",
+                step2: "डाउनलोड की गई APK फाइल को खोलें।",
+                step3: "यदि पूछा जाए, तो अपनी डिवाइस सेटिंग्स में 'अज्ञात स्रोतों से इंस्टॉल करें' को चालू करें।",
+                step4: "'इंस्टॉल' पर टैप करें और RX Player का आनंद लें!"
             }
         };
 
@@ -242,11 +264,11 @@
             const toggleBtn = document.getElementById('lang-toggle');
             if(toggleBtn) toggleBtn.textContent = lang === 'en' ? 'हिंदी' : 'English';
 
-            // Update timer text based on new language
+            // Update timer text if timer is active
             const timerMsg = document.getElementById('timer-message');
-            if (timerMsg) {
+            if (timerMsg && document.getElementById('step-timer').style.display !== 'none') {
                 const m = timerMsg.textContent.match(/\d+/);
-                const t = m ? m[0] : '11';
+                const t = m ? m[0] : '20';
                 timerMsg.textContent = translations[lang].timer_msg.replace('{time}', t);
             }
         }
@@ -259,67 +281,94 @@
         setLanguage('en');
 
         /* =========================================================
-           2. TIMER & TRANSITION LOGIC
+           2. AD OVERLAY & TIMER LOGIC
            ========================================================= */
-        (function () {
-            const WAIT = 11;
+        let timerInterval;
+
+        // 1. Show Ad in Overlay
+        function showAdOverlay() {
+            const overlay = document.getElementById('ad-overlay');
+            const iframe = document.getElementById('ad-iframe');
+            
+            // Set the ad link inside iframe
+            iframe.src = 'https://uplcm.com/4/10362569';
+            
+            // Show overlay
+            overlay.classList.add('show');
+        }
+
+        // 2. Close Ad & Start Timer
+        function closeAdAndStartTimer() {
+            const overlay = document.getElementById('ad-overlay');
+            const iframe = document.getElementById('ad-iframe');
+
+            // Hide overlay and stop ad playing by clearing src
+            overlay.classList.remove('show');
+            iframe.src = '';
+
+            // Switch UI from Unlock Button to Timer
+            document.getElementById('step-buttons').style.display = 'none';
+            document.getElementById('step-timer').style.display = 'flex';
+            document.getElementById('step-download').style.display = 'none';
+
+            // Start 20 Seconds Timer
+            let timeLeft = 20;
             const msgEl = document.getElementById('timer-message');
-            let timeLeft = WAIT;
-            let started = false;
-
-            function show(text) { if (msgEl) msgEl.textContent = text; }
-
-            function tickText() {
+            
+            function updateTimer() {
                 if (document.hidden) {
-                    show(currentLang === 'hi'
-                        ? 'टाइमर रुका है — इस टैब पर वापस आएं'
-                        : 'Timer paused — return to this tab');
+                    msgEl.textContent = currentLang === 'hi' 
+                        ? 'टाइमर रुका है — इस टैब पर वापस आएं' 
+                        : 'Timer paused — return to this tab';
                 } else {
-                    show(translations[currentLang].timer_msg.replace('{time}', timeLeft));
+                    msgEl.textContent = translations[currentLang].timer_msg.replace('{time}', timeLeft);
                 }
             }
 
-            function revealConstructionView() {
-                const adView = document.getElementById('ad-view');
-                const constructionView = document.getElementById('construction-view');
-                const videoIframe = document.getElementById('promo-video');
+            updateTimer();
+            if(timerInterval) clearInterval(timerInterval);
 
-                // 🔥 STOP THE VIDEO: Iframe ka src hata dein taaki background me video na chale
-                if (videoIframe) {
-                    videoIframe.src = 'about:blank'; 
+            timerInterval = setInterval(() => {
+                if (!document.hidden) {
+                    timeLeft--;
                 }
-
-                // Fade out ad view
-                adView.style.opacity = '0';
-                adView.style.transform = 'scale(0.95)';
+                updateTimer();
                 
-                // After fade out, hide ad view and show construction view
-                setTimeout(() => {
-                    adView.style.display = 'none';
-                    constructionView.classList.add('show');
-                }, 500);
-            }
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showDownload();
+                }
+            }, 1000);
+        }
 
-            function startTimer() {
-                tickText();
-                setInterval(() => {
-                    if (!started) return;
-                    if (!document.hidden && timeLeft > 0) timeLeft--;
-                    tickText();
-                    if (timeLeft <= 0) {
-                        started = false; // Stop timer
-                        revealConstructionView(); // Show the coming soon screen
-                    }
-                }, 1000);
-            }
+        // 3. Show Download Button
+        function showDownload() {
+            document.getElementById('step-timer').style.display = 'none';
+            document.getElementById('step-download').style.display = 'flex';
+            setLanguage(currentLang); // Refresh translations for new screen
+        }
 
-            function init() {
-                started = true;
-                startTimer();
+        // 4. Force Download (Optional Safety for cross-origin)
+        // Agar upar wala tarika kaam na kare toh ye JS fallback trigger karega
+        document.getElementById('final-download-btn').addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+            
+            // Agar URL "YOUR_DIRECT_APK_LINK_HERE" hai to kuch mat karo (default anchor behavior)
+            if(url === 'YOUR_DIRECT_APK_LINK_HERE') {
+                return;
             }
-
-            window.addEventListener('load', init);
-        })();
+            
+            // Agar cross-origin hai, toh browser default redirect kar sakta hai, 
+            // isliye hum ek naya temporary anchor banayenge download attribute ke sath.
+            e.preventDefault();
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Rx Player.apk');
+            link.setAttribute('target', '_blank');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
     </script>
 
 </body>
