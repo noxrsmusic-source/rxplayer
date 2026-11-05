@@ -276,10 +276,16 @@
         .step-text { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
         .step-text strong { color: #E5E7EB; }
 
-        /* Video Guide Styles */
+        /* Video Guide Styles - Changed to 9:16 (Vertical) */
         .video-wrapper {
-            position: relative; width: 100%; aspect-ratio: 16 / 9;
-            border-radius: 12px; overflow: hidden; background: #000;
+            position: relative; 
+            width: 100%; 
+            max-width: 260px; /* Limit width so it doesn't get too tall on mobile */
+            margin: 0 auto; /* Center it */
+            aspect-ratio: 9 / 16; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            background: #000;
             border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
@@ -457,11 +463,10 @@
                 </div>
 
                 <div class="instructions-box">
-                    
 
-                <!-- VIDEO GUIDE SECTION -->
+                <!-- VIDEO GUIDE SECTION (9:16 ASPECT RATIO) -->
                 <div class="video-guide-section">
-                    <h3 id="txt-video"><i class="fas fa-video"></i> How To Download</h3>
+                    <h3 id="txt-video"><i class="fas fa-video"></i> How To Download (Video)</h3>
                     <div class="video-wrapper">
                         <!-- YAHAN APNI YOUTUBE VIDEO KA EMBED LINK DAALEIN -->
                         <!-- Example: https://www.youtube.com/embed/VIDEO_ID -->
@@ -514,7 +519,7 @@
                 soon: "Coming Soon",
                 back: "<i class='fas fa-arrow-left'></i> Back",
                 how: "<i class='fas fa-info-circle'></i> How to Download & Install?",
-                video: "<i class='fas fa-video'></i> Video Guide",
+                video: "<i class='fas fa-video'></i> How To Download (Video)",
                 
                 // English Steps
                 step1: "Click on the <strong>\"Continue to Download\"</strong> button below.",
