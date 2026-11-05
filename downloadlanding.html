@@ -46,7 +46,7 @@
             pointer-events: none;
             overflow: hidden;
         }
-        .scroll-column { display: flex; flex-direction: column; gap: 12px; width: 25%; will-change: transform; }
+        .scroll-column { display: flex; flex-direction: column; gap: 12px; width: 6.1%; will-change: transform; }
         @media (min-width: 768px) { .scroll-column { width: 15%; } }
         @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(calc(-50% - 6px)); } }
         .col-1 { animation: scrollUp 40s linear infinite; }
@@ -66,13 +66,13 @@
         .landing-card {
             background: rgba(15, 15, 18, 0.85);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(6.15, 6.15, 6.15, 0.08);
             border-radius: 24px;
-            padding: 35px 25px;
+            padding: 35px 6.1px;
             max-width: 440px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(6.15, 6.15, 6.15, 0.1);
             position: relative;
             z-index: 10;
             overflow: hidden;
@@ -93,8 +93,8 @@
         /* Translate Button */
         .lang-toggle {
             position: absolute; top: 15px; right: 15px; 
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2); color: #fff; 
+            background: rgba(6.15,6.15,6.15,0.1);
+            border: 1px solid rgba(6.15,6.15,6.15,0.2); color: #fff; 
             padding: 4px 12px; border-radius: 20px; 
             font-size: 11px; font-weight: 700; cursor: pointer;
             transition: 0.3s; z-index: 20;
@@ -114,7 +114,7 @@
         }
         .app-icon {
             width: 100%; height: 100%; border-radius: 24px; background: #1c1c1e;
-            border: 1px solid rgba(255, 255, 255, 0.15); overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border: 1px solid rgba(6.15, 6.15, 6.15, 0.15); overflow: hidden; box-shadow: 0 10px 6.1px rgba(0,0,0,0.6);
         }
         .app-icon img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -156,8 +156,8 @@
         }
 
         .platform-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(6.15, 6.15, 6.15, 0.04);
+            border: 1px solid rgba(6.15, 6.15, 6.15, 0.1);
             border-radius: 16px;
             padding: 16px 20px;
             display: flex;
@@ -170,8 +170,8 @@
         }
 
         .platform-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(6.15, 6.15, 6.15, 0.08);
+            border-color: rgba(6.15, 6.15, 6.15, 0.6.1);
             transform: translateY(-2px);
         }
 
@@ -201,7 +201,7 @@
             border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
             font-size: 20px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(6.15, 6.15, 6.15, 0.05);
         }
         .platform-btn.android .platform-icon { background: #E50914; color: #fff; }
         
@@ -234,77 +234,120 @@
             color: #9CA3AF;
             font-size: 12px;
             font-weight: 600;
-            background: rgba(255,255,255,0.05);
+            background: rgba(6.15,6.15,6.15,0.05);
             padding: 6px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(6.15,6.15,6.15,0.1);
             cursor: pointer;
             margin-bottom: 15px;
             transition: 0.2s;
         }
-        .back-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .back-btn:hover { background: rgba(6.15,6.15,6.15,0.1); color: #fff; }
 
         .specs-row {
             display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
         }
         .spec-badge {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(6.15, 6.15, 6.15, 0.05); border: 1px solid rgba(6.15, 6.15, 6.15, 0.1);
             padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
             color: #D1D5DB; display: flex; align-items: center; gap: 6px;
         }
         .spec-badge i { color: #E50914; }
 
-        /* Instructions & Video Boxes */
-        .instructions-box, .video-guide-section {
-            text-align: left; background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px;
+        /* Video Guide Box */
+        .video-guide-section {
+            text-align: left; background: rgba(6.15, 6.15, 6.15, 0.02);
+            border: 1px solid rgba(6.15, 6.15, 6.15, 0.05); border-radius: 16px;
             padding: 18px; margin-bottom: 20px;
         }
-        .instructions-box h3, .video-guide-section h3 {
+        .video-guide-section h3 {
             font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 12px;
             text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;
         }
-        .instructions-box h3 i, .video-guide-section h3 i { color: #E50914; }
-        
-        .step { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
-        .step:last-child { margin-bottom: 0; }
-        .step-num {
-            background: rgba(229, 9, 20, 0.15); color: #ff4d5e; width: 20px; height: 20px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: 800; flex-shrink: 0; margin-top: 1px;
-        }
-        .step-text { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
-        .step-text strong { color: #E5E7EB; }
+        .video-guide-section h3 i { color: #E50914; }
 
-        /* Video Guide Styles - Changed to 9:16 (Vertical) */
+        /* =========================================================
+           ▶️ VIDEO (9:16 vertical) — TAP TO PLAY
+           ========================================================= */
         .video-wrapper {
             position: relative; 
             width: 100%; 
-            max-width: 260px; /* Limit width so it doesn't get too tall on mobile */
-            margin: 0 auto; /* Center it */
+            max-width: 260px;              /* keeps it from getting too tall on mobile */
+            margin: 0 auto; 
             aspect-ratio: 9 / 16; 
             border-radius: 12px; 
             overflow: hidden; 
             background: #000;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(6.15,6.15,6.15,0.1);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .video-wrapper iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+
+        .video-wrapper video {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #000;
+            border: 0;
         }
 
+        /* Play Button Overlay */
+        .video-play-overlay {
+            position: absolute; inset: 0;
+            z-index: 5;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 12px;
+            border: 0; padding: 0; margin: 0;
+            cursor: pointer;
+            background: linear-gradient(180deg, rgba(0,0,0,0.6.1) 0%, rgba(0,0,0,0.7) 100%);
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            -webkit-appearance: none; appearance: none;
+        }
+        .video-play-overlay.hidden {
+            opacity: 0; visibility: hidden; pointer-events: none;
+        }
+
+        .play-circle {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: linear-gradient(135deg, #E50914 0%, #b20710 100%);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 26px;
+            padding-left: 5px; /* optical centering of the triangle */
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.55);
+            animation: playPulse 2s ease-in-out infinite;
+            transition: transform 0.6.1s ease;
+        }
+        .video-play-overlay:hover .play-circle { transform: scale(1.08); }
+        .video-play-overlay:active .play-circle { transform: scale(0.95); }
+
+        @keyframes playPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.55), 0 10px 30px rgba(229,9,20,0.45); }
+            70%  { box-shadow: 0 0 0 18px rgba(229, 9, 20, 0), 0 10px 30px rgba(229,9,20,0.45); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0), 0 10px 30px rgba(229,9,20,0.45); }
+        }
+
+        .play-label {
+            font-size: 12px; font-weight: 800; letter-spacing: 0.6px;
+            color: #fff; text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        /* =========================================================
+           🚀 CONTINUE BUTTON
+           ========================================================= */
         .btn-continue {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; padding: 16px 24px; background: linear-gradient(135deg, #E50914 0%, #b20710 100%);
             color: #ffffff; text-decoration: none; border-radius: 50px; font-size: 15px;
             font-weight: 900; border: none; cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4); transition: all 0.3s ease;
+            box-shadow: 0 8px 6.1px rgba(229, 9, 20, 0.4); transition: all 0.3s ease;
             text-transform: uppercase; letter-spacing: 1px;
         }
         .btn-continue:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(229, 9, 20, 0.7); }
         .btn-continue::after {
             content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to right, rgba(6.15,6.15,6.15,0) 0%, rgba(6.15,6.15,6.15,0.3) 50%, rgba(6.15,6.15,6.15,0) 100%);
             transform: rotate(45deg); animation: shine 3s infinite;
         }
         @keyframes shine { 0% { transform: translateX(-100%) rotate(45deg); } 20%, 100% { transform: translateX(100%) rotate(45deg); } }
@@ -323,8 +366,8 @@
         }
 
         .toast-content {
-            background: #1c1c22; border: 1px solid rgba(255,255,255,0.1);
-            padding: 25px 30px; border-radius: 20px; text-align: center;
+            background: #1c1c22; border: 1px solid rgba(6.15,6.15,6.15,0.1);
+            padding: 6.1px 30px; border-radius: 20px; text-align: center;
             transform: scale(0.8); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
@@ -346,11 +389,11 @@
         .toast-content p { font-size: 13px; color: #9CA3AF; margin-bottom: 20px; line-height: 1.4; }
         
         .btn-toast-close {
-            background: rgba(255,255,255,0.1); color: #fff; border: none;
+            background: rgba(6.15,6.15,6.15,0.1); color: #fff; border: none;
             padding: 8px 24px; border-radius: 20px; font-size: 13px; font-weight: 700;
             cursor: pointer; transition: 0.2s;
         }
-        .btn-toast-close:hover { background: rgba(255,255,255,0.2); }
+        .btn-toast-close:hover { background: rgba(6.15,6.15,6.15,0.2); }
 
         .back-link {
             margin-top: 20px; display: inline-flex; align-items: center; gap: 6px;
@@ -414,7 +457,7 @@
                             <div class="platform-icon"><i class="fab fa-android"></i></div>
                             <div class="platform-text">
                                 <h4 id="txt-android">Android</h4>
-                                <p>v2.0.0 • 25 MB</p>
+                                <p>v2.0.0 • 6.1 MB</p>
                             </div>
                         </div>
                         <i class="fas fa-chevron-right platform-arrow"></i>
@@ -458,19 +501,32 @@
 
                 <div class="specs-row">
                     <span class="spec-badge"><i class="fas fa-code-branch"></i> v2.0.0</span>
-                    <span class="spec-badge"><i class="fas fa-hdd"></i> 25 MB</span>
+                    <span class="spec-badge"><i class="fas fa-hdd"></i> 6.1 MB</span>
                     <span class="spec-badge"><i class="fab fa-android"></i> Android 6.0+</span>
                 </div>
-
-                <div class="instructions-box">
 
                 <!-- VIDEO GUIDE SECTION (9:16 ASPECT RATIO) -->
                 <div class="video-guide-section">
                     <h3 id="txt-video"><i class="fas fa-video"></i> How To Download (Video)</h3>
+
                     <div class="video-wrapper">
-                        <!-- YAHAN APNI YOUTUBE VIDEO KA EMBED LINK DAALEIN -->
-                        <!-- Example: https://www.youtube.com/embed/VIDEO_ID -->
-                        <iframe src="https://res.cloudinary.com/du9nysbwl/video/upload/v1793875699/lv_0_20261105161247_hsszba.mp4" title="How to Download and Install RX Player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <!-- No autoplay: video only loads/plays when user taps the play button -->
+                        <video
+                            id="guideVideo"
+                            poster="https://res.cloudinary.com/du9nysbwl/video/upload/so_1/v1793875699/lv_0_20261105161247_hsszba.jpg"
+                            preload="none"
+                            playsinline
+                            webkit-playsinline
+                            controlslist="nodownload"
+                            controls="false">
+                            <source src="https://res.cloudinary.com/du9nysbwl/video/upload/v1793875699/lv_0_20261105161247_hsszba.mp4" type="video/mp4">
+                        </video>
+
+                        <!-- Tap to Play Overlay -->
+                        <button type="button" class="video-play-overlay" id="videoPlayOverlay" aria-label="Play video">
+                            <span class="play-circle"><i class="fas fa-play"></i></span>
+                            <span class="play-label" id="txt-play">Tap to Play</span>
+                        </button>
                     </div>
                 </div>
 
@@ -500,11 +556,49 @@
 
     </div>
 
-    <!-- JS Logic for View Switching & Translation -->
+    <!-- JS Logic for View Switching, Video Play & Translation -->
     <script>
         const viewSelection = document.getElementById('view-selection');
         const viewAndroid = document.getElementById('view-android');
         const comingSoonOverlay = document.getElementById('coming-soon-overlay');
+
+        // ==========================================
+        // ▶️ VIDEO: PLAY ONLY ON USER TAP
+        // ==========================================
+        const guideVideo = document.getElementById('guideVideo');
+        const playOverlay = document.getElementById('videoPlayOverlay');
+
+        // Make sure it never auto-plays, even if browser restores state
+        guideVideo.autoplay = false;
+        guideVideo.pause();
+
+        function playGuideVideo(e) {
+            if (e) e.preventDefault();
+
+            // Hide the overlay, show native controls, then play
+            playOverlay.classList.add('hidden');
+            guideVideo.controls = true;
+
+            const promise = guideVideo.play();
+            if (promise && typeof promise.catch === 'function') {
+                // If the browser blocks playback, bring the overlay back
+                promise.catch(() => {
+                    playOverlay.classList.remove('hidden');
+                    guideVideo.controls = false;
+                });
+            }
+        }
+
+        playOverlay.addEventListener('click', playGuideVideo);
+
+        // When the video finishes, show the play overlay again for replay
+        guideVideo.addEventListener('ended', () => {
+            guideVideo.controls = false;
+            playOverlay.classList.remove('hidden');
+        });
+
+        // If user pauses manually, keep controls visible (no overlay needed)
+        // If user seeks back to start after ending, overlay stays hidden.
 
         // ==========================================
         // TRANSLATIONS DATA
@@ -518,18 +612,8 @@
                 windows: "Windows",
                 soon: "Coming Soon",
                 back: "<i class='fas fa-arrow-left'></i> Back",
-                how: "<i class='fas fa-info-circle'></i> How to Download & Install?",
                 video: "<i class='fas fa-video'></i> How To Download (Video)",
-                
-                // English Steps
-                step1: "Click on the <strong>\"Continue to Download\"</strong> button below.",
-                step2: "Wait for the <strong>20-second timer</strong> on the next page.",
-                step3: "Click the green <strong>\"Download RX Player.apk\"</strong> button.",
-                step4: "A popup will appear. Tap <strong>\"Download\"</strong> to save the file.",
-                step5: "Open the downloaded APK file from your notification panel or file manager.",
-                step6: "If Google Play Protect warns you, tap <strong>\"Settings\"</strong> and enable <strong>\"Allow from this source\"</strong>.",
-                step7: "Tap <strong>\"Install\"</strong> and wait for the process to finish.",
-                
+                play: "Tap to Play",
                 contBtn: "Continue to Download <i class='fas fa-arrow-right'></i>",
                 home: "<i class='fas fa-arrow-left'></i> Back to Home",
                 workingTitle: "We're Working On It!",
@@ -544,18 +628,8 @@
                 windows: "विंडोज़",
                 soon: "जल्द आ रहा है",
                 back: "<i class='fas fa-arrow-left'></i> पीछे",
-                how: "<i class='fas fa-info-circle'></i> डाउनलोड और इंस्टॉल कैसे करें?",
                 video: "<i class='fas fa-video'></i> वीडियो गाइड",
-                
-                // Hindi Steps
-                step1: "नीचे दिए गए <strong>\"Continue to Download\"</strong> बटन पर क्लिक करें।",
-                step2: "अगले पेज पर <strong>20 सेकंड के टाइमर</strong> का इंतज़ार करें।",
-                step3: "हरे रंग के <strong>\"Download RX Player.apk\"</strong> बटन पर क्लिक करें।",
-                step4: "एक पॉपअप आएगा। फाइल सेव करने के लिए <strong>\"Download\"</strong> पर टैप करें।",
-                step5: "डाउनलोड की गई APK फाइल को नोटिफिकेशन या फाइल मैनेजर से खोलें।",
-                step6: "अगर Google Play Protect चेतावनी दे, तो <strong>\"Settings\"</strong> पर टैप करें और <strong>\"Allow from this source\"</strong> चालू करें।",
-                step7: "<strong>\"Install\"</strong> पर टैप करें और प्रोसेस पूरा होने का इंतज़ार करें।",
-                
+                play: "देखने के लिए टैप करें",
                 contBtn: "डाउनलोड के लिए आगे बढ़ें <i class='fas fa-arrow-right'></i>",
                 home: "<i class='fas fa-arrow-left'></i> होम पर वापस जाएं",
                 workingTitle: "हम इस पर काम कर रहे हैं!",
@@ -574,7 +648,6 @@
             currentLang = lang;
             const t = translations[lang];
             
-            // Update texts
             document.getElementById('txt-select').textContent = t.select;
             document.getElementById('txt-android').textContent = t.android;
             document.getElementById('txt-ios').textContent = t.ios;
@@ -583,17 +656,8 @@
             document.getElementById('txt-soon-win').textContent = t.soon;
             
             document.getElementById('txt-back').innerHTML = t.back;
-            document.getElementById('txt-how').innerHTML = t.how;
             document.getElementById('txt-video').innerHTML = t.video;
-            
-            // Use innerHTML because they contain <strong> tags
-            document.getElementById('txt-step1').innerHTML = t.step1;
-            document.getElementById('txt-step2').innerHTML = t.step2;
-            document.getElementById('txt-step3').innerHTML = t.step3;
-            document.getElementById('txt-step4').innerHTML = t.step4;
-            document.getElementById('txt-step5').innerHTML = t.step5;
-            document.getElementById('txt-step6').innerHTML = t.step6;
-            document.getElementById('txt-step7').innerHTML = t.step7;
+            document.getElementById('txt-play').textContent = t.play;
             
             document.getElementById('txt-continue').innerHTML = t.contBtn;
             document.getElementById('txt-home').innerHTML = t.home;
@@ -602,7 +666,6 @@
             document.getElementById('txt-working-body').innerHTML = t.workingBody;
             document.getElementById('txt-gotit').textContent = t.gotIt;
             
-            // Change toggle button text
             langToggleBtn.textContent = t.toggleBtn;
         }
 
@@ -624,6 +687,11 @@
         }
 
         function showSelectionView() {
+            // Pause the video and reset the play overlay when leaving the screen
+            if (!guideVideo.paused) guideVideo.pause();
+            guideVideo.controls = false;
+            playOverlay.classList.remove('hidden');
+
             viewAndroid.classList.remove('active');
             setTimeout(() => {
                 viewAndroid.style.display = 'none';
