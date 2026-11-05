@@ -265,7 +265,7 @@
         }
         .instructions-box h3 i { color: #E50914; }
         
-        .step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+        .step { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
         .step:last-child { margin-bottom: 0; }
         .step-num {
             background: rgba(229, 9, 20, 0.15); color: #ff4d5e; width: 20px; height: 20px;
@@ -445,23 +445,37 @@
                 </div>
 
                 <div class="instructions-box">
-                    <h3 id="txt-how"><i class="fas fa-info-circle"></i> How to Download?</h3>
+                    <h3 id="txt-how"><i class="fas fa-info-circle"></i> How to Download & Install?</h3>
+                    
                     <div class="step">
                         <div class="step-num">1</div>
                         <div class="step-text" id="txt-step1">Click on the <strong>"Continue to Download"</strong> button below.</div>
                     </div>
                     <div class="step">
                         <div class="step-num">2</div>
-                        <div class="step-text" id="txt-step2">You will be redirected. Please <strong>wait for 20 seconds</strong>.</div>
+                        <div class="step-text" id="txt-step2">Wait for the <strong>20-second timer</strong> on the next page.</div>
                     </div>
                     <div class="step">
                         <div class="step-num">3</div>
-                        <div class="step-text" id="txt-step3">After the timer ends, click on <strong>"Download APP Now"</strong>.</div>
+                        <div class="step-text" id="txt-step3">Click the green <strong>"Download RX Player.apk"</strong> button.</div>
                     </div>
                     <div class="step">
                         <div class="step-num">4</div>
-                        <div class="step-text" id="txt-step4">Allow <strong>"Install from Unknown Sources"</strong> if asked.</div>
+                        <div class="step-text" id="txt-step4">A popup will appear. Tap <strong>"Download"</strong> to save the file.</div>
                     </div>
+                    <div class="step">
+                        <div class="step-num">5</div>
+                        <div class="step-text" id="txt-step5">Open the downloaded APK file from your notification panel or file manager.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">6</div>
+                        <div class="step-text" id="txt-step6">If Google Play Protect warns you, tap <strong>"Settings"</strong> and enable <strong>"Allow from this source"</strong> or <strong>"Install Unknown Apps"</strong>.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">7</div>
+                        <div class="step-text" id="txt-step7">Tap <strong>"Install"</strong> and wait for the process to finish. Open the app and enjoy!</div>
+                    </div>
+
                 </div>
 
                 <a href="appads.html" class="btn-continue" id="txt-continue">
@@ -508,11 +522,17 @@
                 windows: "Windows",
                 soon: "Coming Soon",
                 back: "<i class='fas fa-arrow-left'></i> Back",
-                how: "<i class='fas fa-info-circle'></i> How to Download?",
+                how: "<i class='fas fa-info-circle'></i> How to Download & Install?",
+                
+                // English Steps
                 step1: "Click on the <strong>\"Continue to Download\"</strong> button below.",
-                step2: "You will be redirected. Please <strong>wait for 20 seconds</strong>.",
-                step3: "After the timer ends, click on <strong>\"Download APP Now\"</strong>.",
-                step4: "Allow <strong>\"Install from Unknown Sources\"</strong> if asked.",
+                step2: "Wait for the <strong>20-second timer</strong> on the next page.",
+                step3: "Click the green <strong>\"Download RX Player.apk\"</strong> button.",
+                step4: "A popup will appear. Tap <strong>\"Download\"</strong> to save the file.",
+                step5: "Open the downloaded APK file from your notification panel or file manager.",
+                step6: "If Google Play Protect warns you, tap <strong>\"Settings\"</strong> and enable <strong>\"Allow from this source\"</strong> or <strong>\"Install Unknown Apps\"</strong>.",
+                step7: "Tap <strong>\"Install\"</strong> and wait for the process to finish. Open the app and enjoy!",
+                
                 contBtn: "Continue to Download <i class='fas fa-arrow-right'></i>",
                 home: "<i class='fas fa-arrow-left'></i> Back to Home",
                 workingTitle: "We're Working On It!",
@@ -527,11 +547,17 @@
                 windows: "विंडोज़",
                 soon: "जल्द आ रहा है",
                 back: "<i class='fas fa-arrow-left'></i> पीछे",
-                how: "<i class='fas fa-info-circle'></i> डाउनलोड कैसे करें?",
+                how: "<i class='fas fa-info-circle'></i> डाउनलोड और इंस्टॉल कैसे करें?",
+                
+                // Hindi Steps
                 step1: "नीचे दिए गए <strong>\"Continue to Download\"</strong> बटन पर क्लिक करें।",
-                step2: "आपको रीडायरेक्ट किया जाएगा। कृपया <strong>20 सेकंड प्रतीक्षा करें</strong>।",
-                step3: "टाइमर खत्म होने के बाद, <strong>\"Download APP Now\"</strong> पर क्लिक करें।",
-                step4: "अगर पूछा जाए तो <strong>\"Install from Unknown Sources\"</strong> को अनुमति दें।",
+                step2: "अगले पेज पर <strong>20 सेकंड के टाइमर</strong> का इंतज़ार करें।",
+                step3: "हरे रंग के <strong>\"Download RX Player.apk\"</strong> बटन पर क्लिक करें।",
+                step4: "एक पॉपअप आएगा। फाइल सेव करने के लिए <strong>\"Download\"</strong> पर टैप करें।",
+                step5: "डाउनलोड की गई APK फाइल को नोटिफिकेशन या फाइल मैनेजर से खोलें।",
+                step6: "अगर Google Play Protect चेतावनी दे, तो <strong>\"Settings\"</strong> पर टैप करें और <strong>\"Allow from this source\"</strong> या <strong>\"Install Unknown Apps\"</strong> को चालू करें।",
+                step7: "<strong>\"Install\"</strong> पर टैप करें और प्रोसेस पूरा होने का इंतज़ार करें। ऐप खोलें और आनंद लें!",
+                
                 contBtn: "डाउनलोड के लिए आगे बढ़ें <i class='fas fa-arrow-right'></i>",
                 home: "<i class='fas fa-arrow-left'></i> होम पर वापस जाएं",
                 workingTitle: "हम इस पर काम कर रहे हैं!",
@@ -566,6 +592,9 @@
             document.getElementById('txt-step2').innerHTML = t.step2;
             document.getElementById('txt-step3').innerHTML = t.step3;
             document.getElementById('txt-step4').innerHTML = t.step4;
+            document.getElementById('txt-step5').innerHTML = t.step5;
+            document.getElementById('txt-step6').innerHTML = t.step6;
+            document.getElementById('txt-step7').innerHTML = t.step7;
             
             document.getElementById('txt-continue').innerHTML = t.contBtn;
             document.getElementById('txt-home').innerHTML = t.home;
