@@ -306,7 +306,7 @@
             <p class="hero-subtitle">Stream Movies, Shows &amp; Anime</p>
 
             <div class="app-specs-row">
-                <span class="spec-item" id="appVersionText">v1.1.0</span>
+                <span class="spec-item" id="appVersionText">v2.0.0</span>
                 <span class="spec-item">Android 6.0+</span>
                 <span class="spec-item">100% Safe</span>
             </div>
@@ -444,7 +444,7 @@
                 const doc = await db.collection('config').doc('appVersion').get();
                 if (doc.exists) {
                     const data = doc.data();
-                    const version = data.version || '1.1.0';
+                    const version = data.version || '2.0.0';
                     document.getElementById('appVersionText').textContent = `v${version}`;
                     document.getElementById('downloadBtnLabel').textContent = `Download APK (v${version})`;
                 }
