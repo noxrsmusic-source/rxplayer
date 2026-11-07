@@ -3,29 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Yahan title dynamically aayega -->
     <title>{{TITLE}} - RX PLAYER</title>
     <meta name="description" content="{{DESCRIPTION}}">
     
-    <!-- Open Graph Tags (WhatsApp/Facebook sharing ke liye) -->
+    <!-- Open Graph Tags -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="{{TITLE}}">
     <meta property="og:description" content="{{DESCRIPTION}}">
     <meta property="og:image" content="{{IMAGE}}">
     <meta property="og:url" content="https://www.rxplayer.in/articles/{{ID}}.html">
 
-    <!-- Fonts & CSS (Aapka pura CSS yahan aayega) -->
+    <!-- External Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Yahan Aapka Pura CSS Hai -->
     <style>
-        /* ... Aapka pura CSS yahan paste karein ... */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #050505; color: #ffffff; min-height: 100vh; width: 100%; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        /* ===== NAVBAR ===== */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; z-index: 50; background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .navbar .logo { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; display: flex; }
+        .navbar .logo .rx { color: #e50914; }
+        .navbar .logo .player { color: #fff; font-weight: 300; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: #d1d5db; text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; }
+        .nav-links a:hover { color: #e50914; }
+        .nav-web-link { font-size: 12px; font-weight: 700; color: #fff !important; background: #e50914; padding: 8px 20px; border-radius: 50px; transition: transform 0.2s !important; }
+        .nav-web-link:hover { transform: scale(1.05); background: #b20710; }
+        @media (max-width: 768px) { .nav-links { display: none; } }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-container { flex: 1; width: 100%; max-width: 1000px; margin: 0 auto; padding: 100px 20px 60px; }
+        .back-home-btn { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; padding: 10px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+        .back-home-btn:hover { background: rgba(255, 255, 255, 0.1); transform: translateX(-3px); }
+
+        /* ===== WATCH BANNER ===== */
+        .watch-banner { display: flex; align-items: center; justify-content: center; background: linear-gradient(90deg, #e50914, #b20710); color: #ffffff; text-decoration: none; padding: 16px 20px; border-radius: 12px; margin: 25px 0 30px; box-shadow: 0 8px 25px rgba(229, 9, 20, 0.4); transition: transform 0.2s, box-shadow 0.2s; text-align: center; }
+        .watch-banner:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(229, 9, 20, 0.6); }
+        .watch-banner-content { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
+        .watch-banner-content svg { width: 24px; height: 24px; fill: currentColor; }
+        @media (max-width: 480px) { .watch-banner-content { font-size: 14px; } .watch-banner-content svg { width: 20px; height: 20px; } }
+
+        /* ===== ARTICLE STYLING ===== */
+        .article-content { max-width: 800px; margin: 0 auto; }
+        .post-full-title { font-size: clamp(28px, 4vw, 42px); font-weight: 900; color: #ffffff; margin-bottom: 16px; line-height: 1.2; letter-spacing: -0.5px; }
+        .post-full-meta-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; gap: 15px; }
+        .post-full-meta { font-size: 13px; color: #9ca3af; font-weight: 600; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        .post-full-meta span { color: #e50914; }
+
+        /* Share Button */
+        .share-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; text-decoration: none;}
+        .share-btn:hover { background: #e50914; border-color: #e50914; }
+        .share-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .post-full-body { font-size: 16px; color: #d1d5db; line-height: 1.8; word-wrap: break-word; }
+        .post-full-body img { max-width: 100%; height: auto; border-radius: 12px; margin: 24px 0; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .post-full-body a { color: #e50914; text-decoration: none; font-weight: 600; }
+        .post-full-body a:hover { text-decoration: underline; }
+        .post-full-body p { margin-bottom: 20px; }
+        .post-full-body h1, .post-full-body h2, .post-full-body h3, .post-full-body h4 { color: #ffffff; margin: 35px 0 15px; line-height: 1.3; font-weight: 800; }
+        .post-full-body h2 { font-size: 24px; }
+        .post-full-body h3 { font-size: 20px; }
+        .post-full-body ul, .post-full-body ol { margin: 20px 0 20px 24px; }
+        .post-full-body li { margin-bottom: 10px; }
+
+        /* ===== FOOTER ===== */
+        .footer { background: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 60px 5% 20px; margin-top: auto; }
+        .footer-bottom { text-align: center; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #6b7280; font-size: 13px; }
     </style>
 </head>
 <body>
-    <!-- Navbar & Ads (Aapka pura code) -->
-    
+
+    <!-- Top Navbar -->
+    <header class="navbar">
+        <a class="logo" href="../index.html"><span class="rx">RX</span><span class="player">PLAYER</span></a>
+        <nav class="nav-links">
+            <a href="../index.html#articles">Articles</a>
+            <a href="../index.html#download">Download</a>
+            <a class="nav-web-link" href="https://soonrxplayerweb.blogspot.com/">Watch Web &#8594;</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Layout -->
     <main class="main-container">
+        <!-- Back Button -->
         <a class="back-home-btn" href="../index.html">&#8592; Back to Home</a>
-        
+
+        <!-- Article Container -->
         <article class="article-content">
             <div id="article-container">
                 <h1 class="post-full-title">{{TITLE}}</h1>
@@ -33,11 +101,14 @@
                     <div class="post-full-meta">
                         <span>Published</span> • {{DATE}}
                     </div>
-                    <button class="share-btn" onclick="navigator.share({title: '{{TITLE}}', url: window.location.href})">
+                    <!-- Native Share Button -->
+                    <button class="share-btn" onclick="if(navigator.share){navigator.share({title: '{{TITLE}}', url: window.location.href})}else{alert('Link copied!'); navigator.clipboard.writeText(window.location.href);}">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         Share
                     </button>
                 </div>
 
+                <!-- WATCH BANNER -->
                 <a href="../dominpage.html" class="watch-banner">
                     <div class="watch-banner-content">
                         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -45,8 +116,8 @@
                     </div>
                 </a>
 
-                <!-- Yahan article ka content dynamically aayega -->
-                <div class="post-full-body" id="article-body">
+                <!-- Article Body -->
+                <div class="post-full-body">
                     {{CONTENT}}
                 </div>
             </div>
@@ -54,5 +125,11 @@
     </main>
 
     <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 RX Player. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
