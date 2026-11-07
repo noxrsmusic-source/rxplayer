@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- monetag ads-->
@@ -479,7 +479,8 @@
                     const textSnippet = tempDiv.textContent || tempDiv.innerText || "";
                     const snippet = textSnippet.substring(0, 100) + '...';
 
-                    const articleUrl = `articles/article.html?id=${doc.id}`;
+                    // YAHAN CHANGE HUA HAI - Direct static URL
+                    const articleUrl = `articles/${doc.id}.html`;
 
                     html += `
                         <article class="post-card">
