@@ -1,0 +1,12 @@
+{
+  "name": "rxplayer-articles-generator",
+  "version": "1.0.0",
+  "description": "Generate static HTML for articles",
+  "main": "generate.js",
+  "scripts": {
+    "build": "node generate.js"
+  },
+  "dependencies": {
+    "firebase": "^10.7.1"
+  }
+}
