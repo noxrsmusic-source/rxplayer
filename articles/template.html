@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Yahan title dynamically aayega -->
+    <title>{{TITLE}} - RX PLAYER</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    
+    <!-- Open Graph Tags (WhatsApp/Facebook sharing ke liye) -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{DESCRIPTION}}">
+    <meta property="og:image" content="{{IMAGE}}">
+    <meta property="og:url" content="https://www.rxplayer.in/articles/{{ID}}.html">
+
+    <!-- Fonts & CSS (Aapka pura CSS yahan aayega) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ... Aapka pura CSS yahan paste karein ... */
+    </style>
+</head>
+<body>
+    <!-- Navbar & Ads (Aapka pura code) -->
+    
+    <main class="main-container">
+        <a class="back-home-btn" href="../index.html">&#8592; Back to Home</a>
+        
+        <article class="article-content">
+            <div id="article-container">
+                <h1 class="post-full-title">{{TITLE}}</h1>
+                <div class="post-full-meta-wrapper">
+                    <div class="post-full-meta">
+                        <span>Published</span> • {{DATE}}
+                    </div>
+                    <button class="share-btn" onclick="navigator.share({title: '{{TITLE}}', url: window.location.href})">
+                        Share
+                    </button>
+                </div>
+
+                <a href="../dominpage.html" class="watch-banner">
+                    <div class="watch-banner-content">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <span>Click Here to Watch</span>
+                    </div>
+                </a>
+
+                <!-- Yahan article ka content dynamically aayega -->
+                <div class="post-full-body" id="article-body">
+                    {{CONTENT}}
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+</body>
+</html>
