@@ -181,30 +181,46 @@
         }
 
         /* =========================================================
-           NATIVE BANNER AD SLOT
+           SQUARE NATIVE BANNER AD SLOT (1:1)
            ========================================================= */
         .ad-slot {
-            margin-top: 24px;
+            margin: 24px auto 0;
             width: 100%;
-            min-height: 90px;
+            max-width: 300px;
+            aspect-ratio: 1 / 1;
+            min-height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
         }
 
-        /* Keep injected ad elements inside the card */
-        .ad-slot > div,
+        /* Injected ad elements ko square slot ke andar fit rakho */
+        .ad-slot > div {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .ad-slot > div > div {
-            width: 100%;
-            max-width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
         }
 
         .ad-slot iframe,
         .ad-slot img,
-        .ad-slot ins {
+        .ad-slot ins,
+        .ad-slot video {
             max-width: 100% !important;
+            max-height: 100% !important;
         }
     </style>
 </head>
@@ -228,9 +244,10 @@
             Open Streaming Site
         </a>
 
-        <!-- ===== NATIVE BANNER AD ===== -->
+        <!-- ===== SQUARE NATIVE BANNER AD ===== -->
         <div class="ad-slot">
             <div id="container-5a28c3ec89e81f290c390f0aeb473a2f"></div>
+            <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/5a28c3ec89e81f290c390f0aeb473a2f"></script>
         </div>
 
         <div class="disclaimer-box">
@@ -242,9 +259,6 @@
 
         <a href="index.html" class="back-link">&#8592; Go Back to Home</a>
     </div>
-
-    <!-- Native banner ad loader -->
-    <script async="async" data-cfasync="false" src="https://bancadeltempoidea.org/21/5a28c3ec89e81f290c390f0aeb473a2f"></script>
 
 </body>
 </html>
